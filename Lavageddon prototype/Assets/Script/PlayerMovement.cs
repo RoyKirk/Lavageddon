@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour {
 
     public enum Weapon
@@ -26,7 +26,11 @@ public class PlayerMovement : MonoBehaviour {
 
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
-    int lengthOfLineRenderer = 20;
+    int lengthOfLineRenderer = 10;
+
+    public float laserMinTime = 0.02f;
+    float laserTimer = 0.0f;
+
 
     //public float shootDistance = 1000.0f;
     void Update()
@@ -96,8 +100,27 @@ public class PlayerMovement : MonoBehaviour {
 
         transform.position += Input.GetAxis("Horizontal") * transform.right.normalized * movementSpeed;
 
-        LineRenderer lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
+        laserTimer += Time.deltaTime;
+
+        if (laserTimer >= laserMinTime)
+        {
+            LineRenderer lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.enabled = false;
+        }
+
+        if (laserTimer < laserMinTime)
+        {
+            LineRenderer lineRenderer = GetComponent<LineRenderer>();
+            int i = 0;
+            while (i < lengthOfLineRenderer)
+            {
+                //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                //Vector3 pos = transform.position + transform.forward.normalized * i;
+                Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                lineRenderer.SetPosition(i, pos);
+                i++;
+            }
+        }
 
         if (Input.GetButtonDown("Fire"))
         {
@@ -106,14 +129,17 @@ public class PlayerMovement : MonoBehaviour {
             {
                 GetComponent<FiringScript>().Fire();
             }
-            if (weapon == Weapon.LASER)
+            if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
             {
-                //LineRenderer lineRenderer = GetComponent<LineRenderer>();
+                laserTimer = 0.0f;
+                LineRenderer lineRenderer = GetComponent<LineRenderer>();
                 lineRenderer.enabled = true;
                 int i = 0;
                 while (i < lengthOfLineRenderer)
                 {
-                    Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/10) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 10);
+                    //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                    //Vector3 pos = transform.position + transform.forward.normalized * i;
+                    Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
                     lineRenderer.SetPosition(i, pos);
                     i++;
                 }
@@ -181,6 +207,11 @@ public class PlayerMovement : MonoBehaviour {
             {
                 weapon = (Weapon)(numberOfWeapons - 1);
             }
+        }
+        if (Input.GetButtonDown("StartGame"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         }
 
     }
