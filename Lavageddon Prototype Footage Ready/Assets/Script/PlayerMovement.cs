@@ -29,8 +29,11 @@ public class PlayerMovement : MonoBehaviour {
     public Color c2 = Color.red;
     int lengthOfLineRenderer = 10;
 
-    public float laserMinTime = 0.02f;
+    public float laserMinTime = 0.5f;
+    public float laserResidual = 0.02f;
     float laserTimer = 0.0f;
+    public float bombMinTime = 0.5f;
+    float bombTimer = 0.0f;
 
 
     //public float shootDistance = 1000.0f;
@@ -102,8 +105,9 @@ public class PlayerMovement : MonoBehaviour {
         transform.position += Input.GetAxis("Horizontal") * transform.right.normalized * movementSpeed;
 
         laserTimer += Time.deltaTime;
+        bombTimer += Time.deltaTime;
 
-        if (laserTimer >= laserMinTime)
+        if (laserTimer >= laserResidual)
         {
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             lineRenderer.enabled = false;
@@ -126,8 +130,9 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Fire"))
         {
 
-            if (weapon == Weapon.BOMB)
+            if (weapon == Weapon.BOMB && bombTimer >= bombMinTime)
             {
+                bombTimer = 0.0f;
                 GetComponent<FiringScript>().Fire();
             }
             if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
@@ -216,6 +221,31 @@ public class PlayerMovement : MonoBehaviour {
 
         }
 
+    }
+
+    void LateUpdate()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+        {
+            if (hit.collider.tag == "Block")
+            {
+                Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+                GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
+            }
+            else
+            {
+                GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+            }
+        }
+        else
+        {
+            GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+            //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+        }
     }
 
     void Start()
