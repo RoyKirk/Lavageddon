@@ -79,7 +79,8 @@ public class managerscript : MonoBehaviour {
 
 
 
-            if (Input.GetButtonDown("PlaceBlock") && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks<maxNumberOfBlocks)
+            //if (Input.GetButtonDown("PlaceBlock") && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks<maxNumberOfBlocks)
+            if(Input.GetAxis("PlaceBlock") > 0 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 if (blockType == BlockType.FLOAT)
                 {
@@ -92,7 +93,8 @@ public class managerscript : MonoBehaviour {
                 numberOfBlocks++;
             }
 
-            if (Input.GetButtonDown("DestroyBlock"))
+            //if (Input.GetButtonDown("DestroyBlock"))
+            if (Input.GetAxis("PlaceBlock") < 0)
             {
                 RaycastHit shot;
                 if (Physics.Raycast(transform.position, transform.forward, out shot))
