@@ -140,6 +140,7 @@ public class PlayerMovement : MonoBehaviour {
                     //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
                     //Vector3 pos = transform.position + transform.forward.normalized * i;
                     Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                   
                     lineRenderer.SetPosition(i, pos);
                     i++;
                 }
@@ -216,6 +217,28 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    void LateUpdate()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+        {
+            if (hit.collider.tag == "Block")
+            {
+                Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+                GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+            }
+            else
+            {
+                GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+            }
+        }
+        else
+        {
+            GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+        }
+    }
+
     void Start()
     {
         //Cursor.visible = false;
@@ -230,6 +253,8 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+        //LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
+        //lineRenderer.enabled = true;
         lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
         lineRenderer.SetColors(c1, c2);
         lineRenderer.SetWidth(0.2F, 0.2F);
