@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using XInputDotNetPure;
 
 
 public class managerscript : MonoBehaviour {
@@ -27,7 +28,7 @@ public class managerscript : MonoBehaviour {
     public int maxNumberOfBlocks = 24;
     public int numberOfBlocks = 0;
     public Text numberText;
-    bool axisInUse = false;
+    public int player = 0;
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
@@ -63,10 +64,10 @@ public class managerscript : MonoBehaviour {
             blockdestroyed = false;
         }
 
-        if(Input.GetButtonDown("Exit"))
+        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
             #if UNITY_EDITOR
-                        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
             #elif UNITY_WEBPLAYER
                      Application.OpenURL(webplayerQuitURL);
             #else
@@ -78,7 +79,7 @@ public class managerscript : MonoBehaviour {
         {
 
             //if (Input.GetButtonDown("PlaceBlock") && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks<maxNumberOfBlocks)
-            if (Input.GetAxis("PlaceBlock") > 0 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks && !axisInUse)
+            if (Controller.prevState[player].Triggers.Right == 0 && Controller.state[player].Triggers.Right > 0.1 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 if (blockType == BlockType.FLOAT)
                 {
@@ -89,16 +90,10 @@ public class managerscript : MonoBehaviour {
                     Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
                 }
                 numberOfBlocks++;
-                axisInUse = true;
-            }
-
-            if(Input.GetAxis("PlaceBlock") == 0)
-            {
-                axisInUse = false;
             }
 
             //if (Input.GetButtonDown("DestroyBlock"))
-            if (Input.GetAxis("PlaceBlock") < 0 && !axisInUse)
+            if (Controller.prevState[player].Triggers.Left == 0 && Controller.state[player].Triggers.Left > 0.1)
             {
                 RaycastHit shot;
                 if (Physics.Raycast(transform.position, transform.forward, out shot))
@@ -113,81 +108,41 @@ public class managerscript : MonoBehaviour {
                         }
                     }
                 }
-                axisInUse = true;
             }
 
-            if (Input.GetButtonDown("SwitchBlock"))
+            if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)
             {
-                if (Input.GetAxis("SwitchBlock") > 0)
-                {
-                    blockType++;
-                }
-                if (Input.GetAxis("SwitchBlock") < 0)
-                {
-                    blockType--;
-                }
-
-                if((int)blockType == numberOfBlockTypes)
-                {
-                    blockType = (BlockType)0;
-                }
-                else if((int)blockType < 0)
-                {
-                    blockType = (BlockType)(numberOfBlockTypes -1);
-                }
-
-                if (block)
-                {
-                    Destroy(block);
-
-
-                    if (blockType == BlockType.FLOAT)
-                    {
-                        block = (GameObject)Instantiate(blockPlacePrefabFloat, block.transform.position, block.transform.rotation);
-                    }
-                    if (blockType == BlockType.ARMOUR)
-                    {
-                        block = (GameObject)Instantiate(blockPlacePrefabArmour, block.transform.position, block.transform.rotation);
-                    }
-                }
+                blockType++;
             }
-            else if (!Input.GetButton("SwitchBlock") && !Input.GetButtonDown("SwitchBlock") && Input.GetAxis("SwitchBlock") != 0)
+            if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
-                if (Input.GetAxis("SwitchBlock") > 0)
-                {
-                    blockType++;
-                }
-                if (Input.GetAxis("SwitchBlock") < 0)
-                {
-                    blockType--;
-                }
-
-                if ((int)blockType == numberOfBlockTypes)
-                {
-                    blockType = (BlockType)0;
-                }
-                else if ((int)blockType < 0)
-                {
-                    blockType = (BlockType)(numberOfBlockTypes - 1);
-                }
-
-
-                if (block)
-                {
-                    Destroy(block);
-
-
-                    if (blockType == BlockType.FLOAT)
-                    {
-                        block = (GameObject)Instantiate(blockPlacePrefabFloat, block.transform.position, block.transform.rotation);
-                    }
-                    if (blockType == BlockType.ARMOUR)
-                    {
-                        block = (GameObject)Instantiate(blockPlacePrefabArmour, block.transform.position, block.transform.rotation);
-                    }
-                }
-
+                blockType--;
             }
+
+            if((int)blockType == numberOfBlockTypes)
+            {
+                blockType = (BlockType)0;
+            }
+            else if((int)blockType < 0)
+            {
+                blockType = (BlockType)(numberOfBlockTypes -1);
+            }
+
+            if (block)
+            {
+                Destroy(block);
+
+
+                if (blockType == BlockType.FLOAT)
+                {
+                    block = (GameObject)Instantiate(blockPlacePrefabFloat, block.transform.position, block.transform.rotation);
+                }
+                if (blockType == BlockType.ARMOUR)
+                {
+                    block = (GameObject)Instantiate(blockPlacePrefabArmour, block.transform.position, block.transform.rotation);
+                }
+            }
+            
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 

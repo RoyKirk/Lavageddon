@@ -70,6 +70,9 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
+    <Reference Include="XInputDotNetPure">
+      <HintPath>Assets\Plugins\x86_64\XInputDotNetPure.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Detonator Explosion Framework\Sample Supporting Emitters\DetonatorSprayHelper.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Assets\Script\BlockDamage.cs" />
     <Compile Include="Assets\Script\BuildingBlock.cs" />
     <Compile Include="Assets\Script\CameraMovement.cs" />
+    <Compile Include="Assets\Script\Controller.cs" />
     <Compile Include="Assets\Script\ExplosionScript.cs" />
     <Compile Include="Assets\Script\FiringScript.cs" />
     <Compile Include="Assets\Script\FloatFixed.cs" />
@@ -101,9 +105,11 @@
     <Compile Include="Assets\Script\WhirlpoolCurrent.cs" />
     <Compile Include="Assets\Script\WhirlpoolOffest.cs" />
     <Compile Include="Assets\Script\managerscript.cs" />
+    <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
+    <None Include="Assets\XInputDotNet\MITLicense.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

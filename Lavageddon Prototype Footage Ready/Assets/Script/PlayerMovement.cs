@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
+
 public class PlayerMovement : MonoBehaviour {
 
     public enum Weapon
@@ -12,8 +14,6 @@ public class PlayerMovement : MonoBehaviour {
     public Weapon weapon = Weapon.BOMB;
     public int laserDamage = 1;
     public float movementSpeed;
-    public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-    public RotationAxes axes = RotationAxes.MouseXAndY;
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;
     public float minimumX = -360F;
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour {
     public float bombMinTime = 0.5f;
     float bombTimer = 0.0f;
 
-
+    public int player = 0;
     //public float shootDistance = 1000.0f;
     void Update()
     {
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
         {
 
             Debug.DrawLine(transform.position, hit.point);
-            if (Input.GetButtonDown("Jump"))
+            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.prevState[player].Buttons.A == ButtonState.Pressed)
             {
                 GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
             }
@@ -57,52 +57,16 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //controller look
-        if (axes == RotationAxes.MouseXAndY)
-        {
-            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Joy X");
+        float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X;
 
-            rotationY += Input.GetAxis("Joy Y");
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
+        rotationY += Controller.state[player].ThumbSticks.Right.Y;
+        rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-        }
-        else if (axes == RotationAxes.MouseX)
-        {
-            transform.Rotate(0, Input.GetAxis("Joy X"), 0);
-        }
-        else
-        {
-            rotationY += Input.GetAxis("Joy Y");
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
+        transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 
-            transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
-        }
-        //mouse look
-        if (axes == RotationAxes.MouseXAndY)
-        {
-            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+        transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
 
-            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
-
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-        }
-        else if (axes == RotationAxes.MouseX)
-        {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
-        }
-        else
-        {
-            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
-
-            transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
-        }
-
-
-        transform.position += Input.GetAxis("Vertical") * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
-
-        transform.position += Input.GetAxis("Horizontal") * transform.right.normalized * movementSpeed;
+        transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
 
         laserTimer += Time.deltaTime;
         bombTimer += Time.deltaTime;
@@ -127,7 +91,8 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("Fire"))
+        //if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1)
+        if (Controller.state[player].Triggers.Right > 0.1)
         {
 
             if (weapon == Weapon.BOMB && bombTimer >= bombMinTime)
@@ -174,51 +139,29 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("SwitchWeapon"))
+
+        if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.prevState[player].Buttons.RightShoulder == ButtonState.Pressed)
         {
-            if (Input.GetAxis("SwitchWeapon") > 0)
-            {
-                weapon++;
-            }
-            if (Input.GetAxis("SwitchWeapon") < 0)
-            {
-                weapon--;
-            }
-
-            if ((int)weapon == numberOfWeapons)
-            {
-                weapon = (Weapon)0;
-            }
-            else if ((int)weapon < 0)
-            {
-                weapon = (Weapon)(numberOfWeapons - 1);
-            }
-
+            weapon++;
         }
-        else if (!Input.GetButton("SwitchWeapon") && !Input.GetButtonDown("SwitchWeapon") && Input.GetAxis("SwitchWeapon") != 0)
+        if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Pressed)
         {
-            if (Input.GetAxis("SwitchWeapon") > 0)
-            {
-                weapon++;
-            }
-            if (Input.GetAxis("SwitchWeapon") < 0)
-            {
-                weapon--;
-            }
-
-            if ((int)weapon == numberOfWeapons)
-            {
-                weapon = (Weapon)0;
-            }
-            else if ((int)weapon < 0)
-            {
-                weapon = (Weapon)(numberOfWeapons - 1);
-            }
+            weapon--;
         }
-        if (Input.GetButtonDown("StartGame"))
+
+        if ((int)weapon == numberOfWeapons)
+        {
+            weapon = (Weapon)0;
+        }
+        else if ((int)weapon < 0)
+        {
+            weapon = (Weapon)(numberOfWeapons - 1);
+        }
+
+
+        if (Controller.prevState[player].Buttons.Start == ButtonState.Released && Controller.state[player].Buttons.Start == ButtonState.Pressed)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
         }
 
     }
