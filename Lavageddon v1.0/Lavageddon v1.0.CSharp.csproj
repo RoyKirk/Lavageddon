@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46CF7CF0-1EFB-2F05-B229-C65500E9D1C6}</ProjectGuid>
+    <ProjectGuid>{E2547448-32B7-3BB5-6FEB-159AE1B2F9EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -90,6 +90,7 @@
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSound.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSparks.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSpray.cs" />
+    <Compile Include="Assets\ModeSwitch.cs" />
     <Compile Include="Assets\Script\BlockDamage.cs" />
     <Compile Include="Assets\Script\BuildingBlock.cs" />
     <Compile Include="Assets\Script\CameraMovement.cs" />

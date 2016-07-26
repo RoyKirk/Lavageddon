@@ -78,8 +78,7 @@ public class managerscript : MonoBehaviour {
         if (constructionMode)
         {
 
-            //if (Input.GetButtonDown("PlaceBlock") && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks<maxNumberOfBlocks)
-            if (Controller.prevState[player].Triggers.Right == 0 && Controller.state[player].Triggers.Right > 0.1 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 if (blockType == BlockType.FLOAT)
                 {
@@ -92,8 +91,7 @@ public class managerscript : MonoBehaviour {
                 numberOfBlocks++;
             }
 
-            //if (Input.GetButtonDown("DestroyBlock"))
-            if (Controller.prevState[player].Triggers.Left == 0 && Controller.state[player].Triggers.Left > 0.1)
+            if (Controller.prevState[player].Buttons.B == ButtonState.Released && Controller.state[player].Buttons.B == ButtonState.Pressed)
             {
                 RaycastHit shot;
                 if (Physics.Raycast(transform.position, transform.forward, out shot))

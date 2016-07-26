@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
         {
 
             Debug.DrawLine(transform.position, hit.point);
-            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.prevState[player].Buttons.A == ButtonState.Pressed)
+            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
             {
                 GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
             }
@@ -140,11 +140,11 @@ public class PlayerMovement : MonoBehaviour {
         }
 
 
-        if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.prevState[player].Buttons.RightShoulder == ButtonState.Pressed)
+        if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)
         {
             weapon++;
         }
-        if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Pressed)
+        if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
         {
             weapon--;
         }
@@ -159,10 +159,10 @@ public class PlayerMovement : MonoBehaviour {
         }
 
 
-        if (Controller.prevState[player].Buttons.Start == ButtonState.Released && Controller.state[player].Buttons.Start == ButtonState.Pressed)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        //if (Controller.prevState[player].Buttons.Start == ButtonState.Released && Controller.state[player].Buttons.Start == ButtonState.Pressed)
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //}
 
     }
 
@@ -195,7 +195,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         //Cursor.visible = false;
         GetComponent<CameraMovement>().enabled = false;
-        GetComponent<WhirlpoolCurrent>().enabled = true;
+        //GetComponent<WhirlpoolCurrent>().enabled = true;
         // Make the rigid body not change rotation
         if (GetComponent<Rigidbody>())
         {

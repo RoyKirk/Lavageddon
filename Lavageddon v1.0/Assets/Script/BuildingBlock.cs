@@ -85,7 +85,7 @@ public class BuildingBlock : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if(!GameObject.Find("Main Camera").GetComponent<managerscript>().constructionMode)
+        if(!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<WhirlpoolCurrent>().enabled = true;

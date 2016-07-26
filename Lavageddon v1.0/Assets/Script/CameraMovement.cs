@@ -29,7 +29,11 @@ public class CameraMovement : MonoBehaviour {
 
         transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
 
-        if(Controller.state[player].DPad.Up == ButtonState.Pressed)
+        transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
+
+        transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+
+        if (Controller.state[player].DPad.Up == ButtonState.Pressed)
         {
             transform.position += new Vector3(0, 1, 0) * movementSpeed;
         }
@@ -42,6 +46,12 @@ public class CameraMovement : MonoBehaviour {
 
 
         if (Controller.prevState[player].Buttons.Start == ButtonState.Released && Controller.state[player].Buttons.Start == ButtonState.Pressed)
+        {
+            GetComponent<PlayerMovement>().enabled = true;
+            GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
+            GetComponent<managerscript>().constructionMode = false;
+        }
+        if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {
             GetComponent<PlayerMovement>().enabled = true;
             GetComponent<managerscript>().constructionMode = false;
