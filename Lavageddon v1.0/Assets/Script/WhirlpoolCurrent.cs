@@ -26,7 +26,7 @@ public class WhirlpoolCurrent : MonoBehaviour
         Vector3 follow = center.position - transform.position;
         rb.AddForce(follow.normalized * rotationSpeed);
         follow = new Vector3(follow.z, follow.y, -follow.x);
-        rb.velocity += (follow.normalized * rotationSpeed);
+        rb.AddForce(follow.normalized * rotationSpeed);
 
         //transform.RotateAround(center.position, axis, rotationSpeed * Time.deltaTime);
         //desiredPosition = (transform.position - center.position).normalized * radius + center.position;
