@@ -27,6 +27,7 @@ public class managerscript : MonoBehaviour {
     public int maxNumberOfBlocks = 24;
     public int numberOfBlocks = 0;
     public Text numberText;
+    bool axisInUse = false;
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
@@ -76,11 +77,8 @@ public class managerscript : MonoBehaviour {
         if (constructionMode)
         {
 
-
-
-
             //if (Input.GetButtonDown("PlaceBlock") && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks<maxNumberOfBlocks)
-            if(Input.GetAxis("PlaceBlock") > 0 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Input.GetAxis("PlaceBlock") > 0 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks && !axisInUse)
             {
                 if (blockType == BlockType.FLOAT)
                 {
@@ -91,10 +89,16 @@ public class managerscript : MonoBehaviour {
                     Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
                 }
                 numberOfBlocks++;
+                axisInUse = true;
+            }
+
+            if(Input.GetAxis("PlaceBlock") == 0)
+            {
+                axisInUse = false;
             }
 
             //if (Input.GetButtonDown("DestroyBlock"))
-            if (Input.GetAxis("PlaceBlock") < 0)
+            if (Input.GetAxis("PlaceBlock") < 0 && !axisInUse)
             {
                 RaycastHit shot;
                 if (Physics.Raycast(transform.position, transform.forward, out shot))
@@ -109,6 +113,7 @@ public class managerscript : MonoBehaviour {
                         }
                     }
                 }
+                axisInUse = true;
             }
 
             if (Input.GetButtonDown("SwitchBlock"))
