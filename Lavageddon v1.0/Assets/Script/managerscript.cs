@@ -111,35 +111,26 @@ public class managerscript : MonoBehaviour {
             if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)
             {
                 blockType++;
+                ResetBlock();
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 blockType--;
+                ResetBlock();
             }
 
             if((int)blockType == numberOfBlockTypes)
             {
                 blockType = (BlockType)0;
+                ResetBlock();
             }
             else if((int)blockType < 0)
             {
                 blockType = (BlockType)(numberOfBlockTypes -1);
+                ResetBlock();
             }
 
-            if (block)
-            {
-                Destroy(block);
 
-
-                if (blockType == BlockType.FLOAT)
-                {
-                    block = (GameObject)Instantiate(blockPlacePrefabFloat, block.transform.position, block.transform.rotation);
-                }
-                if (blockType == BlockType.ARMOUR)
-                {
-                    block = (GameObject)Instantiate(blockPlacePrefabArmour, block.transform.position, block.transform.rotation);
-                }
-            }
             
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -200,5 +191,23 @@ public class managerscript : MonoBehaviour {
         //    block = (GameObject)Instantiate(blockPrefab, transform.position + transform.forward.normalized * blockOffset, transform.rotation);
         //    block.GetComponent<BoxCollider>().enabled = false;
         //}
+    }
+
+    void ResetBlock()
+    {
+        if (block)
+        {
+            Destroy(block);
+
+
+            if (blockType == BlockType.FLOAT)
+            {
+                block = (GameObject)Instantiate(blockPlacePrefabFloat, block.transform.position, block.transform.rotation);
+            }
+            if (blockType == BlockType.ARMOUR)
+            {
+                block = (GameObject)Instantiate(blockPlacePrefabArmour, block.transform.position, block.transform.rotation);
+            }
+        }
     }
 }
