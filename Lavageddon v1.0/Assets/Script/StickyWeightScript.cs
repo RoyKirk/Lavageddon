@@ -12,8 +12,8 @@ public class StickyWeightScript : MonoBehaviour {
             temp.connectedBody = other.collider.GetComponent<Rigidbody>();
             temp.enableCollision = false;
             temp.GetComponent<Collider>().enabled = false;
-            temp.breakForce = 1000.0f;
-            temp.breakTorque = 1000.0f;
+            temp.breakForce = 5000.0f;
+            temp.breakTorque = 5000.0f;
         }
     }
 }
