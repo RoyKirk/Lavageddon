@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class StickyWeightScript : MonoBehaviour {
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collision other)
     {
         if (other.collider.tag == "Block")
         {
