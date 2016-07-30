@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour {
     {
         BOMB,
         LASER,
+        STICKY,
     };
-    int numberOfWeapons = 2;
+    int numberOfWeapons = 3;
     public Weapon weapon = Weapon.BOMB;
     public int laserDamage = 1;
     public float movementSpeed;
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour {
     float laserTimer = 0.0f;
     public float bombMinTime = 0.5f;
     float bombTimer = 0.0f;
+    public float stickyMinTime = 0.5f;
+    float stickyTimer = 0.0f;
 
     public int player = 0;
     //public float shootDistance = 1000.0f;
@@ -70,6 +73,7 @@ public class PlayerMovement : MonoBehaviour {
 
         laserTimer += Time.deltaTime;
         bombTimer += Time.deltaTime;
+        stickyTimer += Time.deltaTime;
 
         if (laserTimer >= laserResidual)
         {
@@ -99,6 +103,11 @@ public class PlayerMovement : MonoBehaviour {
             {
                 bombTimer = 0.0f;
                 GetComponent<FiringScript>().Fire();
+            }
+            if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime)
+            {
+                stickyTimer = 0.0f;
+                GetComponent<FireStickyWeight>().Fire();
             }
             if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
             {
