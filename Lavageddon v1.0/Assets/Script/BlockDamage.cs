@@ -6,12 +6,13 @@ public class BlockDamage : MonoBehaviour {
 
 
     public float HitPoints = 1;
+    float hp;
     public bool keystone = false;
 
 
 	// Use this for initialization
 	void Start () {
-	
+        hp = HitPoints;
 	}
 	
 	// Update is called once per frame
@@ -21,11 +22,15 @@ public class BlockDamage : MonoBehaviour {
 
     public void Damage(float damage)
     {
-        HitPoints -= damage;
-        if(HitPoints<=0)
+        hp -= damage;
+        if(hp<=0)
         {
             transform.DetachChildren();
             Destroy(gameObject);
+        }
+        if(hp>HitPoints)
+        {
+            hp = HitPoints;
         }
     }
 

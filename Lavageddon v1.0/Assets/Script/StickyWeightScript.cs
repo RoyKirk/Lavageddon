@@ -2,14 +2,14 @@
 using System.Collections;
 
 public class StickyWeightScript : MonoBehaviour {
-    void OnTriggerEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.collider.tag == "Block")
+        if (other.tag == "Block")
         {
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             FixedJoint temp = gameObject.AddComponent<FixedJoint>();
-            temp.connectedBody = other.collider.GetComponent<Rigidbody>();
+            temp.connectedBody = other.GetComponent<Rigidbody>();
             temp.enableCollision = false;
             temp.GetComponent<Collider>().enabled = false;
             temp.breakForce = 5000.0f;
