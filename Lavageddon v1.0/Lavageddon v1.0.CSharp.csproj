@@ -90,24 +90,28 @@
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSound.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSparks.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSpray.cs" />
-    <Compile Include="Assets\FireStickyWeight.cs" />
     <Compile Include="Assets\Script\BlockDamage.cs" />
     <Compile Include="Assets\Script\BuildingBlock.cs" />
+    <Compile Include="Assets\Script\ButtonManager.cs" />
     <Compile Include="Assets\Script\CameraMovement.cs" />
     <Compile Include="Assets\Script\Controller.cs" />
+    <Compile Include="Assets\Script\DynamicPlayerCount.cs" />
     <Compile Include="Assets\Script\ExplosionScript.cs" />
+    <Compile Include="Assets\Script\FireStickyWeight.cs" />
     <Compile Include="Assets\Script\FiringScript.cs" />
     <Compile Include="Assets\Script\FloatFixed.cs" />
     <Compile Include="Assets\Script\ModeSwitch.cs" />
     <Compile Include="Assets\Script\PlacementBlockScript.cs" />
     <Compile Include="Assets\Script\PlatformScript.cs" />
     <Compile Include="Assets\Script\PlayerMovement.cs" />
+    <Compile Include="Assets\Script\PlayerReady.cs" />
     <Compile Include="Assets\Script\ProjectileScript.cs" />
     <Compile Include="Assets\Script\StickyWeightScript.cs" />
     <Compile Include="Assets\Script\SwitchMode.cs" />
     <Compile Include="Assets\Script\WhirlpoolCurrent.cs" />
     <Compile Include="Assets\Script\WhirlpoolOffest.cs" />
     <Compile Include="Assets\Script\managerscript.cs" />
+    <Compile Include="Assets\Script\startButton.cs" />
     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
   </ItemGroup>
   <ItemGroup>
