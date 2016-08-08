@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class DynamicPlayerCount : MonoBehaviour {
 
     public GameObject[] players = new GameObject[4];
@@ -13,8 +16,12 @@ public class DynamicPlayerCount : MonoBehaviour {
 
     int readyCount = 0;
 
+
+
     void Awake()
     {
+
+
         if (Original)
         {
             DestroyImmediate(gameObject);
@@ -45,7 +52,7 @@ public class DynamicPlayerCount : MonoBehaviour {
             }
 
             InstantiatePlayers(readyCount);
-            //readyCount = 0;
+            readyCount = 0;
         }
     }
 
@@ -87,21 +94,53 @@ public class DynamicPlayerCount : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        for (int i = 0; i < 4; i++)
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            if(readyImage[i] != null)
+            bool playersAlive = true;
+
+            for (int i = 0; i < ready.Length; i++)
             {
                 if (ready[i])
                 {
-                    readyImage[i].SetActive(true);
+                    if (players[i].GetComponent<PlayerMovement>().enabled)
+                    {
+                        playersAlive = playersAlive & players[i].GetComponent<PlayerMovement>().alive;
+                    }
+                    else
+                    {
+                        playersAlive = false;
+                    }
+                }
+            }
+            if (playersAlive)
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
+
+
+
+        readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
+
+        for (int i = 0; i < readyImage.Length; i++)
+        {
+            if (readyImage[i] != null)
+            {
+                if (ready[i])
+                {
+                    //readyImage[i].SetActive(true);
+                    readyImage[i].GetComponent<Text>().text = ("Player " + (i + 1) + " Ready");
                     //readyCount++;
                     //Instantiate(players[i]);
                 }
                 else
                 {
-                    readyImage[i].SetActive(false);
+                    readyImage[i].GetComponent<Text>().text = "";
+                    // readyImage[i].SetActive(false);
                 }
             }
         }
+        
     }
 }

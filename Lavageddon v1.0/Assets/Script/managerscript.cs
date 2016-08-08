@@ -64,7 +64,7 @@ public class managerscript : MonoBehaviour {
             blockdestroyed = false;
         }
 
-        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
+        if (Controller.prevState[player].Buttons.Guide == ButtonState.Released && Controller.state[player].Buttons.Guide == ButtonState.Pressed)
         {
             #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
