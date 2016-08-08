@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class DynamicPlayerCount : MonoBehaviour {
 
@@ -13,8 +14,12 @@ public class DynamicPlayerCount : MonoBehaviour {
 
     int readyCount = 0;
 
+
+
     void Awake()
     {
+
+
         if (Original)
         {
             DestroyImmediate(gameObject);
@@ -45,7 +50,7 @@ public class DynamicPlayerCount : MonoBehaviour {
             }
 
             InstantiatePlayers(readyCount);
-            //readyCount = 0;
+            readyCount = 0;
         }
     }
 
@@ -87,19 +92,23 @@ public class DynamicPlayerCount : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
+       
         for (int i = 0; i < 4; i++)
         {
-            if(readyImage[i] != null)
+            if (readyImage[i] != null)
             {
                 if (ready[i])
                 {
-                    readyImage[i].SetActive(true);
+                    //readyImage[i].SetActive(true);
+                    readyImage[i].GetComponent<Text>().text = ("Player " + (i + 1) + " Ready");
                     //readyCount++;
                     //Instantiate(players[i]);
                 }
                 else
                 {
-                    readyImage[i].SetActive(false);
+                    readyImage[i].GetComponent<Text>().text = "";
+                    // readyImage[i].SetActive(false);
                 }
             }
         }

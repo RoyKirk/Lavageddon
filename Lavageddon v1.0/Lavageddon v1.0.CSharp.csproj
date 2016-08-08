@@ -90,6 +90,7 @@
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSound.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSparks.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSpray.cs" />
+    <Compile Include="Assets\RestartMenu.cs" />
     <Compile Include="Assets\Script\BlockDamage.cs" />
     <Compile Include="Assets\Script\BuildingBlock.cs" />
     <Compile Include="Assets\Script\ButtonManager.cs" />

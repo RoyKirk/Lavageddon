@@ -18,7 +18,7 @@ public class startButton : MonoBehaviour {
     public void ClickStart()
     {
         SceneManager.LoadScene(1);
-    }
+     }
 
     //void OnGUI()
     //{

@@ -45,7 +45,7 @@ public class CameraMovement : MonoBehaviour {
 
 
 
-        if (Controller.prevState[player].Buttons.Start == ButtonState.Released && Controller.state[player].Buttons.Start == ButtonState.Pressed)
+        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
             GetComponent<PlayerMovement>().enabled = true;
             GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
