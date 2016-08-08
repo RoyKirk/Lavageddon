@@ -61,15 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Plugins\x86_64\XInputDotNetPure.dll</HintPath>
     </Reference>
@@ -96,6 +87,7 @@
     <Compile Include="Assets\Script\CameraMovement.cs" />
     <Compile Include="Assets\Script\Controller.cs" />
     <Compile Include="Assets\Script\DynamicPlayerCount.cs" />
+    <Compile Include="Assets\Script\DynamicVariables.cs" />
     <Compile Include="Assets\Script\ExplosionScript.cs" />
     <Compile Include="Assets\Script\FireStickyWeight.cs" />
     <Compile Include="Assets\Script\FiringScript.cs" />
@@ -106,6 +98,7 @@
     <Compile Include="Assets\Script\PlayerMovement.cs" />
     <Compile Include="Assets\Script\PlayerReady.cs" />
     <Compile Include="Assets\Script\ProjectileScript.cs" />
+    <Compile Include="Assets\Script\ReadWrite.cs" />
     <Compile Include="Assets\Script\StickyWeightScript.cs" />
     <Compile Include="Assets\Script\SwitchMode.cs" />
     <Compile Include="Assets\Script\WhirlpoolCurrent.cs" />
