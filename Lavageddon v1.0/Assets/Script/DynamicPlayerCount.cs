@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DynamicPlayerCount : MonoBehaviour {
@@ -92,9 +94,36 @@ public class DynamicPlayerCount : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            bool playersAlive = true;
+
+            for (int i = 0; i < ready.Length; i++)
+            {
+                if (ready[i])
+                {
+                    if (players[i].GetComponent<PlayerMovement>().enabled)
+                    {
+                        playersAlive = playersAlive & players[i].GetComponent<PlayerMovement>().alive;
+                    }
+                    else
+                    {
+                        playersAlive = false;
+                    }
+                }
+            }
+            if (playersAlive)
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
+
+
+
         readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
-       
-        for (int i = 0; i < 4; i++)
+
+        for (int i = 0; i < readyImage.Length; i++)
         {
             if (readyImage[i] != null)
             {
@@ -112,5 +141,6 @@ public class DynamicPlayerCount : MonoBehaviour {
                 }
             }
         }
+        
     }
 }
