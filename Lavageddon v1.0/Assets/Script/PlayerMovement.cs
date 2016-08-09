@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public float lavaHeight = 1.0f;
 
+    public GameObject character;
+
     //public float shootDistance = 1000.0f;
     void Update()
     {
