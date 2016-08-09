@@ -6,6 +6,9 @@ public class DynamicVariables : MonoBehaviour {
     Object[] duplicates = new Object[2];
     static DynamicVariables Original;
 
+    public int MAXRESOURCES = 100;
+
+    [System.Serializable]
     public struct BlockRelated
     {
         int MaxResources;
@@ -20,6 +23,7 @@ public class DynamicVariables : MonoBehaviour {
         float ArmourBlockMASS;
     }
 
+    [System.Serializable]
     public struct PlayerRelated
     {
         float JumpForce;
