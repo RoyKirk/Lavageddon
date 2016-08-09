@@ -21,6 +21,10 @@ public class BuildingBlock : MonoBehaviour {
             {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
+                temp.enableCollision = false;
+                temp.GetComponent<Collider>().enabled = false;
+                temp.breakForce = 1000.0f;
+                temp.breakTorque = 1000.0f;
             }
         }
 
@@ -32,6 +36,10 @@ public class BuildingBlock : MonoBehaviour {
             {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
+                temp.enableCollision = false;
+                temp.GetComponent<Collider>().enabled = false;
+                temp.breakForce = 1000.0f;
+                temp.breakTorque = 1000.0f;
             }
         }
 
@@ -43,6 +51,10 @@ public class BuildingBlock : MonoBehaviour {
             {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
+                temp.enableCollision = false;
+                temp.GetComponent<Collider>().enabled = false;
+                temp.breakForce = 1000.0f;
+                temp.breakTorque = 1000.0f;
             }
         }
 
@@ -54,6 +66,10 @@ public class BuildingBlock : MonoBehaviour {
             {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
+                temp.enableCollision = false;
+                temp.GetComponent<Collider>().enabled = false;
+                temp.breakForce = 1000.0f;
+                temp.breakTorque = 1000.0f;
             }
         }
 
@@ -65,6 +81,10 @@ public class BuildingBlock : MonoBehaviour {
             {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
+                temp.enableCollision = false;
+                temp.GetComponent<Collider>().enabled = false;
+                temp.breakForce = 1000.0f;
+                temp.breakTorque = 1000.0f;
             }
         }
 
@@ -76,6 +96,10 @@ public class BuildingBlock : MonoBehaviour {
             {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
+                temp.enableCollision = false;
+                temp.GetComponent<Collider>().enabled = false;
+                temp.breakForce = 1000.0f;
+                temp.breakTorque = 1000.0f;
             }
         }
 

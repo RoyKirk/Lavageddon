@@ -131,10 +131,21 @@ public class DynamicPlayerCount : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            if (readyCount - playersDead <= 0)
+            if (playersIn <= 1)
             {
-                playersDead = 0;
-                SceneManager.LoadScene(0);
+                if (playersIn - playersDead <= 0)
+                {
+                    playersDead = 0;
+                    SceneManager.LoadScene(0);
+                }
+            }
+            if (playersIn > 1)
+            {
+                if (playersIn - playersDead <= 1)
+                {
+                    playersDead = 0;
+                    SceneManager.LoadScene(0);
+                }
             }
         }
     }
