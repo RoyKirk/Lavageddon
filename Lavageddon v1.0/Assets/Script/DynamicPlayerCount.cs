@@ -15,7 +15,7 @@ public class DynamicPlayerCount : MonoBehaviour {
 
 
     int readyCount = 0;
-
+    int playersDead = 0;
 
 
     void Awake()
@@ -94,33 +94,6 @@ public class DynamicPlayerCount : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            bool playersAlive = true;
-
-            for (int i = 0; i < ready.Length; i++)
-            {
-                if (ready[i])
-                {
-                    if (players[i].GetComponent<PlayerMovement>().enabled)
-                    {
-                        playersAlive = playersAlive & players[i].GetComponent<PlayerMovement>().alive;
-                    }
-                    else
-                    {
-                        playersAlive = false;
-                    }
-                }
-            }
-            if (playersAlive)
-            {
-                SceneManager.LoadScene(0);
-            }
-        }
-
-
-
         readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
 
         for (int i = 0; i < readyImage.Length; i++)
@@ -143,4 +116,38 @@ public class DynamicPlayerCount : MonoBehaviour {
         }
         
     }
+
+    public void playerDeath()
+    {
+        playersDead++;
+        int playersIn = 0;
+        for(int i = 0; i<ready.Length;i++)
+        {
+            if(ready[i])
+            {
+                playersIn++;
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            if (playersIn <= 1)
+            {
+                if (playersIn - playersDead <= 0)
+                {
+                    playersDead = 0;
+                    SceneManager.LoadScene(0);
+                }
+            }
+            if (playersIn > 1)
+            {
+                if (playersIn - playersDead <= 1)
+                {
+                    playersDead = 0;
+                    SceneManager.LoadScene(0);
+                }
+            }
+        }
+    }
+
 }
