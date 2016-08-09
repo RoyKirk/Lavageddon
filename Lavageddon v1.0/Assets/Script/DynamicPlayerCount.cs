@@ -15,7 +15,7 @@ public class DynamicPlayerCount : MonoBehaviour {
 
 
     int readyCount = 0;
-
+    int playersDead = 0;
 
 
     void Awake()
@@ -117,44 +117,25 @@ public class DynamicPlayerCount : MonoBehaviour {
         
     }
 
-    void LateUpdate()
+    public void playerDeath()
     {
+        playersDead++;
+        int playersIn = 0;
+        for(int i = 0; i<ready.Length;i++)
+        {
+            if(ready[i])
+            {
+                playersIn++;
+            }
+        }
+
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-
-            for (int i = 0; i < ready.Length; i++)
+            if (readyCount - playersDead <= 0)
             {
-                     if (players[i].GetComponent<PlayerMovement>().enabled)
-                    {
-                        if (!players[i].GetComponent<PlayerMovement>().alive)
-                        {
-                            SceneManager.LoadScene(0);
-                        }
-                    }
+                playersDead = 0;
+                SceneManager.LoadScene(0);
             }
-
-
-
-
-
-
-            //int playersDead = 0;
-
-
-            //for (int i = 0; i < ready.Length; i++)
-            //{
-            //    if (ready[i])
-            //    {
-            //        if (players[i].GetComponent<PlayerMovement>().enabled)
-            //        {
-            //            playersDead++;
-            //        }
-            //    }
-            //}
-            //if (readyCount - playersDead <= 0)
-            //{
-            //    SceneManager.LoadScene(0);
-            //}
         }
     }
 

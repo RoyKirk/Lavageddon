@@ -211,6 +211,7 @@ public class PlayerMovement : MonoBehaviour {
             if (transform.position.y < lavaHeight)
             {
                 alive = false;
+                GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
             }
         }
 
