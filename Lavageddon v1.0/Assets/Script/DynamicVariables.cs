@@ -65,7 +65,7 @@ public class DynamicVariables : MonoBehaviour {
             }
             if(increase == 1 || increase == -1)
             {
-                delay = 0.3f;
+                delay = 0.2f;
             }
             
         }

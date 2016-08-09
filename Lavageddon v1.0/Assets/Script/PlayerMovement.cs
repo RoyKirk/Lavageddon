@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
         LASER,
         STICKY,
     };
+
     int numberOfWeapons = 3;
     public Weapon weapon = Weapon.BOMB;
     public int laserDamage = 1;
@@ -43,11 +44,11 @@ public class PlayerMovement : MonoBehaviour {
     public bool alive = true;
 
     public float lavaHeight = 1.0f;
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 
     public GameObject character;
->>>>>>> 70c6b6a3e5112736630fa961309e1e7cf5513042
+//>>>>>>> 70c6b6a3e5112736630fa961309e1e7cf5513042
 
     //public float shootDistance = 1000.0f;
     void Update()
