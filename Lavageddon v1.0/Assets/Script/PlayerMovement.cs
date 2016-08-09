@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool alive = true;
 
-    public float lavaHeight = 2.0f;
+    public float lavaHeight = 1.0f;
 
     //public float shootDistance = 1000.0f;
     void Update()
@@ -235,5 +235,6 @@ public class PlayerMovement : MonoBehaviour {
         lineRenderer.SetWidth(0.2F, 0.2F);
         lineRenderer.SetVertexCount(lengthOfLineRenderer);
         lineRenderer.enabled = false;
+        alive = true;
     }
 }
