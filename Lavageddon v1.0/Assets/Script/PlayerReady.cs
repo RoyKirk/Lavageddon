@@ -37,15 +37,41 @@ public class PlayerReady : MonoBehaviour {
                  pressed = true;
              }
 
-             //navigate button menu
-             if(Controller.state[player].DPad.Up == ButtonState.Pressed && Controller.prevState[player].DPad.Up == ButtonState.Released)
+
+            //navigating with thumbsticks
+            BM.Xinput = Controller.state[player].ThumbSticks.Left.X;
+            BM.Yinput = Controller.state[player].ThumbSticks.Left.Y;
+
+            //navigate with dpad
+            if(Controller.state[player].DPad.Up == ButtonState.Pressed && Controller.prevState[player].DPad.Up == ButtonState.Released)
             {
                 BM.selected--;
             }
-             else if (Controller.state[player].DPad.Down == ButtonState.Pressed && Controller.prevState[player].DPad.Down == ButtonState.Released)
+            else if (Controller.state[player].DPad.Down == ButtonState.Pressed && Controller.prevState[player].DPad.Down == ButtonState.Released)
             {
                 BM.selected++;
             }
+
+            //selects the current button
+            if (Controller.state[player].Buttons.A == ButtonState.Pressed && Controller.prevState[player].Buttons.A == ButtonState.Released)
+            {
+                BM.Apressed = true;
+            }
+            else
+            {
+                BM.Apressed = false;
+            }
+
+            if (Controller.state[player].Buttons.B == ButtonState.Pressed && Controller.prevState[player].Buttons.B == ButtonState.Released)
+            {
+                BM.Bpressed = true;
+            }
+            else
+            {
+                BM.Bpressed = false;
+            }
+
+
         }
         
     }

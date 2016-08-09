@@ -7,6 +7,7 @@ public class DynamicVariables : MonoBehaviour {
     static DynamicVariables Original;
 
     public int MAXRESOURCES = 100;
+    public int FLOATBLOCKHP = 3;
 
     [System.Serializable]
     public struct BlockRelated
@@ -47,9 +48,34 @@ public class DynamicVariables : MonoBehaviour {
         float StickyWeight;
     }
 
-    
+   
 
+    public void Increment(int area, float increase)
+    {
+        if(delay <= 0)
+        {
+            switch (area)
+            {
+                case 0:
+                    MAXRESOURCES += (int)increase;
+                    break;
+                case 1:
+                    FLOATBLOCKHP += (int)increase;
+                    break;
+            }
+            if(increase == 1 || increase == -1)
+            {
+                delay = 0.3f;
+            }
+            
+        }
+        if(delay > -.1f)
+        {
+            delay -= Time.deltaTime;
+        }
+    }
 
+    public float delay = 0f;
     void Awake()
     {
         if (Original)
