@@ -25,15 +25,29 @@ public class managerscript : MonoBehaviour {
     public BlockType blockType = BlockType.FLOAT;
     bool startConstruction = true;
     public float startDistance = 10;
-    public int maxNumberOfBlocks = 24;
+    int maxNumberOfBlocks = 24;
     public int numberOfBlocks = 0;
     public Text numberText;
     public int player = 0;
+
+    int FloatBlockCost;
+    int ArmourBlockCost;
+
+    //reference to option variables
+    GameObject playerManager;
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
     void Start ()
     {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+
+        //variables are set to options variables
+        maxNumberOfBlocks = (int)DV.BlockRelated[0];
+        FloatBlockCost = (int)DV.BlockRelated[2];
+        ArmourBlockCost = (int)DV.BlockRelated[6];
+
         if (blockType == BlockType.FLOAT)
         {
             GameObject temp = (GameObject)Instantiate(blockPrefabFloat, transform.position + transform.forward * startDistance, new Quaternion(0, 0, 0, 0));
@@ -83,12 +97,14 @@ public class managerscript : MonoBehaviour {
                 if (blockType == BlockType.FLOAT)
                 {
                     Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation);
+                    numberOfBlocks += FloatBlockCost;
                 }
                 if (blockType == BlockType.ARMOUR)
                 {
                     Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
+                    numberOfBlocks += ArmourBlockCost;
                 }
-                numberOfBlocks++;
+                //numberOfBlocks += FloatBlockCost;
             }
 
             if (Controller.prevState[player].Buttons.B == ButtonState.Released && Controller.state[player].Buttons.B == ButtonState.Pressed)
@@ -102,7 +118,8 @@ public class managerscript : MonoBehaviour {
                         if (!shot.collider.GetComponent<BlockDamage>().keystone)
                         {
                             shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
-                            numberOfBlocks--;
+
+                            numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost; 
                         }
                     }
                 }

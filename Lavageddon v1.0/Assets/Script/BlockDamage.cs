@@ -9,9 +9,27 @@ public class BlockDamage : MonoBehaviour {
     float hp;
     public bool keystone = false;
 
+    public int cost = 1;
 
-	// Use this for initialization
-	void Start () {
+    GameObject playerManager;
+
+    // Use this for initialization
+    void Start () {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+        //Rigidbody rb = GetComponent<Rigidbody>()
+
+        Debug.Log(gameObject.name);
+        if (gameObject.name == "BlockFloat(Clone)")
+        {
+            HitPoints = (int)DV.BlockRelated[1];
+            cost = (int)DV.BlockRelated[2];
+        }
+        if (gameObject.name == "BlockArmour(Clone)")
+        {
+            HitPoints = (int)DV.BlockRelated[5];
+            cost = (int)DV.BlockRelated[6];
+        }
         hp = HitPoints;
 	}
 	
