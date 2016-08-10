@@ -6,63 +6,61 @@ public class DynamicVariables : MonoBehaviour {
     Object[] duplicates = new Object[2];
     static DynamicVariables Original;
 
-    public int MAXRESOURCES = 100;
-    public int FLOATBLOCKHP = 3;
+    public float[] BlockRelated;
 
-    [System.Serializable]
-    public struct BlockRelated
+    // BLOCK RELATED
+    int MaxResources;
+
+    int FloatBlockHP;
+    int ArmourBlockHP;
+
+    float FloatBloatFLOATATION;
+    float ArmourBlockFLOATATION;
+
+    float FloatBlockMASS;
+    float ArmourBlockMASS;
+
+    //PLAYER RELATED
+    float JumpForce;
+    float Gravity;
+    float Sensitivity;
+    float DeathTimer;
+
+    // WEAPON RELATED
+    float CannonBulletSpeed;
+    float CannonDmg;
+    float CannonCD;
+
+    float BeamDmg;
+    float BeamCD;
+    float BeamForce;
+
+    float StickyBulletSpeed;
+    float StickyCD;
+    float StickyWeight;
+
+    void Update()
     {
-        int MaxResources;
-
-        int FloatBlockHP;
-        int ArmourBlockHP;
-
-        float FloatBloatFLOATATION;
-        float ArmourBlockFLOATATION;
-
-        float FloatBlockMASS;
-        float ArmourBlockMASS;
+        //for(int i = 0; i < 20; i++)
+        //{
+        //    ALLVALUES[i] = ;
+        //}
     }
-
-    [System.Serializable]
-    public struct PlayerRelated
-    {
-        float JumpForce;
-        float Gravity;
-        float Sensitivity;
-        float DeathTimer;
-    }
-
-    public struct WeaponRelated
-    {
-        float CannonBulletSpeed;
-        float CannonDmg;
-        float CannonCD;
-
-        float BeamDmg;
-        float BeamCD;
-        float BeamForce;
-
-        float StickyBulletSpeed;
-        float StickyCD;
-        float StickyWeight;
-    }
-
-   
 
     public void Increment(int area, float increase)
     {
         if(delay <= 0)
         {
-            switch (area)
-            {
-                case 0:
-                    MAXRESOURCES += (int)increase;
-                    break;
-                case 1:
-                    FLOATBLOCKHP += (int)increase;
-                    break;
-            }
+            //switch (area)
+            //{
+            //    case 0:
+            //        MaxResources += (int)increase;
+            //        break;
+            //    case 1:
+            //        FloatBlockHP += (int)increase;
+            //        break;
+            //}
+            BlockRelated[area] += increase;
             if(increase == 1 || increase == -1)
             {
                 delay = 0.2f;

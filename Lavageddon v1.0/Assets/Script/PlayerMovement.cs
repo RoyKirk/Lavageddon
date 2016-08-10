@@ -44,11 +44,8 @@ public class PlayerMovement : MonoBehaviour {
     public bool alive = true;
 
     public float lavaHeight = 1.0f;
-//<<<<<<< HEAD
-//=======
 
     public GameObject character;
-//>>>>>>> 70c6b6a3e5112736630fa961309e1e7cf5513042
 
     //public float shootDistance = 1000.0f;
     void Update()

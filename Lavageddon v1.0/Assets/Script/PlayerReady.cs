@@ -39,8 +39,7 @@ public class PlayerReady : MonoBehaviour {
 
 
             //navigating with thumbsticks
-            BM.Xinput = Controller.state[player].ThumbSticks.Left.X;
-            BM.Yinput = Controller.state[player].ThumbSticks.Left.Y;
+           
 
             //navigate with dpad
             if(Controller.state[player].DPad.Up == ButtonState.Pressed && Controller.prevState[player].DPad.Up == ButtonState.Released)
@@ -51,6 +50,41 @@ public class PlayerReady : MonoBehaviour {
             {
                 BM.selected++;
             }
+
+            if (Controller.state[player].DPad.Right == ButtonState.Pressed)
+            {
+                BM.DpadR = 1;
+            }
+            else if (Controller.state[player].DPad.Right == ButtonState.Released)
+            {
+                BM.DpadR = 0;
+            }
+
+            if (Controller.state[player].DPad.Left == ButtonState.Pressed && Controller.prevState[player].DPad.Left == ButtonState.Released)
+            {
+                BM.DpadL = -1;
+            }
+            else if(Controller.state[player].DPad.Left == ButtonState.Released)
+            {
+                BM.DpadL = 0;
+            }
+            
+            if(Controller.state[player].ThumbSticks.Left.X != 0 || Controller.state[player].ThumbSticks.Left.Y != 0)
+            {
+                BM.Xinput = Controller.state[player].ThumbSticks.Left.X;
+                BM.Yinput = Controller.state[player].ThumbSticks.Left.Y;
+            }
+            else if(Controller.state[player].ThumbSticks.Right.X != 0 || Controller.state[player].ThumbSticks.Right.Y != 0)
+            {
+                BM.Xinput = Controller.state[player].ThumbSticks.Right.X;
+                BM.Yinput = Controller.state[player].ThumbSticks.Right.Y;
+            }
+            else
+            {
+                BM.Xinput = 0;
+                BM.Yinput = 0;
+            }
+            
 
             //selects the current button
             if (Controller.state[player].Buttons.A == ButtonState.Pressed && Controller.prevState[player].Buttons.A == ButtonState.Released)

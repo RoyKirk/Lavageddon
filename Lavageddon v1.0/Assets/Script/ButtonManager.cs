@@ -7,8 +7,9 @@ public class ButtonManager : MonoBehaviour {
     public DynamicVariables values;
 
     public Button[] MainBtns;
-    public Button[] OptionBtns;
+    public Button[] VariableBtns;
     public Text[] text;
+    public Image[] variablesBackground;
 
     public int selected = 0;
     public bool Apressed = false;
@@ -18,6 +19,8 @@ public class ButtonManager : MonoBehaviour {
 
     public float Xinput;
     public float Yinput;
+    public float DpadR;
+    public float DpadL;
 
     // Use this for initialization
     void Start ()
@@ -36,10 +39,11 @@ public class ButtonManager : MonoBehaviour {
         //they have selected the options menu
         if(options == true)
         {
-            
-            for(int i = 0; i < OptionBtns.Length; i++)
+
+            variablesBackground[0].gameObject.SetActive(true);
+            for(int i = 0; i < VariableBtns.Length; i++)
             {
-                OptionBtns[i].gameObject.SetActive(true);
+                VariableBtns[i].gameObject.SetActive(true);
             }
             for (int i = 0; i < text.Length; i++)
             {
@@ -48,30 +52,59 @@ public class ButtonManager : MonoBehaviour {
 
             if (selected < 0)
             {
-                selected = OptionBtns.Length - 1;
+                selected = VariableBtns.Length - 1;
             }
-            else if (selected > OptionBtns.Length - 1)
+            else if (selected > VariableBtns.Length - 1)
             {
                 selected = 0;
             }
-            OptionBtns[selected].Select();
+            VariableBtns[selected].Select();
 
-            values.Increment(selected, Xinput);
-            text[0].text = values.MAXRESOURCES.ToString();
-            text[1].text = values.FLOATBLOCKHP.ToString();
+            if(Xinput > 0.3)
+            {
+                values.Increment(selected, 1);
+            }
+            else if(Xinput < -0.3)
+            {
+                values.Increment(selected, -1);
+            }
+            if (Xinput > 0.8)
+            {
+                values.Increment(selected, 1);
+            }
+            else if (Xinput < -0.8)
+            {
+                values.Increment(selected, -1);
+            }
+
+            if (DpadR > 0)
+            {
+                values.Increment(selected, 1);
+            }
+            else if(DpadL < 0)
+            {
+                values.Increment(selected, -1);
+            }
+            for (int i  = 0; i < text.Length; i++)
+            {
+                text[i].text = values.BlockRelated[i].ToString();
+            }
+            
             if (Bpressed == true)
             {
                 options = false;
                 Bpressed = false;
+                selected = 2;
             }
             //use this when you want to call an onClick function
             //OptionBtns[selected].onClick.AddListener(delegate () { PressedButton(selected); });
         }
         else
         {
-            for (int i = 0; i < OptionBtns.Length; i++)
+            variablesBackground[0].gameObject.SetActive(false);
+            for (int i = 0; i < VariableBtns.Length; i++)
             {
-                OptionBtns[i].gameObject.SetActive(false);
+                VariableBtns[i].gameObject.SetActive(false);
             }
             for (int i = 0; i < text.Length; i++)
             {
@@ -89,9 +122,10 @@ public class ButtonManager : MonoBehaviour {
             }
             MainBtns[selected].Select();
 
-            if (Apressed == true && selected == 1)
+            if (Apressed == true && selected == 2)
             {
                 options = !options;
+                selected = 0;
             }
         }
         
@@ -117,7 +151,7 @@ public class ButtonManager : MonoBehaviour {
 
     public void PressedButton(int selectedbtn)
     {
-        values.Increment(0, 0);
+        values.Increment(0, 1);
         
     }
 }
