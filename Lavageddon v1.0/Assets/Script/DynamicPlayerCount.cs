@@ -13,11 +13,13 @@ public class DynamicPlayerCount : MonoBehaviour {
     Object[] duplicates = new Object[2];
     static DynamicPlayerCount Original;
 
+    Canvas gameOver;
+
+    bool allDead = false;
 
     int readyCount = 0;
     int playersDead = 0;
-
-
+    
     void Awake()
     {
 
@@ -90,31 +92,49 @@ public class DynamicPlayerCount : MonoBehaviour {
         }
         
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
 
-        for (int i = 0; i < readyImage.Length; i++)
+    // Update is called once per frame
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            if (readyImage[i] != null)
+            readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
+
+            for (int i = 0; i < readyImage.Length; i++)
             {
-                if (ready[i])
+                if (readyImage[i] != null)
                 {
-                    //readyImage[i].SetActive(true);
-                    readyImage[i].GetComponent<Text>().text = ("Player " + (i + 1) + " Ready");
-                    //readyCount++;
-                    //Instantiate(players[i]);
-                }
-                else
-                {
-                    readyImage[i].GetComponent<Text>().text = "";
-                    // readyImage[i].SetActive(false);
+                    if (ready[i])
+                    {
+                        //readyImage[i].SetActive(true);
+                        readyImage[i].GetComponent<Text>().text = ("Player " + (i + 1) + " Ready");
+                        //readyCount++;
+                        //Instantiate(players[i]);
+                    }
+                    else
+                    {
+                        readyImage[i].GetComponent<Text>().text = "";
+                        // readyImage[i].SetActive(false);
+                    }
                 }
             }
         }
-        
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            gameOver = GameObject.Find("GameOver").GetComponent<Canvas>();
+            gameOver.enabled = false;
+        }
+
+        if(allDead)
+        {
+
+            System.Threading.Thread.Sleep(2000);
+            SceneManager.LoadScene(0);
+            allDead = false;
+        }
+
+
     }
 
     public void playerDeath()
@@ -136,7 +156,8 @@ public class DynamicPlayerCount : MonoBehaviour {
                 if (playersIn - playersDead <= 0)
                 {
                     playersDead = 0;
-                    SceneManager.LoadScene(0);
+                    gameOver.enabled = true;
+                    allDead = true;
                 }
             }
             if (playersIn > 1)
@@ -144,7 +165,8 @@ public class DynamicPlayerCount : MonoBehaviour {
                 if (playersIn - playersDead <= 1)
                 {
                     playersDead = 0;
-                    SceneManager.LoadScene(0);
+                    gameOver.enabled = true;
+                    allDead = true;
                 }
             }
         }
