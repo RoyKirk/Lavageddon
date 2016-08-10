@@ -37,9 +37,9 @@ public class BlockDamage : MonoBehaviour {
     void OnDestroy()
     {
         //destruction
-        if (GameObject.Find("Main Camera"))
+        if (GameObject.Find("Player"))
         {
-            GameObject.Find("Main Camera").GetComponent<managerscript>().blockdestroyed = true;
+            GameObject.Find("Player").GetComponent<managerscript>().blockdestroyed = true;
         }
     }
 }
