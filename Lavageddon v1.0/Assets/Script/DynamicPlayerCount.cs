@@ -126,13 +126,13 @@ public class DynamicPlayerCount : MonoBehaviour {
             gameOver.enabled = false;
         }
 
-        if(allDead)
-        {
+        //if(allDead)
+        //{
 
-            System.Threading.Thread.Sleep(2000);
-            SceneManager.LoadScene(0);
-            allDead = false;
-        }
+            //System.Threading.Thread.Sleep(2000);
+            //SceneManager.LoadScene(0);
+            //allDead = false;
+        //}
 
 
     }
@@ -151,6 +151,7 @@ public class DynamicPlayerCount : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
+
             if (playersIn <= 1)
             {
                 if (playersIn - playersDead <= 0)
@@ -158,6 +159,8 @@ public class DynamicPlayerCount : MonoBehaviour {
                     playersDead = 0;
                     gameOver.enabled = true;
                     allDead = true;
+                    Canvas restart = GameObject.Find("Restart").GetComponent<Canvas>();
+                    restart.enabled = true;
                 }
             }
             if (playersIn > 1)
@@ -167,6 +170,8 @@ public class DynamicPlayerCount : MonoBehaviour {
                     playersDead = 0;
                     gameOver.enabled = true;
                     allDead = true;
+                    Canvas restart = GameObject.Find("Restart").GetComponent<Canvas>();
+                    restart.enabled = true;
                 }
             }
         }
