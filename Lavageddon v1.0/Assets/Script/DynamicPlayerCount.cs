@@ -14,6 +14,9 @@ public class DynamicPlayerCount : MonoBehaviour {
     static DynamicPlayerCount Original;
 
     Canvas gameOver;
+    GameObject restart;
+
+    bool newScene = true;
 
     bool allDead = false;
 
@@ -120,22 +123,30 @@ public class DynamicPlayerCount : MonoBehaviour {
             }
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 1 && newScene)
         {
             gameOver = GameObject.Find("GameOver").GetComponent<Canvas>();
             gameOver.enabled = false;
+            restart = GameObject.Find("Restart");
+            restart.SetActive(false);
+            newScene = false;
         }
 
-        //if(allDead)
-        //{
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            newScene = true;
+        }
+
+            //if(allDead)
+            //{
 
             //System.Threading.Thread.Sleep(2000);
             //SceneManager.LoadScene(0);
             //allDead = false;
-        //}
+            //}
 
 
-    }
+        }
 
     public void playerDeath()
     {
@@ -158,9 +169,10 @@ public class DynamicPlayerCount : MonoBehaviour {
                 {
                     playersDead = 0;
                     gameOver.enabled = true;
+                    restart.SetActive(true);
                     allDead = true;
-                    Canvas restart = GameObject.Find("Restart").GetComponent<Canvas>();
-                    restart.enabled = true;
+                    //GameObject restart = GameObject.Find("Restart").transform.parent.GetComponent<GameObject>();
+                    //restart.SetActive(true);
                 }
             }
             if (playersIn > 1)
@@ -169,9 +181,10 @@ public class DynamicPlayerCount : MonoBehaviour {
                 {
                     playersDead = 0;
                     gameOver.enabled = true;
+                    restart.SetActive(true);
                     allDead = true;
-                    Canvas restart = GameObject.Find("Restart").GetComponent<Canvas>();
-                    restart.enabled = true;
+                    //GameObject restart = GameObject.Find("Restart").transform.parent.GetComponent<GameObject>();
+                    //restart.SetActive(true);
                 }
             }
         }
