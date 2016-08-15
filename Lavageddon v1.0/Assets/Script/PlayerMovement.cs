@@ -215,7 +215,16 @@ public class PlayerMovement : MonoBehaviour {
             {
                 alive = false;
                 GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
+                transform.position = new Vector3(5, 50, -65);
+                transform.eulerAngles = new Vector3(45, 0, 0);
+                GetComponent<Rigidbody>().useGravity = false;
             }
+        }
+        else
+        {
+            transform.position = new Vector3(5, 50, -65);
+            transform.eulerAngles = new Vector3(45, 0, 0);
+            GetComponent<Rigidbody>().useGravity = false;
         }
 
     }
