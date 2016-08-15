@@ -11,26 +11,26 @@ public class ReadWrite : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\FeedBack (" + monthVar + ").txt";
+        //path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\FeedBack (" + monthVar + ").txt";
 
 
         if (!File.Exists(path))//this will only happen if document doesnt exist. we need to make sure the path gets changed each time they submit a comment
         {
             //create a file to write to, this will need to happen every time they want to leave a comment
-            string createText = "Hello and Welcome " + Environment.NewLine;
-            File.WriteAllText(path, createText);
+            //string createText = "Hello and Welcome " + Environment.NewLine;
+            //File.WriteAllText(path, createText);
         }
         else
         {
             //to append things after the file is created, use the following
-            string appendText = "This is extra text" + Environment.NewLine;
-            File.AppendAllText(path, appendText);
+            //string appendText = "This is extra text" + Environment.NewLine;
+            //File.AppendAllText(path, appendText);
         }
         
 
         //open a file to read from
-        string readText = File.ReadAllText(path);
-        Console.WriteLine(readText);
+        //string readText = File.ReadAllText(path);
+        //Console.WriteLine(readText);
 	}
 	    
 	// Update is called once per frame

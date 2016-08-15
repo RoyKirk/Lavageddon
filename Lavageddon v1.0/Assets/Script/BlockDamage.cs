@@ -17,18 +17,24 @@ public class BlockDamage : MonoBehaviour {
     void Start () {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-        //Rigidbody rb = GetComponent<Rigidbody>()
+        Rigidbody rb = GetComponent<Rigidbody>();
+        FloatFixed ff = GetComponent<FloatFixed>();
 
-        Debug.Log(gameObject.name);
+        //Debug.Log(gameObject.name);
         if (gameObject.name == "BlockFloat(Clone)")
         {
+            Debug.Log("float block var set");
             HitPoints = (int)DV.BlockRelated[1];
             cost = (int)DV.BlockRelated[2];
+            ff.FloatScale = (DV.BlockRelated[3] / 200);
+            rb.mass = (DV.BlockRelated[4] / 100);
         }
         if (gameObject.name == "BlockArmour(Clone)")
         {
             HitPoints = (int)DV.BlockRelated[5];
             cost = (int)DV.BlockRelated[6];
+            ff.FloatScale = (DV.BlockRelated[7] / 200);
+            rb.mass = (DV.BlockRelated[8] / 100);
         }
         hp = HitPoints;
 	}

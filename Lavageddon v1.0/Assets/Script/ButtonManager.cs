@@ -8,8 +8,11 @@ public class ButtonManager : MonoBehaviour {
 
     public Button[] MainBtns;
     public Button[] VariableBtns;
+    public Button[] PlayerRelatedBtns;
     public Text[] text;
     public Image[] variablesBackground;
+
+    public Dropdown dropDown;
 
     public int selected = 0;
     public bool Apressed = false;
@@ -22,73 +25,192 @@ public class ButtonManager : MonoBehaviour {
     public float DpadR;
     public float DpadL;
 
+
+    /*NOTES!!!!!!!
+     * create a reset buttons funtions to clean up code
+     * make sure you iterate over different sets of buttons appropriately
+     * */
+
+
     // Use this for initialization
     void Start ()
     {
-	
-	}
+        //dropDown.OnSubmit()
+    }
+
+    void HideButtons(int show)
+    {
+        switch (show)
+        {
+            case 0:
+                for (int i = 0; i < PlayerRelatedBtns.Length; i++)//reset buttons
+                {
+                    PlayerRelatedBtns[i].gameObject.SetActive(false);
+                }
+                for (int i = 0; i < VariableBtns.Length; i++)
+                {
+                    VariableBtns[i].gameObject.SetActive(true);
+                }
+                for (int i = 0; i < text.Length; i++)
+                {
+                    text[i].gameObject.SetActive(true);
+                }
+                break;
+            case 1:
+                for (int i = 0; i < PlayerRelatedBtns.Length; i++)//reset buttons
+                {
+                    PlayerRelatedBtns[i].gameObject.SetActive(true);
+                }
+                for (int i = 0; i < VariableBtns.Length; i++)
+                {
+                    VariableBtns[i].gameObject.SetActive(false);
+                }
+                for (int i = 0; i < text.Length; i++)
+                {
+                    text[i].gameObject.SetActive(false);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < PlayerRelatedBtns.Length; i++)//reset buttons
+                {
+                    PlayerRelatedBtns[i].gameObject.SetActive(false);
+                }
+                for (int i = 0; i < VariableBtns.Length; i++)
+                {
+                    VariableBtns[i].gameObject.SetActive(false);
+                }
+                break;
+        }
+        //for (int i = 0; i < text.Length; i++)
+        //{
+        //    text[i].gameObject.SetActive(true);
+        //}
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        
+        dropDown.Hide();
+        HideButtons(2);
 
+        //highlight 6ABAEAFF
+        //normal 1D678CFF
+        //text 
 
-        
 
         //they have selected the options menu
-        if(options == true)
+        if (options == true)
         {
-
+            dropDown.gameObject.SetActive(true);
             variablesBackground[0].gameObject.SetActive(true);
-            for(int i = 0; i < VariableBtns.Length; i++)
+            //if(dropDown.OnSelect)
+            if (dropDown.value == 0)//BLOCK RELATED VARIABLES
             {
-                VariableBtns[i].gameObject.SetActive(true);
+                HideButtons(0);
+
+                
+                if(selected == 0)
+                {
+                    dropDown.Select();
+                    if(Apressed == true)
+                    {
+                        dropDown.value++;
+                        dropDown.Hide();
+                    }
+                }
+                else
+                {
+                    if (selected < 1)
+                    {
+                        selected = VariableBtns.Length;
+                    }
+                    else if (selected > VariableBtns.Length)
+                    {
+                        selected = 0;
+                    }
+                    if(selected != 0)
+                    {
+                        VariableBtns[selected - 1].Select();
+                    }
+                }
+                
             }
-            for (int i = 0; i < text.Length; i++)
+            else if(dropDown.value == 1)//PLAYER RELATED
             {
-                text[i].gameObject.SetActive(true);
+                HideButtons(1);
+
+
+                if (selected == 0)
+                {
+                    dropDown.Select();
+                    if (Apressed == true)
+                    {
+                        dropDown.value++;
+                    }
+                }
+                else
+                {
+                    if (selected < 1)
+                    {
+                        selected = PlayerRelatedBtns.Length;
+                    }
+                    else if (selected > PlayerRelatedBtns.Length)
+                    {
+                        selected = 0;
+                    }
+                    if (selected != 0)
+                    {
+                        PlayerRelatedBtns[selected - 1].Select();
+                    }
+                }
+            }
+            else if(dropDown.value == 2)
+            {
+                HideButtons(2);
+                if (selected == 0)
+                {
+                    dropDown.Select();
+                    if (Apressed == true)
+                    {
+                        dropDown.value = 0;
+                        
+                    }
+                }
             }
 
-            if (selected < 0)
+            if(selected != 0)
             {
-                selected = VariableBtns.Length - 1;
-            }
-            else if (selected > VariableBtns.Length - 1)
-            {
-                selected = 0;
-            }
-            VariableBtns[selected].Select();
+                if (Xinput > 0.3)
+                {
+                    values.Increment(selected - 1, 1);
+                }
+                else if (Xinput < -0.3)
+                {
+                    values.Increment(selected - 1, -1);
+                }
+                if (Xinput > 0.8)
+                {
+                    values.Increment(selected - 1, 1);
+                }
+                else if (Xinput < -0.8)
+                {
+                    values.Increment(selected - 1, -1);
+                }
 
-            if(Xinput > 0.3)
-            {
-                values.Increment(selected, 1);
+                if (DpadR > 0)
+                {
+                    values.Increment(selected - 1, 1);
+                }
+                else if (DpadL < 0)
+                {
+                    values.Increment(selected - 1, -1);
+                }
+                for (int i = 0; i < text.Length; i++)
+                {
+                    text[i].text = values.BlockRelated[i].ToString();
+                }
             }
-            else if(Xinput < -0.3)
-            {
-                values.Increment(selected, -1);
-            }
-            if (Xinput > 0.8)
-            {
-                values.Increment(selected, 1);
-            }
-            else if (Xinput < -0.8)
-            {
-                values.Increment(selected, -1);
-            }
-
-            if (DpadR > 0)
-            {
-                values.Increment(selected, 1);
-            }
-            else if(DpadL < 0)
-            {
-                values.Increment(selected, -1);
-            }
-            for (int i  = 0; i < text.Length; i++)
-            {
-                text[i].text = values.BlockRelated[i].ToString();
-            }
+            
             
             if (Bpressed == true)
             {
@@ -101,6 +223,7 @@ public class ButtonManager : MonoBehaviour {
         }
         else
         {
+            dropDown.gameObject.SetActive(false);
             variablesBackground[0].gameObject.SetActive(false);
             for (int i = 0; i < VariableBtns.Length; i++)
             {

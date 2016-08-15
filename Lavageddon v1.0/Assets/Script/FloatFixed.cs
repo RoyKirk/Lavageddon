@@ -8,6 +8,7 @@ public class FloatFixed : MonoBehaviour
     public float waterLevel = 4;
     public float floatHeight = 2;
     public float bounceDamp = .05f;
+    public float FloatScale = 1;
 
     Vector3 localScale;
 
@@ -61,11 +62,11 @@ public class FloatFixed : MonoBehaviour
 
             if(forceFactor[i] > 0f)
             {
-                if(FLOAT)
-                {
-                    upLift[i] = -Physics.gravity * (forceFactor[i] - rb.velocity.y * bounceDamp);
-                    rb.AddForceAtPosition(upLift[i], actionPoint[i]);
-                }
+                
+                
+                   upLift[i] = -Physics.gravity * (forceFactor[i] - rb.velocity.y * bounceDamp);
+                   rb.AddForceAtPosition(upLift[i] * FloatScale, actionPoint[i]);
+                
             }
         }
     }
