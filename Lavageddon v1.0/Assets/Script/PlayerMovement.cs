@@ -69,9 +69,9 @@ public class PlayerMovement : MonoBehaviour {
             }
 
             //controller look
-            float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X;
+            float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X*(sensitivityX/10);
 
-            rotationY += Controller.state[player].ThumbSticks.Right.Y;
+            rotationY += Controller.state[player].ThumbSticks.Right.Y * (sensitivityY/10);
             rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
