@@ -277,8 +277,19 @@ public class PlayerMovement : MonoBehaviour {
         jumpForce = (DV.PlayerRelated[0] * 10);
         sensitivityX = DV.PlayerRelated[1];
         sensitivityY = DV.PlayerRelated[2];
+        rb.mass = DV.PlayerRelated[3];
         //DeathTimer = DV.PlayerRelated[3];
-        rb.mass = DV.PlayerRelated[4];
+        //submerged min time & submerged accumilate
+        submergedMinTime = DV.PlayerRelated[4];
+        if(DV.PlayerRelated[5] == 1)
+        {
+            submergeAccumulate = true;
+        }
+        else
+        {
+            submergeAccumulate = false;
+        }
+
         //rb.
     }
 

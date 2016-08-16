@@ -122,7 +122,7 @@ public class ButtonManager : MonoBehaviour {
             {
                 BlockRelatedtext[i].text = values.BlockRelated[i].ToString();
             }
-            for (int i = 0; i < PlayerRelatedtext.Length; i++)
+            for (int i = 0; i < PlayerRelatedtext.Length - 1; i++)
             {
                 PlayerRelatedtext[i].text = values.PlayerRelated[i].ToString();
             }

@@ -59,6 +59,17 @@ public class DynamicVariables : MonoBehaviour {
                     break;
                 case 1:
                     PlayerRelated[variable] += increase;
+                    if (variable == 5)
+                    {
+                        if(PlayerRelated[variable] > 1)
+                        {
+                            PlayerRelated[variable] = 0;
+                        }
+                        else if(PlayerRelated[variable] < 0)
+                        {
+                            PlayerRelated[variable] = 1;
+                        }
+                    }
                     break;
             }
             //BlockRelated[variable] += increase;
