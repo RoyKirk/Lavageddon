@@ -218,13 +218,22 @@ public class PlayerMovement : MonoBehaviour {
                 transform.position = new Vector3(5, 50, -65);
                 transform.eulerAngles = new Vector3(45, 0, 0);
                 GetComponent<Rigidbody>().useGravity = false;
+                GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             }
         }
         else
         {
-            transform.position = new Vector3(5, 50, -65);
-            transform.eulerAngles = new Vector3(45, 0, 0);
-            GetComponent<Rigidbody>().useGravity = false;
+            //controller look
+            float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X;
+
+            rotationY += Controller.state[player].ThumbSticks.Right.Y;
+            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
+
+            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+
+            transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
+
+            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
         }
 
     }
