@@ -58,6 +58,8 @@ public class CameraMovement : MonoBehaviour {
         }
     }
 
+    GameObject playerManager;
+
     void Start()
     {
         Cursor.visible = false;
@@ -67,6 +69,13 @@ public class CameraMovement : MonoBehaviour {
             GetComponent<Rigidbody>().freezeRotation = true;
             GetComponent<Rigidbody>().isKinematic = true;
         }
+
+
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+
+        sensitivityX = DV.PlayerRelated[1];
+        sensitivityY = DV.PlayerRelated[2];
 
     }
 
