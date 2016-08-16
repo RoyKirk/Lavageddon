@@ -51,6 +51,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public GameObject character;
 
+    public GameObject redScreen;
+
     //public float shootDistance = 1000.0f;
     void Update()
     {
@@ -227,7 +229,12 @@ public class PlayerMovement : MonoBehaviour {
 
             if (transform.position.y < lavaHeight)
             {
+                redScreen.SetActive(true);
                 PlayerDead();
+            }
+            if (transform.position.y > lavaHeight)
+            {
+                redScreen.SetActive(false);
             }
             if (transform.position.y > lavaHeight && !submergeAccumulate)
             {
@@ -251,6 +258,7 @@ public class PlayerMovement : MonoBehaviour {
             transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
             transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+
         }
 
     }
@@ -305,6 +313,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void PlayerDead()
     {
+
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
@@ -315,6 +324,8 @@ public class PlayerMovement : MonoBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             submergedTimer = 0;
+
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 }

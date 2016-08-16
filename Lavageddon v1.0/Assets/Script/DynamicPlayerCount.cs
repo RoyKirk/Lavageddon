@@ -146,6 +146,7 @@ public class DynamicPlayerCount : MonoBehaviour {
             restart = GameObject.Find("Restart");
             restart.SetActive(false);
             newScene = false;
+            allDead = false;
         }
 
         if (SceneManager.GetActiveScene().buildIndex == 0)
