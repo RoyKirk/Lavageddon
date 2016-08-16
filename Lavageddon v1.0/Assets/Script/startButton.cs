@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class startButton : MonoBehaviour {
 
+    public bool ready = false;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -17,7 +19,10 @@ public class startButton : MonoBehaviour {
 
     public void ClickStart()
     {
-        SceneManager.LoadScene(1);
+        if(ready)
+        {
+            SceneManager.LoadScene(1);
+        }
      }
 
     //void OnGUI()

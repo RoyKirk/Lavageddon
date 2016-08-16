@@ -229,6 +229,9 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    //used for setting variables set in menu
+    GameObject playerManager;
+
     void Start()
     {
         //Cursor.visible = false;
@@ -249,5 +252,13 @@ public class PlayerMovement : MonoBehaviour {
         lineRenderer.SetVertexCount(lengthOfLineRenderer);
         lineRenderer.enabled = false;
         alive = true;
+
+        //setting the menu variables to the player variables
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        jumpForce = DV.PlayerRelated[0];
+        //rb.
     }
 }

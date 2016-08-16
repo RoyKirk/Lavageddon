@@ -9,7 +9,8 @@ public class ButtonManager : MonoBehaviour {
     public Button[] MainBtns;
     public Button[] VariableBtns;
     public Button[] PlayerRelatedBtns;
-    public Text[] text;
+    public Text[] BlockRelatedtext;
+    public Text[] PlayerRelatedtext;
     public Image[] variablesBackground;
 
     public Dropdown dropDown;
@@ -51,9 +52,13 @@ public class ButtonManager : MonoBehaviour {
                 {
                     VariableBtns[i].gameObject.SetActive(true);
                 }
-                for (int i = 0; i < text.Length; i++)
+                for (int i = 0; i < BlockRelatedtext.Length; i++)
                 {
-                    text[i].gameObject.SetActive(true);
+                    BlockRelatedtext[i].gameObject.SetActive(true);
+                }
+                for (int i = 0; i < PlayerRelatedtext.Length; i++)
+                {
+                    PlayerRelatedtext[i].gameObject.SetActive(false);
                 }
                 break;
             case 1:
@@ -65,9 +70,13 @@ public class ButtonManager : MonoBehaviour {
                 {
                     VariableBtns[i].gameObject.SetActive(false);
                 }
-                for (int i = 0; i < text.Length; i++)
+                for (int i = 0; i < BlockRelatedtext.Length; i++)
                 {
-                    text[i].gameObject.SetActive(false);
+                    BlockRelatedtext[i].gameObject.SetActive(false);
+                }
+                for (int i = 0; i < PlayerRelatedtext.Length; i++)
+                {
+                    PlayerRelatedtext[i].gameObject.SetActive(true);
                 }
                 break;
             case 2:
@@ -78,6 +87,10 @@ public class ButtonManager : MonoBehaviour {
                 for (int i = 0; i < VariableBtns.Length; i++)
                 {
                     VariableBtns[i].gameObject.SetActive(false);
+                }
+                for (int i = 0; i < PlayerRelatedtext.Length; i++)
+                {
+                    PlayerRelatedtext[i].gameObject.SetActive(false);
                 }
                 break;
         }
@@ -103,6 +116,16 @@ public class ButtonManager : MonoBehaviour {
         {
             dropDown.gameObject.SetActive(true);
             variablesBackground[0].gameObject.SetActive(true);
+
+            //set the text to their numbers so they are updating const.
+            for (int i = 0; i < BlockRelatedtext.Length; i++)
+            {
+                BlockRelatedtext[i].text = values.BlockRelated[i].ToString();
+            }
+            for (int i = 0; i < PlayerRelatedtext.Length; i++)
+            {
+                PlayerRelatedtext[i].text = values.PlayerRelated[i].ToString();
+            }
             //if(dropDown.OnSelect)
             if (dropDown.value == 0)//BLOCK RELATED VARIABLES
             {
@@ -182,33 +205,30 @@ public class ButtonManager : MonoBehaviour {
             {
                 if (Xinput > 0.3)
                 {
-                    values.Increment(selected - 1, 1);
+                    values.Increment(dropDown.value, selected - 1, 1);
                 }
                 else if (Xinput < -0.3)
                 {
-                    values.Increment(selected - 1, -1);
+                    values.Increment(dropDown.value, selected - 1, -1);
                 }
                 if (Xinput > 0.8)
                 {
-                    values.Increment(selected - 1, 1);
+                    values.Increment(dropDown.value, selected - 1, 1);
                 }
                 else if (Xinput < -0.8)
                 {
-                    values.Increment(selected - 1, -1);
+                    values.Increment(dropDown.value, selected - 1, -1);
                 }
 
                 if (DpadR > 0)
                 {
-                    values.Increment(selected - 1, 1);
+                    values.Increment(dropDown.value, selected - 1, 1);
                 }
                 else if (DpadL < 0)
                 {
-                    values.Increment(selected - 1, -1);
+                    values.Increment(dropDown.value, selected - 1, -1);
                 }
-                for (int i = 0; i < text.Length; i++)
-                {
-                    text[i].text = values.BlockRelated[i].ToString();
-                }
+                
             }
             
             
@@ -229,9 +249,9 @@ public class ButtonManager : MonoBehaviour {
             {
                 VariableBtns[i].gameObject.SetActive(false);
             }
-            for (int i = 0; i < text.Length; i++)
+            for (int i = 0; i < BlockRelatedtext.Length; i++)
             {
-                text[i].gameObject.SetActive(false);
+                BlockRelatedtext[i].gameObject.SetActive(false);
             }
 
 
@@ -274,7 +294,6 @@ public class ButtonManager : MonoBehaviour {
 
     public void PressedButton(int selectedbtn)
     {
-        values.Increment(0, 1);
-        
+        values.Increment(dropDown.value, 0, 1);
     }
 }

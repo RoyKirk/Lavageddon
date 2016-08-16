@@ -7,6 +7,7 @@ public class DynamicVariables : MonoBehaviour {
     static DynamicVariables Original;
 
     public float[] BlockRelated;
+    public float[] PlayerRelated;
 
     // BLOCK RELATED
     int MaxResources;
@@ -47,20 +48,20 @@ public class DynamicVariables : MonoBehaviour {
         //}
     }
 
-    public void Increment(int area, float increase)
+    public void Increment(int relation, int variable, float increase)
     {
         if(delay <= 0)
         {
-            //switch (area)
-            //{
-            //    case 0:
-            //        MaxResources += (int)increase;
-            //        break;
-            //    case 1:
-            //        FloatBlockHP += (int)increase;
-            //        break;
-            //}
-            BlockRelated[area] += increase;
+            switch (relation)
+            {
+                case 0:
+                    BlockRelated[variable] += increase;
+                    break;
+                case 1:
+                    PlayerRelated[variable] += increase;
+                    break;
+            }
+            //BlockRelated[variable] += increase;
             if(increase == 1 || increase == -1)
             {
                 delay = 0.2f;

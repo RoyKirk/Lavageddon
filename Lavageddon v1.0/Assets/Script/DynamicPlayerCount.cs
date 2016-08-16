@@ -13,6 +13,8 @@ public class DynamicPlayerCount : MonoBehaviour {
     Object[] duplicates = new Object[2];
     static DynamicPlayerCount Original;
 
+    public startButton readytostart;
+
     Canvas gameOver;
     GameObject restart;
 
@@ -99,6 +101,16 @@ public class DynamicPlayerCount : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        readytostart.ready = false;
+        for (int i = 0; i < 4; i++)
+        {
+            if (ready[i])
+            {
+                Debug.Log("at least one player is ready");
+                readytostart.ready = true;
+            }
+        }
+
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             readyImage = GameObject.FindGameObjectsWithTag("PlayerReady");
@@ -136,6 +148,8 @@ public class DynamicPlayerCount : MonoBehaviour {
         {
             newScene = true;
         }
+
+        
 
             //if(allDead)
             //{
