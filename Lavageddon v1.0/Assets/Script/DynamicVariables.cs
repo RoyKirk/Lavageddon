@@ -73,7 +73,21 @@ public class DynamicVariables : MonoBehaviour {
                     }
                     break;
                 case 2:
-                    WeaponRelated[variable] += increase;
+                    if(variable == 2 || variable == 4 || variable == 7)
+                    {
+                        if (increase > 0)
+                        {
+                            WeaponRelated[variable] += 0.1000000000000000f;
+                        }
+                        else
+                        {
+                            WeaponRelated[variable] -= 0.10000000000000000f;
+                        }
+                    }
+                    else
+                    {
+                        WeaponRelated[variable] += increase;
+                    }
                     break;
             }
             //BlockRelated[variable] += increase;
