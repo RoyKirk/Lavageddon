@@ -51,6 +51,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public GameObject character;
 
+    public GameObject redScreen;
+
     //public float shootDistance = 1000.0f;
     void Update()
     {
@@ -96,15 +98,22 @@ public class PlayerMovement : MonoBehaviour {
 
             if (laserTimer < laserMinTime)
             {
-                LineRenderer lineRenderer = GetComponent<LineRenderer>();
-                int i = 0;
-                while (i < lengthOfLineRenderer)
+                RaycastHit shot;
+                if (Physics.Raycast(transform.position, transform.forward, out shot))
                 {
-                    //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
-                    //Vector3 pos = transform.position + transform.forward.normalized * i;
-                    Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
-                    lineRenderer.SetPosition(i, pos);
-                    i++;
+
+                    LineRenderer lineRenderer = GetComponent<LineRenderer>();
+                    int i = 0;
+                    while (i < lengthOfLineRenderer)
+                    {
+                        //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                        //Vector3 pos = transform.position + transform.forward.normalized * i;
+                        //Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
+
+                        Vector3 pos = (transform.position - new Vector3(0,0.1f,0)) + i * ((shot.point - transform.position) / lengthOfLineRenderer);
+                        lineRenderer.SetPosition(i, pos);
+                        i++;
+                    }
                 }
             }
 
@@ -125,17 +134,6 @@ public class PlayerMovement : MonoBehaviour {
                 if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
                 {
                     laserTimer = 0.0f;
-                    LineRenderer lineRenderer = GetComponent<LineRenderer>();
-                    lineRenderer.enabled = true;
-                    int i = 0;
-                    while (i < lengthOfLineRenderer)
-                    {
-                        //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
-                        //Vector3 pos = transform.position + transform.forward.normalized * i;
-                        Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
-                        lineRenderer.SetPosition(i, pos);
-                        i++;
-                    }
                     //laser.enabled = true;
                     //int i = 0;
                     //while (i < lengthOfLineRenderer)
@@ -149,7 +147,21 @@ public class PlayerMovement : MonoBehaviour {
                     RaycastHit shot;
                     if (Physics.Raycast(transform.position, transform.forward, out shot))
                     {
-                        Debug.DrawLine(transform.position, shot.point, Color.red);
+ 
+                        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+                        lineRenderer.enabled = true;
+                        int i = 0;
+                        while (i < lengthOfLineRenderer)
+                        {
+                            //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                            //Vector3 pos = transform.position + transform.forward.normalized * i;
+                            //Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
+                            //lineRenderer.SetPosition(i, pos);
+                            Vector3 pos = (transform.position - new Vector3(0, 0.1f, 0)) + i*((shot.point - transform.position)/lengthOfLineRenderer);
+                            lineRenderer.SetPosition(i, pos);
+                            i++;
+                        }
+                        Debug.DrawLine(transform.position, shot.point, Color.green);
                         if (shot.collider.tag == "Block")
                         {
 
@@ -217,7 +229,12 @@ public class PlayerMovement : MonoBehaviour {
 
             if (transform.position.y < lavaHeight)
             {
+                redScreen.SetActive(true);
                 PlayerDead();
+            }
+            if (transform.position.y > lavaHeight)
+            {
+                redScreen.SetActive(false);
             }
             if (transform.position.y > lavaHeight && !submergeAccumulate)
             {
@@ -241,6 +258,7 @@ public class PlayerMovement : MonoBehaviour {
             transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
             transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+
         }
 
     }
@@ -264,7 +282,7 @@ public class PlayerMovement : MonoBehaviour {
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
         lineRenderer.SetColors(c1, c2);
-        lineRenderer.SetWidth(0.2F, 0.2F);
+        lineRenderer.SetWidth(0.3F, 0.3F);
         lineRenderer.SetVertexCount(lengthOfLineRenderer);
         lineRenderer.enabled = false;
         alive = true;
@@ -304,6 +322,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void PlayerDead()
     {
+
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
@@ -314,6 +333,8 @@ public class PlayerMovement : MonoBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             submergedTimer = 0;
+
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 }
