@@ -267,7 +267,7 @@ public class PlayerMovement : MonoBehaviour {
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         Rigidbody rb = GetComponent<Rigidbody>();
 
-        jumpForce = DV.PlayerRelated[0];
+        jumpForce = (DV.PlayerRelated[0] * 10);
         //rb.
     }
 }
