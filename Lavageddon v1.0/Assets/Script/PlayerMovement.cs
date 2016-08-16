@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public float lavaHeight = 1.0f;
 
+    public float submergedMinTime = 1.0f;
+    float submergedTimer = 0.0f;
+    public bool submergeAccumulate = true;
+
     public GameObject character;
 
     //public float shootDistance = 1000.0f;
@@ -213,12 +217,11 @@ public class PlayerMovement : MonoBehaviour {
 
             if (transform.position.y < lavaHeight)
             {
-                alive = false;
-                GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
-                transform.position = new Vector3(5, 50, -65);
-                transform.eulerAngles = new Vector3(45, 0, 0);
-                GetComponent<Rigidbody>().useGravity = false;
-                GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                PlayerDead();
+            }
+            if (transform.position.y > lavaHeight && !submergeAccumulate)
+            {
+                submergedTimer = 0;
             }
         }
         else
@@ -231,9 +234,13 @@ public class PlayerMovement : MonoBehaviour {
 
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
+            transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
             transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
+
+            transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
+
+            transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
         }
 
     }
@@ -269,5 +276,20 @@ public class PlayerMovement : MonoBehaviour {
 
         jumpForce = (DV.PlayerRelated[0] * 10);
         //rb.
+    }
+
+    void PlayerDead()
+    {
+        submergedTimer += Time.deltaTime;
+        if (submergedTimer >= submergedMinTime)
+        {
+            alive = false;
+            GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
+            transform.position = new Vector3(5, 50, -65);
+            transform.eulerAngles = new Vector3(45, 0, 0);
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            submergedTimer = 0;
+        }
     }
 }
