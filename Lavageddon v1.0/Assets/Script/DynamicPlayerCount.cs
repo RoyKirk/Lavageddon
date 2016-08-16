@@ -61,6 +61,10 @@ public class DynamicPlayerCount : MonoBehaviour {
             InstantiatePlayers(readyCount);
             readyCount = 0;
         }
+        if(level == 0)
+        {
+            readytostart = FindObjectOfType<startButton>();
+        }
     }
 
     public Camera p1C;
@@ -106,7 +110,7 @@ public class DynamicPlayerCount : MonoBehaviour {
         {
             if (ready[i])
             {
-                Debug.Log("at least one player is ready");
+                //Debug.Log("at least one player is ready");
                 readytostart.ready = true;
             }
         }
