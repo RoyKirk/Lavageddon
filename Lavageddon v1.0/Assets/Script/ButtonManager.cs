@@ -36,7 +36,7 @@ public class ButtonManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        //dropDown.OnSubmit()
+        values = FindObjectOfType<DynamicVariables>();
     }
 
     void HideButtons(int show)

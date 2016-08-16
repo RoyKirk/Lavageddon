@@ -23,7 +23,7 @@ public class BlockDamage : MonoBehaviour {
         //Debug.Log(gameObject.name);
         if (gameObject.name == "BlockFloat(Clone)")
         {
-            Debug.Log("float block var set");
+            //Debug.Log("float block var set");
             HitPoints = (int)DV.BlockRelated[1];
             cost = (int)DV.BlockRelated[2];
             ff.FloatScale = (DV.BlockRelated[3] / 200);
