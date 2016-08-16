@@ -14,4 +14,14 @@ public class FireStickyWeight : MonoBehaviour {
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddRelativeForce(Vector3.forward * speed);
     }
+
+    GameObject playerManager;
+
+    void Start()
+    {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+
+        speed = DV.WeaponRelated[6];
+    }
 }

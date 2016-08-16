@@ -16,4 +16,15 @@ public class StickyWeightScript : MonoBehaviour {
             temp.breakTorque = 5000.0f;
         }
     }
+
+    GameObject playerManager;
+
+    void Start()
+    {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.mass = DV.WeaponRelated[8];
+    }
 }

@@ -8,6 +8,7 @@ public class DynamicVariables : MonoBehaviour {
 
     public float[] BlockRelated;
     public float[] PlayerRelated;
+    public float[] WeaponRelated;
 
     // BLOCK RELATED
     int MaxResources;
@@ -70,6 +71,9 @@ public class DynamicVariables : MonoBehaviour {
                             PlayerRelated[variable] = 1;
                         }
                     }
+                    break;
+                case 2:
+                    WeaponRelated[variable] += increase;
                     break;
             }
             //BlockRelated[variable] += increase;

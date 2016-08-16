@@ -9,8 +9,12 @@ public class ButtonManager : MonoBehaviour {
     public Button[] MainBtns;
     public Button[] VariableBtns;
     public Button[] PlayerRelatedBtns;
+    public Button[] WeaponRelatedBtns;
+
     public Text[] BlockRelatedtext;
     public Text[] PlayerRelatedtext;
+    public Text[] WeaponRelatedtext;
+
     public Image[] variablesBackground;
 
     public Dropdown dropDown;
@@ -43,8 +47,9 @@ public class ButtonManager : MonoBehaviour {
     {
         switch (show)
         {
-            case 0:
-                for (int i = 0; i < PlayerRelatedBtns.Length; i++)//reset buttons
+            case 0://BLOCK RELATED
+                //BUTTON RELATED
+                for (int i = 0; i < PlayerRelatedBtns.Length; i++)
                 {
                     PlayerRelatedBtns[i].gameObject.SetActive(false);
                 }
@@ -52,6 +57,12 @@ public class ButtonManager : MonoBehaviour {
                 {
                     VariableBtns[i].gameObject.SetActive(true);
                 }
+                for (int i = 0; i < WeaponRelatedBtns.Length; i++)
+                {
+                    WeaponRelatedBtns[i].gameObject.SetActive(false);
+                }
+
+                //TEXT RELATED
                 for (int i = 0; i < BlockRelatedtext.Length; i++)
                 {
                     BlockRelatedtext[i].gameObject.SetActive(true);
@@ -60,9 +71,15 @@ public class ButtonManager : MonoBehaviour {
                 {
                     PlayerRelatedtext[i].gameObject.SetActive(false);
                 }
+                for (int i = 0; i < WeaponRelatedtext.Length; i++)
+                {
+                    WeaponRelatedtext[i].gameObject.SetActive(false);
+                }
                 break;
-            case 1:
-                for (int i = 0; i < PlayerRelatedBtns.Length; i++)//reset buttons
+
+            case 1://PLAYER RELATED
+                //BUTTON RELATED
+                for (int i = 0; i < PlayerRelatedBtns.Length; i++)
                 {
                     PlayerRelatedBtns[i].gameObject.SetActive(true);
                 }
@@ -70,6 +87,12 @@ public class ButtonManager : MonoBehaviour {
                 {
                     VariableBtns[i].gameObject.SetActive(false);
                 }
+                for (int i = 0; i < WeaponRelatedBtns.Length; i++)
+                {
+                    WeaponRelatedBtns[i].gameObject.SetActive(false);
+                }
+
+                //TEXT RELATED
                 for (int i = 0; i < BlockRelatedtext.Length; i++)
                 {
                     BlockRelatedtext[i].gameObject.SetActive(false);
@@ -78,9 +101,15 @@ public class ButtonManager : MonoBehaviour {
                 {
                     PlayerRelatedtext[i].gameObject.SetActive(true);
                 }
+                for (int i = 0; i < WeaponRelatedtext.Length; i++)
+                {
+                    WeaponRelatedtext[i].gameObject.SetActive(false);
+                }
                 break;
-            case 2:
-                for (int i = 0; i < PlayerRelatedBtns.Length; i++)//reset buttons
+
+            case 2://WEAPON RELATED
+                   //BUTTON RELATED
+                for (int i = 0; i < PlayerRelatedBtns.Length; i++)
                 {
                     PlayerRelatedBtns[i].gameObject.SetActive(false);
                 }
@@ -88,9 +117,23 @@ public class ButtonManager : MonoBehaviour {
                 {
                     VariableBtns[i].gameObject.SetActive(false);
                 }
+                for (int i = 0; i < WeaponRelatedBtns.Length; i++)
+                {
+                    WeaponRelatedBtns[i].gameObject.SetActive(true);
+                }
+
+                //TEXT RELATED
+                for (int i = 0; i < BlockRelatedtext.Length; i++)
+                {
+                    BlockRelatedtext[i].gameObject.SetActive(false);
+                }
                 for (int i = 0; i < PlayerRelatedtext.Length; i++)
                 {
                     PlayerRelatedtext[i].gameObject.SetActive(false);
+                }
+                for (int i = 0; i < WeaponRelatedtext.Length; i++)
+                {
+                    WeaponRelatedtext[i].gameObject.SetActive(true);
                 }
                 break;
         }
@@ -125,6 +168,10 @@ public class ButtonManager : MonoBehaviour {
             for (int i = 0; i < PlayerRelatedtext.Length - 1; i++)
             {
                 PlayerRelatedtext[i].text = values.PlayerRelated[i].ToString();
+            }
+            for (int i = 0; i < WeaponRelatedtext.Length; i++)
+            {
+                WeaponRelatedtext[i].text = values.WeaponRelated[i].ToString();
             }
             //if(dropDown.OnSelect)
             if (dropDown.value == 0)//BLOCK RELATED VARIABLES
@@ -196,7 +243,22 @@ public class ButtonManager : MonoBehaviour {
                     if (Apressed == true)
                     {
                         dropDown.value = 0;
-                        
+                        dropDown.Hide();
+                    }
+                }
+                else
+                {
+                    if (selected < 1)
+                    {
+                        selected = WeaponRelatedBtns.Length;
+                    }
+                    else if (selected > WeaponRelatedBtns.Length)
+                    {
+                        selected = 0;
+                    }
+                    if (selected != 0)
+                    {
+                        WeaponRelatedBtns[selected - 1].Select();
                     }
                 }
             }
@@ -245,15 +307,32 @@ public class ButtonManager : MonoBehaviour {
         {
             dropDown.gameObject.SetActive(false);
             variablesBackground[0].gameObject.SetActive(false);
+            for (int i = 0; i < PlayerRelatedBtns.Length; i++)
+            {
+                PlayerRelatedBtns[i].gameObject.SetActive(false);
+            }
             for (int i = 0; i < VariableBtns.Length; i++)
             {
                 VariableBtns[i].gameObject.SetActive(false);
             }
+            for (int i = 0; i < WeaponRelatedBtns.Length; i++)
+            {
+                WeaponRelatedBtns[i].gameObject.SetActive(false);
+            }
+
+            //TEXT RELATED
             for (int i = 0; i < BlockRelatedtext.Length; i++)
             {
                 BlockRelatedtext[i].gameObject.SetActive(false);
             }
-
+            for (int i = 0; i < PlayerRelatedtext.Length; i++)
+            {
+                PlayerRelatedtext[i].gameObject.SetActive(false);
+            }
+            for (int i = 0; i < WeaponRelatedtext.Length; i++)
+            {
+                WeaponRelatedtext[i].gameObject.SetActive(false);
+            }
 
             if (selected < 0)
             {

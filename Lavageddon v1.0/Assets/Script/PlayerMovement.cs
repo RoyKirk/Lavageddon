@@ -269,17 +269,17 @@ public class PlayerMovement : MonoBehaviour {
         lineRenderer.enabled = false;
         alive = true;
 
+
         //setting the menu variables to the player variables
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         Rigidbody rb = GetComponent<Rigidbody>();
 
+        //PLAYER RELATED VALUES
         jumpForce = (DV.PlayerRelated[0] * 10);
         sensitivityX = DV.PlayerRelated[1];
         sensitivityY = DV.PlayerRelated[2];
         rb.mass = DV.PlayerRelated[3];
-        //DeathTimer = DV.PlayerRelated[3];
-        //submerged min time & submerged accumilate
         submergedMinTime = DV.PlayerRelated[4];
         if(DV.PlayerRelated[5] == 1)
         {
@@ -290,7 +290,16 @@ public class PlayerMovement : MonoBehaviour {
             submergeAccumulate = false;
         }
 
-        //rb.
+        //WEAPON RELATED VALUES
+        //cannon isnt referenced here
+        bombMinTime = DV.WeaponRelated[2];
+
+        laserDamage = (int)DV.WeaponRelated[3];
+        laserMinTime = DV.WeaponRelated[4];
+        laserForce = DV.WeaponRelated[5];
+
+        stickyMinTime = DV.WeaponRelated[7];
+
     }
 
     void PlayerDead()

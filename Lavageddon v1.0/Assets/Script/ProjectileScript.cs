@@ -7,10 +7,16 @@ public class ProjectileScript : MonoBehaviour
     public GameObject explosion;
     public GameObject bombEffect;
 
+    GameObject playerManager;
+
 	// Use this for initialization
-	void Start () {
-	
-	}
+	void Start ()
+    {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+
+        dmg = DV.WeaponRelated[1];
+    }
 	
 	// Update is called once per frame
 	void Update ()
