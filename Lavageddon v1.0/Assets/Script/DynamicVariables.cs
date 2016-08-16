@@ -94,7 +94,7 @@ public class DynamicVariables : MonoBehaviour {
         duplicates = FindObjectsOfType(GetType());
         if (duplicates.Length > 1)
         {
-            Destroy(duplicates[0]);
+            Destroy(duplicates[1]);
         }
         if (level > 0)
         {

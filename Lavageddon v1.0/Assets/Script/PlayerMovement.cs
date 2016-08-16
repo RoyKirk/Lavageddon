@@ -275,6 +275,10 @@ public class PlayerMovement : MonoBehaviour {
         Rigidbody rb = GetComponent<Rigidbody>();
 
         jumpForce = (DV.PlayerRelated[0] * 10);
+        sensitivityX = DV.PlayerRelated[1];
+        sensitivityY = DV.PlayerRelated[2];
+        //DeathTimer = DV.PlayerRelated[3];
+        rb.mass = DV.PlayerRelated[4];
         //rb.
     }
 
