@@ -187,7 +187,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                 {
                     playersDead = 0;
                     gameOver.enabled = true;
-                    restart.SetActive(true);
+                    //restart.SetActive(true);
                     allDead = true;
                     //GameObject restart = GameObject.Find("Restart").transform.parent.GetComponent<GameObject>();
                     //restart.SetActive(true);
@@ -199,7 +199,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                 {
                     playersDead = 0;
                     gameOver.enabled = true;
-                    restart.SetActive(true);
+                    //restart.SetActive(true);
                     allDead = true;
                     //GameObject restart = GameObject.Find("Restart").transform.parent.GetComponent<GameObject>();
                     //restart.SetActive(true);

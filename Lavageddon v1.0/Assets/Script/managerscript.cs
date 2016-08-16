@@ -50,12 +50,12 @@ public class managerscript : MonoBehaviour {
 
         if (blockType == BlockType.FLOAT)
         {
-            GameObject temp = (GameObject)Instantiate(blockPrefabFloat, transform.position + transform.forward * startDistance, new Quaternion(0, 0, 0, 0));
+            GameObject temp = (GameObject)Instantiate(blockPrefabFloat, transform.position + transform.forward * startDistance - transform.up * startDistance / 4, new Quaternion(0, 0, 0, 0));
             temp.GetComponent<BlockDamage>().keystone = true;
         }
         if (blockType == BlockType.ARMOUR)
         {
-            GameObject temp = (GameObject)Instantiate(blockPrefabArmour, transform.position + transform.forward * startDistance, new Quaternion(0, 0, 0, 0));
+            GameObject temp = (GameObject)Instantiate(blockPrefabArmour, transform.position + transform.forward * startDistance - transform.up * startDistance / 4, new Quaternion(0, 0, 0, 0));
             temp.GetComponent<BlockDamage>().keystone = true;
         }
     }
