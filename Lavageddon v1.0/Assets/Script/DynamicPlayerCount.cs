@@ -57,7 +57,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                     //Instantiate(players[i]);
                 }
             }
-
+            playersDead = 0;
             InstantiatePlayers(readyCount);
             readyCount = 0;
         }
