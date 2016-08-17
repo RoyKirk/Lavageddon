@@ -15,6 +15,9 @@ public class CameraMovement : MonoBehaviour {
 
     public int player = 0;
 
+    public float lavaHeight = 1.0f;
+    public GameObject redScreen;
+
     void Update()
     {
         //controller look
@@ -55,6 +58,18 @@ public class CameraMovement : MonoBehaviour {
         {
             GetComponent<PlayerMovement>().enabled = true;
             GetComponent<managerscript>().constructionMode = false;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (transform.position.y < lavaHeight)
+        {
+            redScreen.SetActive(true);
+        }
+        if (transform.position.y > lavaHeight)
+        {
+            redScreen.SetActive(false);
         }
     }
 

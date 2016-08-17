@@ -231,10 +231,14 @@ public class PlayerMovement : MonoBehaviour {
             {
                 redScreen.SetActive(true);
                 PlayerDead();
+                GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
+                GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
             }
             if (transform.position.y > lavaHeight)
             {
                 redScreen.SetActive(false);
+                GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = false;
+                GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = false;
             }
             if (transform.position.y > lavaHeight && !submergeAccumulate)
             {
