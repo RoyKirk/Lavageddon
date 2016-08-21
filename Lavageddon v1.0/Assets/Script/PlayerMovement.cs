@@ -318,6 +318,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             submergeAccumulate = false;
         }
+        movementSpeed = DV.PlayerRelated[7] / 100;
 
         //WEAPON RELATED VALUES
         //cannon isnt referenced here

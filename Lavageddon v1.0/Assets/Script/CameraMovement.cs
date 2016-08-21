@@ -98,6 +98,7 @@ public class CameraMovement : MonoBehaviour {
 
         sensitivityX = DV.PlayerRelated[1];
         sensitivityY = DV.PlayerRelated[2];
+        movementSpeed = DV.PlayerRelated[6] / 100;
 
     }
 
