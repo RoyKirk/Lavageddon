@@ -18,15 +18,22 @@ public class CameraMovement : MonoBehaviour {
     public float lavaHeight = 1.0f;
     public GameObject redScreen;
 
+    public GameObject body;
+
     void Update()
     {
         //controller look
-        float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X * (sensitivityX/10);
+        //float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X * (sensitivityX/10);
 
-        rotationY += Controller.state[player].ThumbSticks.Right.Y * (sensitivityY/10);
-        rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
+        //rotationY += Controller.state[player].ThumbSticks.Right.Y * (sensitivityY/10);
+        //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-        transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+        //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+
+        float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
+        rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
+        transform.RotateAround(body.transform.position, transform.up, rotationX);
+        transform.RotateAround(body.transform.position, transform.right, -rotationY);
 
         transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
