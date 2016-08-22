@@ -13,12 +13,15 @@ public class RestartMenu : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (Controller.prevState[0].Buttons.Start == ButtonState.Released && Controller.state[0].Buttons.Start == ButtonState.Pressed)
+	void Update ()
+    {
+        for(int i = 0; i < 4; i++)
         {
-            menu.SetActive(!menu.activeSelf);
+            if (Controller.prevState[i].Buttons.Start == ButtonState.Released && Controller.state[i].Buttons.Start == ButtonState.Pressed)
+            {
+                menu.SetActive(!menu.activeSelf);
+            }
         }
-
     }
 
     public void RestartGame()

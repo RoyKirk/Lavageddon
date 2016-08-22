@@ -30,6 +30,8 @@ public class ButtonManager : MonoBehaviour {
     public float DpadR;
     public float DpadL;
 
+    //public float NoInput;
+
 
     /*NOTES!!!!!!!
      * create a reset buttons funtions to clean up code
@@ -146,14 +148,20 @@ public class ButtonManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        
         dropDown.Hide();
         HideButtons(2);
 
         //highlight 6ABAEAFF
         //normal 1D678CFF
         //text 
-
-
+        //if(NoInput >= 4)
+        //{
+        //    Xinput = 0;
+        //    Yinput = 0;
+        //    NoInput = 0;
+        //}
+        
         //they have selected the options menu
         if (options == true)
         {
@@ -186,6 +194,7 @@ public class ButtonManager : MonoBehaviour {
                     {
                         dropDown.value++;
                         dropDown.Hide();
+                        Apressed = false;
                     }
                 }
                 else
@@ -216,6 +225,7 @@ public class ButtonManager : MonoBehaviour {
                     if (Apressed == true)
                     {
                         dropDown.value++;
+                        Apressed = false;
                     }
                 }
                 else
@@ -244,6 +254,7 @@ public class ButtonManager : MonoBehaviour {
                     {
                         dropDown.value = 0;
                         dropDown.Hide();
+                        Apressed = false;
                     }
                 }
                 else
@@ -348,15 +359,16 @@ public class ButtonManager : MonoBehaviour {
             {
                 options = !options;
                 selected = 0;
+                Apressed = false;
             }
         }
         
         //this navigates the menu with thumbstick, making sure you can only go through one button at a time. no scrolling
-        if(Yinput < 0.1 && Yinput > -0.1)
+        if (Yinput < 0.1 && Yinput > -0.1)
         {
             reset = false;
         }
-
+        //reset = false;
         if (Yinput < -0.1 && reset == false)
         {
             selected++;
@@ -367,6 +379,8 @@ public class ButtonManager : MonoBehaviour {
             selected--;
             reset = true;
         }
+        Xinput = 0;
+        Yinput = 0;
     }
 
     public bool reset = false;
