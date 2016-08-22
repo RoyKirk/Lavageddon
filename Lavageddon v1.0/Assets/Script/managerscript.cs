@@ -92,20 +92,20 @@ public class managerscript : MonoBehaviour {
         if (constructionMode)
         {
 
-            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
-            {
-                if (blockType == BlockType.FLOAT)
-                {
-                    Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation);
-                    numberOfBlocks += FloatBlockCost;
-                }
-                if (blockType == BlockType.ARMOUR)
-                {
-                    Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
-                    numberOfBlocks += ArmourBlockCost;
-                }
-                //numberOfBlocks += FloatBlockCost;
-            }
+            //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            //{
+            //    if (blockType == BlockType.FLOAT)
+            //    {
+            //        Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation);
+            //        numberOfBlocks += FloatBlockCost;
+            //    }
+            //    if (blockType == BlockType.ARMOUR)
+            //    {
+            //        Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
+            //        numberOfBlocks += ArmourBlockCost;
+            //    }
+            //    //numberOfBlocks += FloatBlockCost;
+            //}
 
             if (Controller.prevState[player].Buttons.B == ButtonState.Released && Controller.state[player].Buttons.B == ButtonState.Pressed)
             {
@@ -152,6 +152,86 @@ public class managerscript : MonoBehaviour {
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
+            ////if (Physics.Raycast(ray, out hit, placementReach))
+            //if (Physics.Raycast(transform.position, transform.forward, out hit, placementReach))
+            //{
+
+            //    //Debug.DrawLine(ray.origin, hit.point);
+            //    Debug.DrawLine(transform.position, hit.point);
+
+            //    if (hit.collider.tag == "Block")
+            //    {
+            //        if (startConstruction)
+            //        {
+            //            if (blockType == BlockType.FLOAT)
+            //            {
+            //                block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
+            //            }
+            //            if (blockType == BlockType.ARMOUR)
+            //            {
+            //                block = (GameObject)Instantiate(blockPlacePrefabArmour, hit.collider.transform.position, hit.collider.transform.rotation);
+            //            }
+            //            startConstruction = false;
+            //        }
+
+            //        block.transform.rotation = hit.collider.transform.rotation;
+            //        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
+
+            //    }
+            //    else if (hit.collider.tag != "Block" && hit.collider.tag != "PlaceBlock")
+            //    {
+            //        Destroy(block);
+            //        startConstruction = true;
+            //    }
+
+
+
+            //}
+            //else
+            //{
+            //    Destroy(block);
+            //    startConstruction = true;
+            //}
+        }
+        else
+        {
+            Destroy(block);
+        }
+        //if (!block.GetComponent<buildingblock>().placed)
+        //{
+        //    block.transform.position = transform.position + transform.forward.normalized * blockOffset;
+        //    block.transform.rotation = transform.rotation;
+        //}
+        //if (block.GetComponent<buildingblock>().placed)
+        //{
+        //    block.GetComponent<BoxCollider>().enabled = true;
+        //    block = (GameObject)Instantiate(blockPrefab, transform.position + transform.forward.normalized * blockOffset, transform.rotation);
+        //    block.GetComponent<BoxCollider>().enabled = false;
+        //}
+    }
+
+    void LateUpdate()
+    {
+        if (constructionMode)
+        {
+
+            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            {
+                if (blockType == BlockType.FLOAT)
+                {
+                    Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation);
+                    numberOfBlocks += FloatBlockCost;
+                }
+                if (blockType == BlockType.ARMOUR)
+                {
+                    Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
+                    numberOfBlocks += ArmourBlockCost;
+                }
+                //numberOfBlocks += FloatBlockCost;
+            }
+
+            RaycastHit hit;
+
             //if (Physics.Raycast(ray, out hit, placementReach))
             if (Physics.Raycast(transform.position, transform.forward, out hit, placementReach))
             {
@@ -193,21 +273,6 @@ public class managerscript : MonoBehaviour {
                 startConstruction = true;
             }
         }
-        else
-        {
-            Destroy(block);
-        }
-        //if (!block.GetComponent<buildingblock>().placed)
-        //{
-        //    block.transform.position = transform.position + transform.forward.normalized * blockOffset;
-        //    block.transform.rotation = transform.rotation;
-        //}
-        //if (block.GetComponent<buildingblock>().placed)
-        //{
-        //    block.GetComponent<BoxCollider>().enabled = true;
-        //    block = (GameObject)Instantiate(blockPrefab, transform.position + transform.forward.normalized * blockOffset, transform.rotation);
-        //    block.GetComponent<BoxCollider>().enabled = false;
-        //}
     }
 
     void ResetBlock()

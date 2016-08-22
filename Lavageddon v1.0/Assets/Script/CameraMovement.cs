@@ -20,6 +20,10 @@ public class CameraMovement : MonoBehaviour {
 
     public GameObject body;
 
+    public float thirdPersonoffset = 2.0f;
+
+    Vector3 thirdPersonPivot;
+
     void Update()
     {
         //controller look
@@ -30,10 +34,19 @@ public class CameraMovement : MonoBehaviour {
 
         //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 
+
+        //thirdPersonPivot = transform.position + transform.forward.normalized * thirdPersonoffset;
+
         float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
         rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
-        transform.RotateAround(body.transform.position, transform.up, rotationX);
-        transform.RotateAround(body.transform.position, transform.right, -rotationY);
+
+        transform.RotateAround(body.transform.position, body.transform.up, rotationX);
+        transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+        transform.localEulerAngles = new Vector3(Mathf.Clamp(transform.localEulerAngles.x, maximumY, minimumY), transform.localEulerAngles.y, transform.localEulerAngles.z);
+        //transform.RotateAround(thirdPersonPivot, transform.up, rotationX);
+        //transform.RotateAround(thirdPersonPivot, transform.right, -rotationY);
+        //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
 
         transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 

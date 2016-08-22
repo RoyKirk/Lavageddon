@@ -49,8 +49,6 @@ public class PlayerMovement : MonoBehaviour {
     float submergedTimer = 0.0f;
     public bool submergeAccumulate = true;
 
-    public GameObject character;
-
     public GameObject redScreen;
 
     public GameObject body;
@@ -60,20 +58,22 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (alive)
         {
-            RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
             {
 
-                Debug.DrawLine(transform.position, hit.point);
-                if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
-                {
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
-                }
-                //if (hit.collider.tag == "Block")
-                //{
+                RaycastHit hit;
 
-                //}
+                if (Physics.Raycast(body.transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+                {
+
+                    Debug.DrawLine(body.transform.position, hit.point);
+                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    //if (hit.collider.tag == "Block")
+                    //{
+
+                    //}
+                }
             }
 
             //controller look
@@ -86,8 +86,8 @@ public class PlayerMovement : MonoBehaviour {
 
             float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
             rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
-            transform.RotateAround(body.transform.position, transform.up, rotationX);
-            transform.RotateAround(body.transform.position, transform.right, -rotationY);
+            transform.RotateAround(body.transform.position, body.transform.up, rotationX);
+            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
             transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
 
@@ -234,20 +234,12 @@ public class PlayerMovement : MonoBehaviour {
                 //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
             }
 
-            if (transform.position.y < lavaHeight)
+            if (body.transform.position.y < lavaHeight)
             {
-                redScreen.SetActive(true);
                 PlayerDead();
-                GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
-                GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
+
             }
-            if (transform.position.y > lavaHeight)
-            {
-                redScreen.SetActive(false);
-                GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = false;
-                GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = false;
-            }
-            if (transform.position.y > lavaHeight && !submergeAccumulate)
+            if (body.transform.position.y > lavaHeight && !submergeAccumulate)
             {
                 submergedTimer = 0;
             }
@@ -255,12 +247,16 @@ public class PlayerMovement : MonoBehaviour {
         else
         {
             //controller look
-            float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X;
+            //float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X;
 
-            rotationY += Controller.state[player].ThumbSticks.Right.Y;
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
+            //rotationY += Controller.state[player].ThumbSticks.Right.Y;
+            //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+            //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+            float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
+            rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
+            transform.RotateAround(body.transform.position, body.transform.up, rotationX);
+            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
             transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
@@ -270,6 +266,20 @@ public class PlayerMovement : MonoBehaviour {
 
             transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
 
+        }
+
+
+        if (transform.position.y < lavaHeight)
+        {
+            redScreen.SetActive(true);
+            GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
+            GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
+        }
+        if (transform.position.y > lavaHeight)
+        {
+            redScreen.SetActive(false);
+            GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = false;
+            GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = false;
         }
 
     }
@@ -346,7 +356,7 @@ public class PlayerMovement : MonoBehaviour {
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             submergedTimer = 0;
 
-            GetComponent<CapsuleCollider>().enabled = false;
+            body.GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 }
