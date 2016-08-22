@@ -73,16 +73,19 @@ public class PlayerReady : MonoBehaviour {
             {
                 BM.Xinput = Controller.state[player].ThumbSticks.Left.X;
                 BM.Yinput = Controller.state[player].ThumbSticks.Left.Y;
+                //Debug.Log(player + "using left thumbsticks");
             }
             else if(Controller.state[player].ThumbSticks.Right.X != 0 || Controller.state[player].ThumbSticks.Right.Y != 0)
             {
                 BM.Xinput = Controller.state[player].ThumbSticks.Right.X;
                 BM.Yinput = Controller.state[player].ThumbSticks.Right.Y;
+                //Debug.Log(BM.Xinput);
             }
             else
             {
-                BM.Xinput = 0;
-                BM.Yinput = 0;
+                //BM.NoInput++;
+                //BM.Xinput = 0;
+                //BM.Yinput = 0;
             }
             
 
@@ -93,7 +96,7 @@ public class PlayerReady : MonoBehaviour {
             }
             else
             {
-                BM.Apressed = false;
+                //BM.Apressed = false;
             }
 
             if (Controller.state[player].Buttons.B == ButtonState.Pressed && Controller.prevState[player].Buttons.B == ButtonState.Released)
@@ -102,7 +105,7 @@ public class PlayerReady : MonoBehaviour {
             }
             else
             {
-                BM.Bpressed = false;
+                //BM.Bpressed = false;
             }
 
 

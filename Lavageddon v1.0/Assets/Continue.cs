@@ -6,25 +6,56 @@ using XInputDotNetPure;
 public class Continue : MonoBehaviour {
 
     public GameObject menu;
+    public GameObject resetbtn;
+
+    public DynamicPlayerCount DPC;
+    public GameObject[] players;
+    public GameObject[] playerPrefabs;
+    public ModeSwitch MS;
+    public Canvas gameover;
 
     // Use this for initialization
     void Start()
     {
-
+        //players = new GameObject[4];
+        DPC = FindObjectOfType<DynamicPlayerCount>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Controller.prevState[0].Buttons.Start == ButtonState.Released && Controller.state[0].Buttons.Start == ButtonState.Pressed)
+
+
+        for (int i = 0; i < 4; i++)
         {
-            menu.SetActive(!menu.activeSelf);
+            if (Controller.prevState[i].Buttons.Start == ButtonState.Released && Controller.state[i].Buttons.Start == ButtonState.Pressed)
+            {
+                menu.SetActive(!menu.activeSelf);
+            }
         }
 
     }
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(1);
+        players = GameObject.FindGameObjectsWithTag("MainCamera");
+
+        for(int i = 0; i < players.Length; i++)
+        {
+            Destroy(players[i]);
+        }
+        MS.construction = true;
+        gameover.enabled = false;
+        menu.SetActive(!menu.activeSelf);
+        resetbtn.SetActive(false);
+
+        for (int i = 0; i < DPC.ready.Length; i++)
+        {
+            if(DPC.ready[i] == true)
+            {
+                Instantiate(playerPrefabs[i]);
+            }
+        }
     }
 }
