@@ -43,7 +43,7 @@ public class CameraMovement : MonoBehaviour {
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
         transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
-        transform.localEulerAngles = new Vector3(Mathf.Clamp(transform.localEulerAngles.x, maximumY, minimumY), transform.localEulerAngles.y, transform.localEulerAngles.z);
+        //transform.localEulerAngles = new Vector3(Mathf.Clamp(transform.localEulerAngles.x, maximumY, minimumY), transform.localEulerAngles.y, transform.localEulerAngles.z);
         //transform.RotateAround(thirdPersonPivot, transform.up, rotationX);
         //transform.RotateAround(thirdPersonPivot, transform.right, -rotationY);
         //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
