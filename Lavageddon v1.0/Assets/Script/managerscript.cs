@@ -150,7 +150,7 @@ public class managerscript : MonoBehaviour {
 
             
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            //RaycastHit hit;
 
             ////if (Physics.Raycast(ray, out hit, placementReach))
             //if (Physics.Raycast(transform.position, transform.forward, out hit, placementReach))

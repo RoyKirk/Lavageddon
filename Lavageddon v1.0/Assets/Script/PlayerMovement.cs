@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public GameObject redScreen;
 
-    //public GameObject body;
+    public GameObject body;
 
     //public float shootDistance = 1000.0f;
     void Update()
@@ -86,13 +86,13 @@ public class PlayerMovement : MonoBehaviour {
 
             float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
             rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
-<<<<<<< HEAD
+
             transform.RotateAround(body.transform.position, body.transform.up, rotationX);
             transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-=======
+
             //transform.RotateAround(body.transform.position, transform.up, rotationX);
             //transform.RotateAround(body.transform.position, transform.right, -rotationY);
->>>>>>> 10febba50f7f176d28b3b7eaf9cf2adc6193bfd3
+
 
             transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
 
