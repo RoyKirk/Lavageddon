@@ -10,6 +10,7 @@ public class BuildingBlock : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+
         GetComponent<BoxCollider>().enabled = false;
         RaycastHit hit;
 
@@ -105,6 +106,9 @@ public class BuildingBlock : MonoBehaviour {
 
         GetComponent<BoxCollider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<WhirlpoolCurrent>().enabled = false;
+        GetComponent<FloatFixed>().enabled = false;
     }
 
     // Update is called once per frame
@@ -114,6 +118,13 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<WhirlpoolCurrent>().enabled = true;
             GetComponent<FloatFixed>().enabled = true;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<WhirlpoolCurrent>().enabled = false;
+            GetComponent<FloatFixed>().enabled = false;
         }
 
     }
