@@ -46,6 +46,13 @@ public class FloatFixed : MonoBehaviour
     
     void Update()
     {
+        if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+        {
+            GetComponent<BuildingBlock>().enabled = true;
+
+        }
+
+
         //if (FLOAT)
         //{
         //    GetComponent<Renderer>().material.color = Color.green;
@@ -55,7 +62,7 @@ public class FloatFixed : MonoBehaviour
         //    GetComponent<Renderer>().material.color = Color.yellow;
         //}
 
-        for(int i = 0; i < offsetsize; i++)
+        for (int i = 0; i < offsetsize; i++)
         {
             actionPoint[i] = transform.position + transform.TransformDirection(buoyancyOffset[i]);
             forceFactor[i] = 1f - ((actionPoint[i].y - waterLevel) / floatHeight);
