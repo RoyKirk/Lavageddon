@@ -59,21 +59,23 @@ public class PlayerMovement : MonoBehaviour {
         if (alive)
         {
 
-            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
-            {
+
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(body.transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+                if (Physics.Raycast(body.transform.position+ new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
                 {
 
                     Debug.DrawLine(body.transform.position, hit.point);
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    Debug.Log(hit.collider.name);
+                    if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
+                    {
+                         GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
                     //if (hit.collider.tag == "Block")
                     //{
 
                     //}
-                }
+                    }
             }
 
             //controller look
@@ -122,7 +124,7 @@ public class PlayerMovement : MonoBehaviour {
                         //Vector3 pos = transform.position + transform.forward.normalized * i;
                         //Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
 
-                        Vector3 pos = (transform.position - new Vector3(0,0.1f,0)) + i * ((shot.point - transform.position) / lengthOfLineRenderer);
+                        Vector3 pos = (body.transform.position + new Vector3(0,1,0)) + i * ((shot.point - body.transform.position) / lengthOfLineRenderer);
                         lineRenderer.SetPosition(i, pos);
                         i++;
                     }
@@ -169,7 +171,7 @@ public class PlayerMovement : MonoBehaviour {
                             //Vector3 pos = transform.position + transform.forward.normalized * i;
                             //Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
                             //lineRenderer.SetPosition(i, pos);
-                            Vector3 pos = (transform.position - new Vector3(0, 0.1f, 0)) + i*((shot.point - transform.position)/lengthOfLineRenderer);
+                            Vector3 pos = (body.transform.position + new Vector3(0, 1, 0)) + i*((shot.point - body.transform.position)/lengthOfLineRenderer);
                             lineRenderer.SetPosition(i, pos);
                             i++;
                         }
@@ -217,6 +219,8 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (alive)
         {
+
+
             RaycastHit hit;
 
             if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit, frictionCast))

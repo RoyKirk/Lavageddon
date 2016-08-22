@@ -118,6 +118,7 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<WhirlpoolCurrent>().enabled = true;
             GetComponent<FloatFixed>().enabled = true;
+            GetComponent<Rigidbody>().useGravity = true;
         }
         else
         {

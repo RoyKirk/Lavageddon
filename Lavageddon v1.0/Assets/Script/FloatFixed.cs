@@ -46,10 +46,12 @@ public class FloatFixed : MonoBehaviour
     
     void Update()
     {
-        if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+        if (GameObject.Find("Controller"))
         {
-            GetComponent<BuildingBlock>().enabled = true;
-
+            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+            {
+                GetComponent<BuildingBlock>().enabled = true;
+            }
         }
 
 
