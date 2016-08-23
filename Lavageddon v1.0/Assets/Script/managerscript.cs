@@ -36,6 +36,8 @@ public class managerscript : MonoBehaviour {
     //reference to option variables
     GameObject playerManager;
 
+    GameObject boatParent;
+
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
     void Start ()
@@ -50,14 +52,16 @@ public class managerscript : MonoBehaviour {
 
         if (blockType == BlockType.FLOAT)
         {
-            GameObject temp = (GameObject)Instantiate(blockPrefabFloat, transform.position + transform.forward * startDistance - transform.up * startDistance / 4, new Quaternion(0, 0, 0, 0));
-            temp.GetComponent<BlockDamage>().keystone = true;
+            //GameObject temp = (GameObject)Instantiate(blockPrefabFloat, transform.position + transform.forward * startDistance - transform.up * startDistance / 4, new Quaternion(0, 0, 0, 0));
+            //temp.GetComponent<BlockDamage>().keystone = true;
         }
         if (blockType == BlockType.ARMOUR)
         {
-            GameObject temp = (GameObject)Instantiate(blockPrefabArmour, transform.position + transform.forward * startDistance - transform.up * startDistance / 4, new Quaternion(0, 0, 0, 0));
-            temp.GetComponent<BlockDamage>().keystone = true;
+            //GameObject temp = (GameObject)Instantiate(blockPrefabArmour, transform.position + transform.forward * startDistance - transform.up * startDistance / 4, new Quaternion(0, 0, 0, 0));
+            //temp.GetComponent<BlockDamage>().keystone = true;
         }
+
+        boatParent = GameObject.FindGameObjectWithTag("boatPrefab" + player);
     }
 
     // Update is called once per frame
@@ -219,12 +223,15 @@ public class managerscript : MonoBehaviour {
             {
                 if (blockType == BlockType.FLOAT)
                 {
-                    Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation);
+                    //change these to a var to set its parent to a refernce
+                    GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
+                    blok.transform.parent = boatParent.transform;
                     numberOfBlocks += FloatBlockCost;
                 }
                 if (blockType == BlockType.ARMOUR)
                 {
-                    Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
+                    GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
+                    blok.transform.parent = boatParent.transform;
                     numberOfBlocks += ArmourBlockCost;
                 }
                 //numberOfBlocks += FloatBlockCost;

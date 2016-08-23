@@ -15,6 +15,8 @@ public class DynamicPlayerCount : MonoBehaviour {
 
     public startButton readytostart;
 
+    public GameObject[] BoatParents;
+
     Canvas gameOver;
     GameObject restart;
 
@@ -97,6 +99,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                     p1C.rect = spot4[spotCount++];
                     Instantiate(players[i]);
                 }
+                Instantiate(BoatParents[i]);
             }
         }
         spotCount = 0;
