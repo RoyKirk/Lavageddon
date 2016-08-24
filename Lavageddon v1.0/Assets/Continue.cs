@@ -13,6 +13,7 @@ public class Continue : MonoBehaviour {
     public GameObject[] playerPrefabs;
     public ModeSwitch MS;
     public Canvas gameover;
+    GameObject[] BoatParents;
 
     // Use this for initialization
     void Start()
@@ -49,13 +50,15 @@ public class Continue : MonoBehaviour {
         gameover.enabled = false;
         menu.SetActive(!menu.activeSelf);
         resetbtn.SetActive(false);
-
+        //BoatParents[0] = (GameObject)Resources.Load("player1parent");
         for (int i = 0; i < DPC.ready.Length; i++)
         {
             if(DPC.ready[i] == true)
             {
                 Instantiate(playerPrefabs[i]);
+                //instantiate boats
             }
         }
+        //Instantiate(BoatParents[0]);
     }
 }

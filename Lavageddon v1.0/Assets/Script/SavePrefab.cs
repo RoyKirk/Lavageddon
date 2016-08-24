@@ -5,6 +5,7 @@ using UnityEditor;
 public class SavePrefab : MonoBehaviour {
 
     public GameObject parent;
+    //public GameObject playerBoats;
 
 	// Use this for initialization
 	void Start ()
@@ -20,6 +21,7 @@ public class SavePrefab : MonoBehaviour {
 
     public void CreatePrefab()
     {
-        GameObject prefab = PrefabUtility.CreatePrefab("Assets/Temp/" + parent.name + ".prefab", parent);
+        GameObject prefab = PrefabUtility.CreatePrefab("Assets/Resources/player1parent" + ".prefab", parent);
+        //prefab.transform.parent = playerBoats.transform;
     }
 }

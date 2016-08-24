@@ -51,6 +51,7 @@ public class DynamicPlayerCount : MonoBehaviour {
         }
         if (level > 0)
         {
+            BoatParents[0] = (GameObject)Resources.Load("player1parent");
             for (int i = 0; i < 4; i++)
             {
                 if (ready[i])
