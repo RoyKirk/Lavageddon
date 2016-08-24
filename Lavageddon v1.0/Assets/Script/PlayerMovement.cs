@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour {
                 PlayerDead();
 
             }
-            if (body.transform.position.y > lavaHeight && !submergeAccumulate)
+            if (body.transform.position.y > lavaHeight && submergeAccumulate)
             {
                 submergedTimer = 0;
             }
