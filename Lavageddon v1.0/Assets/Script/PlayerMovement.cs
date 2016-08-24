@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour {
                 {
 
                     Debug.DrawLine(body.transform.position, hit.point);
-                    Debug.Log(hit.collider.name);
+                    //Debug.Log(hit.collider.name);
                     if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
                     {
                          GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
