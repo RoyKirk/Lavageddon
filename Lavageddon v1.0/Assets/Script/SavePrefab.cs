@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class SavePrefab : MonoBehaviour {
 
@@ -21,7 +21,7 @@ public class SavePrefab : MonoBehaviour {
 
     public void CreatePrefab()
     {
-        GameObject prefab = PrefabUtility.CreatePrefab("Assets/Resources/player1parent" + ".prefab", parent);
+        //GameObject prefab = PrefabUtility.CreatePrefab("Assets/Resources/player1parent" + ".prefab", parent);
         //prefab.transform.parent = playerBoats.transform;
     }
 }

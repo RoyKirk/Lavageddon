@@ -25,7 +25,7 @@ public class DynamicPlayerCount : MonoBehaviour {
     bool allDead = false;
 
     int readyCount = 0;
-    int playersDead = 0;
+    public int playersDead = 0;
     
     void Awake()
     {
