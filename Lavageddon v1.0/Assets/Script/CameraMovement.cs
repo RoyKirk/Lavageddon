@@ -24,6 +24,8 @@ public class CameraMovement : MonoBehaviour {
 
     Vector3 thirdPersonPivot;
 
+    public SavePrefab save;
+
     void Update()
     {
         //controller look
@@ -86,11 +88,13 @@ public class CameraMovement : MonoBehaviour {
         {
             GetComponent<PlayerMovement>().enabled = true;
             GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
+            save.CreatePrefab();
             GetComponent<managerscript>().constructionMode = false;
         }
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {
             GetComponent<PlayerMovement>().enabled = true;
+            save.CreatePrefab();
             GetComponent<managerscript>().constructionMode = false;
         }
     }

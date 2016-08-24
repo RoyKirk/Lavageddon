@@ -38,6 +38,8 @@ public class managerscript : MonoBehaviour {
 
     GameObject boatParent;
 
+    public SavePrefab save;
+
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
     void Start ()
@@ -62,6 +64,7 @@ public class managerscript : MonoBehaviour {
         }
 
         boatParent = GameObject.FindGameObjectWithTag("boatPrefab" + player);
+        save.parent = boatParent;
     }
 
     // Update is called once per frame

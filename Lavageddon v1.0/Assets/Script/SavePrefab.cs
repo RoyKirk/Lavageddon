@@ -7,17 +7,19 @@ public class SavePrefab : MonoBehaviour {
     public GameObject parent;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+	    
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+	    
 	}
 
     public void CreatePrefab()
     {
-        Object prefab = PrefabUtility.CreatePrefab("Assets/Temp/" + parent.name + ".prefab", parent);
+        GameObject prefab = PrefabUtility.CreatePrefab("Assets/Temp/" + parent.name + ".prefab", parent);
     }
 }
