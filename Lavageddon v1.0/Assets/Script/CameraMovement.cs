@@ -41,9 +41,21 @@ public class CameraMovement : MonoBehaviour {
 
         float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
         rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
-
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
         transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+        //if (transform.localEulerAngles.x >= minimumY && transform.localEulerAngles.x <= maximumY)
+        //{
+        //    transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+        //}
+        //if (transform.localEulerAngles.x < minimumY)
+        //{
+        //    transform.localEulerAngles = new Vector3(minimumY-1, transform.localEulerAngles.y, transform.localEulerAngles.z);
+        //}
+        //if (transform.localEulerAngles.x > maximumY)
+        //{
+        //    transform.localEulerAngles = new Vector3(maximumY-1, transform.localEulerAngles.y, transform.localEulerAngles.z);
+        //}
 
         //transform.RotateAround(thirdPersonPivot, transform.up, rotationX);
         //transform.RotateAround(thirdPersonPivot, transform.right, -rotationY);
