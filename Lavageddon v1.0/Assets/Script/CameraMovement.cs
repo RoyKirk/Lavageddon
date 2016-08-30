@@ -44,33 +44,13 @@ public class CameraMovement : MonoBehaviour {
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
         transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
-        //if (transform.localEulerAngles.x >= minimumY && transform.localEulerAngles.x <= maximumY)
-        //{
-        //    transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-        //}
-        //if (transform.localEulerAngles.x < minimumY)
-        //{
-        //    transform.localEulerAngles = new Vector3(minimumY-1, transform.localEulerAngles.y, transform.localEulerAngles.z);
-        //}
-        //if (transform.localEulerAngles.x > maximumY)
-        //{
-        //    transform.localEulerAngles = new Vector3(maximumY-1, transform.localEulerAngles.y, transform.localEulerAngles.z);
-        //}
+        //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
-        //transform.RotateAround(thirdPersonPivot, transform.up, rotationX);
-        //transform.RotateAround(thirdPersonPivot, transform.right, -rotationY);
-        //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
+        //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
 
-        //transform.RotateAround(body.transform.position, transform.up, rotationX);
-        //transform.RotateAround(body.transform.position, transform.right, -rotationY);
+        //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
-        transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
-
-        transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
-
-        transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
-
-        transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+        //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
 
         if (Controller.state[player].DPad.Up == ButtonState.Pressed)
         {
@@ -78,6 +58,21 @@ public class CameraMovement : MonoBehaviour {
         }
 
         if (Controller.state[player].DPad.Down == ButtonState.Pressed)
+        {
+            transform.position += new Vector3(0, -1, 0) * movementSpeed;
+        }
+
+
+        transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
+
+        transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
+
+        if (Controller.state[player].Buttons.A == ButtonState.Pressed)
+        {
+            transform.position += new Vector3(0, 1, 0) * movementSpeed;
+        }
+
+        if (Controller.state[player].Buttons.X == ButtonState.Pressed)
         {
             transform.position += new Vector3(0, -1, 0) * movementSpeed;
         }

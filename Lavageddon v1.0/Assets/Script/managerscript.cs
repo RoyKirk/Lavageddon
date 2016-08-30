@@ -33,6 +33,9 @@ public class managerscript : MonoBehaviour {
     int FloatBlockCost;
     int ArmourBlockCost;
 
+    float blockTimer = 0;
+    float blockTime = 0.2f;
+
     //reference to option variables
     GameObject playerManager;
 
@@ -114,7 +117,7 @@ public class managerscript : MonoBehaviour {
             //    //numberOfBlocks += FloatBlockCost;
             //}
 
-            if (Controller.prevState[player].Buttons.B == ButtonState.Released && Controller.state[player].Buttons.B == ButtonState.Pressed)
+            if (Controller.prevState[player].Triggers.Left < 0.1 && Controller.state[player].Triggers.Left > 0.1)
             {
                 RaycastHit shot;
                 if (Physics.Raycast(transform.position, transform.forward, out shot))
@@ -126,11 +129,35 @@ public class managerscript : MonoBehaviour {
                         {
                             shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
 
-                            numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost; 
+                            numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
                         }
                     }
                 }
             }
+            if (Controller.state[player].Triggers.Left > 0.1)
+            {
+                blockTimer += Time.deltaTime;
+
+                if (blockTimer >= blockTime)
+                {
+                    RaycastHit shot;
+                    if (Physics.Raycast(transform.position, transform.forward, out shot))
+                    {
+                        Debug.DrawLine(transform.position, shot.point);
+                        if (shot.collider.tag == "Block")
+                        {
+                            if (!shot.collider.GetComponent<BlockDamage>().keystone)
+                            {
+                                shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
+
+                                numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
+                            }
+                        }
+                    }
+                    blockTimer = 0;
+                }
+            }
+
 
             if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)
             {
@@ -222,7 +249,25 @@ public class managerscript : MonoBehaviour {
         if (constructionMode)
         {
 
-            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            //{
+            //    if (blockType == BlockType.FLOAT)
+            //    {
+            //        //change these to a var to set its parent to a refernce
+            //        GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
+            //        blok.transform.parent = boatParent.transform;
+            //        numberOfBlocks += FloatBlockCost;
+            //    }
+            //    if (blockType == BlockType.ARMOUR)
+            //    {
+            //        GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
+            //        blok.transform.parent = boatParent.transform;
+            //        numberOfBlocks += ArmourBlockCost;
+            //    }
+            //    //numberOfBlocks += FloatBlockCost;
+            //}
+
+            if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 if (blockType == BlockType.FLOAT)
                 {
@@ -238,6 +283,29 @@ public class managerscript : MonoBehaviour {
                     numberOfBlocks += ArmourBlockCost;
                 }
                 //numberOfBlocks += FloatBlockCost;
+            }
+
+            if (Controller.state[player].Triggers.Right > 0.1 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            {
+                blockTimer += Time.deltaTime;
+
+                if (blockTimer >= blockTime)
+                {
+                    if (blockType == BlockType.FLOAT)
+                    {
+                        //change these to a var to set its parent to a refernce
+                        GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
+                        blok.transform.parent = boatParent.transform;
+                        numberOfBlocks += FloatBlockCost;
+                    }
+                    if (blockType == BlockType.ARMOUR)
+                    {
+                        GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
+                        blok.transform.parent = boatParent.transform;
+                        numberOfBlocks += ArmourBlockCost;
+                    }
+                    blockTimer = 0;
+                }
             }
 
             RaycastHit hit;
