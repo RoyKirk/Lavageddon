@@ -1,11 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEditor;
+//using UnityEditor;s
+using System.Collections.Generic;
 
-public class SavePrefab : MonoBehaviour {
+public class SavePrefab : MonoBehaviour
+{
+    /*CANT USE UNITY EDITOR TO SAVE BOAT PREFAB
+     * 
+     * will have to create own method that saves the transforms of placed blocks and type of block into a list.
+     * then instantiate those blocks from the list, taking away the players resources as well.
+     * 
+     * create a button that will reset the boat to just one block
+     * 
+     * side note: creating joints will need to happen at the right time, and the reset will need to have none
+     */
+    public struct blockinfo
+    {
+        Vector3 trans;
+        bool floating;
+    }
 
-    public GameObject parent;
-    //public GameObject playerBoats;
+    public List<blockinfo> Boat = new List<blockinfo>();
+
 
 	// Use this for initialization
 	void Start ()
@@ -21,7 +37,7 @@ public class SavePrefab : MonoBehaviour {
 
     public void CreatePrefab()
     {
-        //GameObject prefab = PrefabUtility.CreatePrefab("Assets/Resources/player1parent" + ".prefab", parent);
+        //GameObject prefab = PrefabUtility.CreatePrefab("Assets/Resources/player" + playerINT + "parent" + ".prefab", parent);
         //prefab.transform.parent = playerBoats.transform;
     }
 }
