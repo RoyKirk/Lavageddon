@@ -39,7 +39,7 @@ public class managerscript : MonoBehaviour {
     //reference to option variables
     GameObject playerManager;
 
-    GameObject boatParent;
+    //GameObject boatParent;
 
     public SavePrefab save;
 
@@ -66,8 +66,8 @@ public class managerscript : MonoBehaviour {
             //temp.GetComponent<BlockDamage>().keystone = true;
         }
 
-        boatParent = GameObject.FindGameObjectWithTag("boatPrefab" + player);
-        save.parent = boatParent;
+        //boatParent = GameObject.FindGameObjectWithTag("boatPrefab" + player);
+        //save.parent = boatParent;
     }
 
     // Update is called once per frame
@@ -128,7 +128,7 @@ public class managerscript : MonoBehaviour {
                         if (!shot.collider.GetComponent<BlockDamage>().keystone)
                         {
                             shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
-
+                            save.RemovefromList(shot.collider.transform.position);
                             numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
                         }
                     }
@@ -149,7 +149,7 @@ public class managerscript : MonoBehaviour {
                             if (!shot.collider.GetComponent<BlockDamage>().keystone)
                             {
                                 shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
-
+                                save.RemovefromList(shot.collider.transform.position);
                                 numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
                             }
                         }
@@ -273,13 +273,13 @@ public class managerscript : MonoBehaviour {
                 {
                     //change these to a var to set its parent to a refernce
                     GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
-                    blok.transform.parent = boatParent.transform;
+                    save.AddtoList(blok.transform.position, true);
                     numberOfBlocks += FloatBlockCost;
                 }
                 if (blockType == BlockType.ARMOUR)
                 {
                     GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
-                    blok.transform.parent = boatParent.transform;
+                    save.AddtoList(blok.transform.position, false);
                     numberOfBlocks += ArmourBlockCost;
                 }
                 //numberOfBlocks += FloatBlockCost;
@@ -295,13 +295,13 @@ public class managerscript : MonoBehaviour {
                     {
                         //change these to a var to set its parent to a refernce
                         GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
-                        blok.transform.parent = boatParent.transform;
+                        save.AddtoList(blok.transform.position, true);
                         numberOfBlocks += FloatBlockCost;
                     }
                     if (blockType == BlockType.ARMOUR)
                     {
                         GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
-                        blok.transform.parent = boatParent.transform;
+                        save.AddtoList(blok.transform.position, false);
                         numberOfBlocks += ArmourBlockCost;
                     }
                     blockTimer = 0;

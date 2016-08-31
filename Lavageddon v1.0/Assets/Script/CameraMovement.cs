@@ -83,13 +83,15 @@ public class CameraMovement : MonoBehaviour {
         {
             GetComponent<PlayerMovement>().enabled = true;
             GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
-            save.CreatePrefab();
+            //save.CreatePrefab();
+            save.WriteBoat();
             GetComponent<managerscript>().constructionMode = false;
         }
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {
             GetComponent<PlayerMovement>().enabled = true;
-            save.CreatePrefab();
+            //save.CreatePrefab();
+            //save.createblocks();
             GetComponent<managerscript>().constructionMode = false;
         }
     }
