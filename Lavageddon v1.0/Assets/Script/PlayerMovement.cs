@@ -58,24 +58,35 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (alive)
         {
-
-
-
+            if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
+            {
                 RaycastHit hit;
 
                 if (Physics.Raycast(body.transform.position+ new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
                 {
-
                     Debug.DrawLine(body.transform.position, hit.point);
-                    //Debug.Log(hit.collider.name);
-                    if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
-                    {
-                         GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
-                    //if (hit.collider.tag == "Block")
-                    //{
-
-                    //}
-                    }
+                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                }
+                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
+                {
+                    Debug.DrawLine(body.transform.position, hit.point);
+                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                }
+                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(-1, -1, 0), out hit, frictionCast))
+                {
+                    Debug.DrawLine(body.transform.position, hit.point);
+                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                }
+                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 1), out hit, frictionCast))
+                {
+                    Debug.DrawLine(body.transform.position, hit.point);
+                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                }
+                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, -1), out hit, frictionCast))
+                {
+                    Debug.DrawLine(body.transform.position, hit.point);
+                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                }
             }
 
             //controller look
