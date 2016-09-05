@@ -12,7 +12,7 @@ public class CameraMovement : MonoBehaviour {
     public float minimumY = -60F;
     public float maximumY = 60F;
     float rotationY = 0F;
-
+    float rotationX = 0F;
     public int player = 0;
 
     public float lavaHeight = 1.0f;
@@ -25,6 +25,8 @@ public class CameraMovement : MonoBehaviour {
     Vector3 thirdPersonPivot;
 
     public SavePrefab save;
+
+    private Vector3 initialVector = Vector3.forward;
 
     void Update()
     {
@@ -39,10 +41,29 @@ public class CameraMovement : MonoBehaviour {
 
         //thirdPersonPivot = transform.position + transform.forward.normalized * thirdPersonoffset;
 
-        float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
+        rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
         rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-        transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+        //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+
+        float rotateDegrees = 0f;
+
+        rotateDegrees = -rotationY;
+        initialVector = -body.transform.forward;
+        initialVector.y = 0;
+        Vector3 currentVector = transform.position - body.transform.position;
+        currentVector.y = 0;
+        float angleBetween = Vector3.Angle(initialVector, currentVector) * (Vector3.Cross(initialVector, currentVector).y > 0 ? 1 : -1);
+        float newAngle = Mathf.Clamp(angleBetween + rotateDegrees, minimumY, maximumY);
+        rotateDegrees = newAngle - angleBetween;
+
+        transform.RotateAround(body.transform.position, body.transform.right, rotateDegrees);
+
+
+
+
 
         //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
@@ -127,6 +148,8 @@ public class CameraMovement : MonoBehaviour {
         sensitivityX = DV.PlayerRelated[1];
         sensitivityY = DV.PlayerRelated[2];
         movementSpeed = DV.PlayerRelated[6] / 100;
+
+
 
     }
 
