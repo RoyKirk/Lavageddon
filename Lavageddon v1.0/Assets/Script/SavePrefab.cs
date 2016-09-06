@@ -9,12 +9,9 @@ public class SavePrefab : MonoBehaviour
 {
     /*CANT USE UNITY EDITOR TO SAVE BOAT PREFAB
      * 
-     * will have to create own method that saves the transforms of placed blocks and type of block into a list.
-     * then instantiate those blocks from the list, taking away the players resources as well.
      * 
      * create a button that will reset the boat to just one block
-     * 
-     * side note: creating joints will need to happen at the right time, and the reset will need to have none
+     * the current function will need to be changed to delete all of your current blocks in the scene and re-instantiate the default.
      */
 
     public GameObject blockFloat;
@@ -58,6 +55,10 @@ public class SavePrefab : MonoBehaviour
 
     public void ReadBoat(bool create)
     {
+        if(!File.Exists(path))
+        {
+            ResetBoat();
+        }
         string test = "True";
         bool testoutcome;
 
@@ -119,6 +120,18 @@ public class SavePrefab : MonoBehaviour
     public void ResetBoat()
     {
         //Destroy()
+        //0<4.04<16.16< True
+        //foreach (blockinfo block in Boat)
+        //{
+        //    if (block.trans == pos)
+        //    {
+        //        Boat.Remove(block);
+        //        break;
+        //    }
+        //}
+
+        AddtoList(new Vector3(0, 4.04f, 16.16f), true);
+        Instantiate(blockFloat, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
     }
-    
+
 }
