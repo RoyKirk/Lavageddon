@@ -157,6 +157,10 @@ public class managerscript : MonoBehaviour {
                     blockTimer = 0;
                 }
             }
+            if (Controller.state[player].Triggers.Left < 0.9)
+            {
+                blockTimer = 0;
+            }
 
 
             if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)

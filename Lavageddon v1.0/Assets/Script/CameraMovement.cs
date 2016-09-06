@@ -53,7 +53,8 @@ public class CameraMovement : MonoBehaviour {
 
         //if (transform.eulerAngles.x > initialXRotate + maximumY && transform.eulerAngles.x < initialXRotate + 360 + minimumY)
         //{
-        //    transform.RotateAround(body.transform.position,new Vector3(1,0,0), 100*(previousRotate- transform.eulerAngles.x));
+        //    transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+        //    //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.eulerAngles.x));
         //}
         //else
         //{
@@ -62,15 +63,15 @@ public class CameraMovement : MonoBehaviour {
 
         //previousRotate = transform.eulerAngles.x;
 
-            //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
+        //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
-            //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
+        //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
 
-            //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
+        //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
-            //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+        //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
 
-            if (Controller.state[player].DPad.Up == ButtonState.Pressed)
+        if (Controller.state[player].DPad.Up == ButtonState.Pressed)
         {
             transform.position += new Vector3(0, 1, 0) * movementSpeed;
         }
