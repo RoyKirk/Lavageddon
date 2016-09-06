@@ -17,7 +17,8 @@ public class SavePrefab : MonoBehaviour
      * side note: creating joints will need to happen at the right time, and the reset will need to have none
      */
 
-
+    public GameObject blockFloat;
+    public GameObject blockArmor;
     public struct blockinfo
     {
         public Vector3 trans;
@@ -25,6 +26,7 @@ public class SavePrefab : MonoBehaviour
     }
 
     public List<blockinfo> Boat = new List<blockinfo>();
+    public int playernumber = 0;
 
     string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat.txt";// this is the write path to print the boat block details to read from later.
 
@@ -32,50 +34,67 @@ public class SavePrefab : MonoBehaviour
 	void Start ()
     {
         //do some research to get a better path location, preferably this games location
-        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat.txt";
+        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
+        ReadBoat(false);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-	    
+
 	}
 
     public void WriteBoat()
     {
-        if(!File.Exists(path))//if the file doesnt already exist (not sure if we need this as the file should always be overridden at this stage)
-        {
-            
-        }
-
-        string createText = "BOATS!";
+        string createText = "";
         File.WriteAllText(path, createText);
-
-        int blockCounter = 0;
-
+        
         foreach (blockinfo block in Boat)
         {
-            string blockN = Environment.NewLine + "Block" + blockCounter + " = <" + block.trans.x + "> <" + block.trans.y + "> <" + block.trans.z + "> <" + block.floating + ">";
+            string blockN = block.trans.x + "<" + block.trans.y + "<" + block.trans.z + "< " + block.floating + Environment.NewLine;
             File.AppendAllText(path, blockN);
-            blockCounter++;
         }
     }
 
-    public void ReadBoat()
+    public void ReadBoat(bool create)
     {
-        //foreach (string line in File.ReadLines(@"d:\data\episodes.txt"))
-        //{
-        //    if (line.Contains("episode") & line.Contains("2006"))
-        //    {
-        //        Console.WriteLine(line);
-        //    }
-        //}
+        string test = "True";
+        bool testoutcome;
 
-        foreach (string blockLine in File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat.txt"))
+        //int start = 0;
+        //int at = 0;
+        char splitChar = '<';
+
+        foreach (string blockLine in File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt"))
         {
-            Debug.Log(blockLine);
+            String[] values = blockLine.Split(splitChar);
+            Vector3 pos = new Vector3((float.Parse(values[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat)),(float.Parse(values[1], System.Globalization.CultureInfo.InvariantCulture.NumberFormat)),(float.Parse(values[2], System.Globalization.CultureInfo.InvariantCulture.NumberFormat)));
+
+            if (testoutcome = blockLine.Contains(test))//float block
+            {
+                if(create)
+                {
+                    Instantiate(blockFloat, pos, Quaternion.identity);//loads the boat
+                }
+                else
+                {
+                    AddtoList(pos, true);//adds to the list (this needs to be done in this script
+                }
+            }
+            else//armor block
+            {
+                if (create)
+                {
+                    Instantiate(blockFloat, pos, Quaternion.identity);
+                }
+                else
+                {
+                    AddtoList(pos, false);
+                }
+            }
         }
     }
+    
 
     public void AddtoList(Vector3 pos, bool floating)
     {
@@ -83,7 +102,6 @@ public class SavePrefab : MonoBehaviour
         block.trans = pos;
         block.floating = floating;
         Boat.Add(block);
-        //Debug.Log("Adding: " + block.trans.x + " " + block.trans.y + " " + block.trans.z);
     }
 
     public void RemovefromList(Vector3 pos)
@@ -93,23 +111,14 @@ public class SavePrefab : MonoBehaviour
             if(block.trans == pos)
             {
                 Boat.Remove(block);
-                //Debug.Log("Removed: "+block.trans.x + " " + block.trans.y + " " + block.trans.z);
                 break;
             }
         }
     }
 
-    public void createblocks()
+    public void ResetBoat()
     {
-        //for(int i = 0; i < Boat.Count; i++)
-        //{
-        //    Debug.Log(Boat.);
-        //}
-        Debug.Log("creating boats for players");
-
-        foreach (blockinfo block in Boat)
-        {
-            Debug.Log("created: "+block.trans.x + " " + block.trans.y + " " + block.trans.z);
-        }
+        //Destroy()
     }
+    
 }

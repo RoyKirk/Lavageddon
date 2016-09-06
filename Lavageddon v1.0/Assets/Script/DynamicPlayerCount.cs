@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -26,7 +26,7 @@ public class DynamicPlayerCount : MonoBehaviour {
 
     int readyCount = 0;
     public int playersDead = 0;
-    
+
     void Awake()
     {
 
@@ -87,21 +87,21 @@ public class DynamicPlayerCount : MonoBehaviour {
                     p1C = players[i].GetComponent<Camera>();
                     p1C.rect = new Rect(0, 0, 1, 1);
                     Instantiate(players[i]);//set up player
-                    players[i].GetComponent<SavePrefab>().ReadBoat();
+                    players[i].GetComponent<SavePrefab>().ReadBoat(true);
                 }
                 else if (readyCount == 2)
                 {
                     p1C = players[i].GetComponent<Camera>();
                     p1C.rect = spot2[spotCount++];
                     Instantiate(players[i]);// set up player
-                    players[i].GetComponent<SavePrefab>().ReadBoat();
+                    players[i].GetComponent<SavePrefab>().ReadBoat(true);
                 }
                 else if (readyCount > 2)
                 {
                     p1C = players[i].GetComponent<Camera>();
                     p1C.rect = spot4[spotCount++];
                     Instantiate(players[i]);
-                    players[i].GetComponent<SavePrefab>().ReadBoat();
+                    players[i].GetComponent<SavePrefab>().ReadBoat(true);
                 }
                 Instantiate(BoatParents[i]);//change this to get each player to call create boat in their save code
             }
