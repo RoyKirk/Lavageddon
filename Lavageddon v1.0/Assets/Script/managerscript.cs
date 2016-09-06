@@ -34,7 +34,7 @@ public class managerscript : MonoBehaviour {
     int ArmourBlockCost;
 
     float blockTimer = 0;
-    float blockTime = 0.2f;
+    float blockTime = 0.5f;
 
     //reference to option variables
     GameObject playerManager;
@@ -117,7 +117,7 @@ public class managerscript : MonoBehaviour {
             //    //numberOfBlocks += FloatBlockCost;
             //}
 
-            if (Controller.prevState[player].Triggers.Left < 0.1 && Controller.state[player].Triggers.Left > 0.1)
+            if (Controller.prevState[player].Triggers.Left < 0.9 && Controller.state[player].Triggers.Left > 0.9)
             {
                 RaycastHit shot;
                 if (Physics.Raycast(transform.position, transform.forward, out shot))
@@ -134,7 +134,7 @@ public class managerscript : MonoBehaviour {
                     }
                 }
             }
-            if (Controller.state[player].Triggers.Left > 0.1)
+            if (Controller.state[player].Triggers.Left > 0.9)
             {
                 blockTimer += Time.deltaTime;
 
@@ -267,7 +267,7 @@ public class managerscript : MonoBehaviour {
             //    //numberOfBlocks += FloatBlockCost;
             //}
 
-            if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.prevState[player].Triggers.Right < 0.9 && Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 if (blockType == BlockType.FLOAT)
                 {
@@ -285,7 +285,7 @@ public class managerscript : MonoBehaviour {
                 //numberOfBlocks += FloatBlockCost;
             }
 
-            if (Controller.state[player].Triggers.Right > 0.1 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 blockTimer += Time.deltaTime;
 

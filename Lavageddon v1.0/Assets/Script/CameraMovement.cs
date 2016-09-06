@@ -28,6 +28,9 @@ public class CameraMovement : MonoBehaviour {
 
     private Vector3 initialVector = Vector3.forward;
 
+    float initialXRotate;
+    float previousRotate;
+
     void Update()
     {
         //controller look
@@ -44,36 +47,30 @@ public class CameraMovement : MonoBehaviour {
         rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
         rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-
-        //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-
-
-        float rotateDegrees = 0f;
-
-        rotateDegrees = -rotationY;
-        initialVector = -body.transform.forward;
-        initialVector.y = 0;
-        Vector3 currentVector = transform.position - body.transform.position;
-        currentVector.y = 0;
-        float angleBetween = Vector3.Angle(initialVector, currentVector) * (Vector3.Cross(initialVector, currentVector).y > 0 ? 1 : -1);
-        float newAngle = Mathf.Clamp(angleBetween + rotateDegrees, minimumY, maximumY);
-        rotateDegrees = newAngle - angleBetween;
-
-        transform.RotateAround(body.transform.position, body.transform.right, rotateDegrees);
+        transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
 
 
+        //if (transform.eulerAngles.x > initialXRotate + maximumY && transform.eulerAngles.x < initialXRotate + 360 + minimumY)
+        //{
+        //    transform.RotateAround(body.transform.position,new Vector3(1,0,0), 100*(previousRotate- transform.eulerAngles.x));
+        //}
+        //else
+        //{
+        //    transform.RotateAround(body.transform.position, body.transform.right, rotationY);
+        //}
 
+        //previousRotate = transform.eulerAngles.x;
 
-        //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
+            //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
-        //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
+            //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
 
-        //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
+            //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
-        //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+            //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
 
-        if (Controller.state[player].DPad.Up == ButtonState.Pressed)
+            if (Controller.state[player].DPad.Up == ButtonState.Pressed)
         {
             transform.position += new Vector3(0, 1, 0) * movementSpeed;
         }
@@ -149,7 +146,8 @@ public class CameraMovement : MonoBehaviour {
         sensitivityY = DV.PlayerRelated[2];
         movementSpeed = DV.PlayerRelated[6] / 100;
 
-
+        initialXRotate = transform.eulerAngles.x;
+        previousRotate = transform.eulerAngles.x;
 
     }
 
