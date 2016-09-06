@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour {
     int lengthOfLineRenderer = 10;
 
     public float laserMinTime = 0.5f;
-    public float laserResidual = 0.02f;
+    public float laserResidual = 0.3f;
     float laserTimer = 0.0f;
     public float bombMinTime = 0.5f;
     float bombTimer = 0.0f;
@@ -64,28 +64,43 @@ public class PlayerMovement : MonoBehaviour {
 
                 if (Physics.Raycast(body.transform.position+ new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
                 {
-                    Debug.DrawLine(body.transform.position, hit.point);
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    if (hit.collider.tag == "Block")
+                    {
+                        Debug.DrawLine(body.transform.position, hit.point);
+                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
                 {
-                    Debug.DrawLine(body.transform.position, hit.point);
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    if (hit.collider.tag == "Block")
+                    {
+                        Debug.DrawLine(body.transform.position, hit.point);
+                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(-1, -1, 0), out hit, frictionCast))
                 {
-                    Debug.DrawLine(body.transform.position, hit.point);
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    if (hit.collider.tag == "Block")
+                    {
+                        Debug.DrawLine(body.transform.position, hit.point);
+                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 1), out hit, frictionCast))
                 {
-                    Debug.DrawLine(body.transform.position, hit.point);
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    if (hit.collider.tag == "Block")
+                    {
+                        Debug.DrawLine(body.transform.position, hit.point);
+                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, -1), out hit, frictionCast))
                 {
-                    Debug.DrawLine(body.transform.position, hit.point);
-                    GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    if (hit.collider.tag == "Block")
+                    {
+                        Debug.DrawLine(body.transform.position, hit.point);
+                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                    }
                 }
             }
 
@@ -121,6 +136,7 @@ public class PlayerMovement : MonoBehaviour {
                 lineRenderer.enabled = false;
             }
 
+
             if (laserTimer < laserMinTime)
             {
                 RaycastHit shot;
@@ -142,6 +158,11 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
+            if (laserTimer >= laserResidual*3)
+            {
+                GamePad.SetVibration(0, 0f, 0f);
+            }
+
             //if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1)
             if (Controller.state[player].Triggers.Right > 0.1)
             {
@@ -159,6 +180,7 @@ public class PlayerMovement : MonoBehaviour {
                 if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
                 {
                     laserTimer = 0.0f;
+                    GamePad.SetVibration(0, 10.0f, 10.0f);
                     //laser.enabled = true;
                     //int i = 0;
                     //while (i < lengthOfLineRenderer)
