@@ -101,7 +101,11 @@ public class managerscript : MonoBehaviour {
 
         if (constructionMode)
         {
-
+            //if the player presses the left stick in, reset the boat
+            if(Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed)
+            {
+                save.ResetBoat();
+            }
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             //{
             //    if (blockType == BlockType.FLOAT)
@@ -125,7 +129,7 @@ public class managerscript : MonoBehaviour {
                     Debug.DrawLine(transform.position, shot.point);
                     if (shot.collider.tag == "Block")
                     {
-                        if (!shot.collider.GetComponent<BlockDamage>().keystone)
+                        if (!shot.collider.GetComponent<BlockDamage>().keystone && shot.collider.GetComponent<BuildingBlock>().playerOwner == player)
                         {
                             shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
                             save.RemovefromList(shot.collider.transform.position);
@@ -146,7 +150,7 @@ public class managerscript : MonoBehaviour {
                         Debug.DrawLine(transform.position, shot.point);
                         if (shot.collider.tag == "Block")
                         {
-                            if (!shot.collider.GetComponent<BlockDamage>().keystone)
+                            if (!shot.collider.GetComponent<BlockDamage>().keystone && shot.collider.GetComponent<BuildingBlock>().playerOwner == player)
                             {
                                 shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
                                 save.RemovefromList(shot.collider.transform.position);
@@ -248,11 +252,16 @@ public class managerscript : MonoBehaviour {
         //}
     }
 
+    public bool testingboat = false;
+
     void LateUpdate()
     {
         if (constructionMode)
         {
-
+            if(Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
+            {//the right stick is being pressed in, atm we want this to "test the boat"
+                testingboat = true;
+            }
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             //{
             //    if (blockType == BlockType.FLOAT)
@@ -277,12 +286,14 @@ public class managerscript : MonoBehaviour {
                 {
                     //change these to a var to set its parent to a refernce
                     GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
+                    blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, true);
                     numberOfBlocks += FloatBlockCost;
                 }
                 if (blockType == BlockType.ARMOUR)
                 {
                     GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
+                    blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, false);
                     numberOfBlocks += ArmourBlockCost;
                 }
@@ -299,12 +310,14 @@ public class managerscript : MonoBehaviour {
                     {
                         //change these to a var to set its parent to a refernce
                         GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
+                        blok.GetComponent<BuildingBlock>().playerOwner = player;
                         save.AddtoList(blok.transform.position, true);
                         numberOfBlocks += FloatBlockCost;
                     }
                     if (blockType == BlockType.ARMOUR)
                     {
                         GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
+                        blok.GetComponent<BuildingBlock>().playerOwner = player;
                         save.AddtoList(blok.transform.position, false);
                         numberOfBlocks += ArmourBlockCost;
                     }
@@ -328,10 +341,12 @@ public class managerscript : MonoBehaviour {
                         if (blockType == BlockType.FLOAT)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
+                            //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.ARMOUR)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabArmour, hit.collider.transform.position, hit.collider.transform.rotation);
+                            //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         startConstruction = false;
                     }

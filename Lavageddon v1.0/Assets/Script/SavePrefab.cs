@@ -9,6 +9,7 @@ public class SavePrefab : MonoBehaviour
 {
     /*CANT USE UNITY EDITOR TO SAVE BOAT PREFAB
      * 
+     * at the moment the left stick button will create a starting block for the player if there is none.
      * 
      * create a button that will reset the boat to just one block
      * the current function will need to be changed to delete all of your current blocks in the scene and re-instantiate the default.
@@ -57,13 +58,12 @@ public class SavePrefab : MonoBehaviour
     {
         if(!File.Exists(path))
         {
+            File.WriteAllText(path, "");
             ResetBoat();
         }
         string test = "True";
         bool testoutcome;
-
-        //int start = 0;
-        //int at = 0;
+        
         char splitChar = '<';
 
         foreach (string blockLine in File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt"))

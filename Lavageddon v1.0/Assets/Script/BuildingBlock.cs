@@ -128,8 +128,25 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<WhirlpoolCurrent>().enabled = false;
             GetComponent<FloatFixed>().enabled = false;
         }
-
+        if(GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true)
+        {
+            TestBoat(playerOwner);
+        }
     }
 
+    public int playerOwner;//this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not
+
+    //set the block to change state (this is required to be called for the boat testing funtion)
+    public void TestBoat(int owner)
+    {
+        if(playerOwner == owner)
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<WhirlpoolCurrent>().enabled = true;
+            GetComponent<FloatFixed>().enabled = true;
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<BlockDamage>().keystone = false;
+        }
+    }
 
 }

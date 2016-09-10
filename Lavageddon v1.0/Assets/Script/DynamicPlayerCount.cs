@@ -15,7 +15,7 @@ public class DynamicPlayerCount : MonoBehaviour {
 
     public startButton readytostart;
 
-    public GameObject[] BoatParents;
+    //public GameObject[] BoatParents;
 
     Canvas gameOver;
     GameObject restart;
@@ -51,7 +51,7 @@ public class DynamicPlayerCount : MonoBehaviour {
         }
         if (level > 0)
         {
-            BoatParents[0] = (GameObject)Resources.Load("player1parent");
+            //BoatParents[0] = (GameObject)Resources.Load("player1parent");
             for (int i = 0; i < 4; i++)
             {
                 if (ready[i])
@@ -103,7 +103,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                     Instantiate(players[i]);
                     players[i].GetComponent<SavePrefab>().ReadBoat(true);
                 }
-                Instantiate(BoatParents[i]);//change this to get each player to call create boat in their save code
+                //Instantiate(BoatParents[i]);//change this to get each player to call create boat in their save code
             }
         }
         spotCount = 0;
