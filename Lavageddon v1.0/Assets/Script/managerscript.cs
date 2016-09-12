@@ -48,6 +48,8 @@ public class managerscript : MonoBehaviour {
 
     //GameObject boatParent;
 
+    public bool testingboat = false;
+
     public SavePrefab save;
 
     //List<GameObject> boat = new List<GameObject>();
@@ -80,6 +82,10 @@ public class managerscript : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if(!constructionMode)
+        {
+            //testingboat = false;
+        }
         numberText.text = "No. of Blocks = " + (maxNumberOfBlocks - numberOfBlocks);
 
 	    if(blockdestroyed)
@@ -249,7 +255,6 @@ public class managerscript : MonoBehaviour {
         //}
     }
 
-    public bool testingboat = false;
 
     void LateUpdate()
     {

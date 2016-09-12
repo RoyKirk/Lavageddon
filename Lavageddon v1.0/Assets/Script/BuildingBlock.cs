@@ -26,13 +26,14 @@ public class BuildingBlock : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if(!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+        if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<WhirlpoolCurrent>().enabled = true;
             GetComponent<FloatFixed>().enabled = true;
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<BlockDamage>().keystone = false;
+            Debug.Log("not in construction mode");
         }
         else
         {

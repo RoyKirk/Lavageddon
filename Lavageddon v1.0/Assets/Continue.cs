@@ -15,7 +15,7 @@ public class Continue : MonoBehaviour {
     public GameObject[] playerPrefabs;
     public ModeSwitch MS;
     public Canvas gameover;
-    GameObject[] BoatParents;
+    //GameObject[] BoatParents;
 
     public int select = 0;
 
