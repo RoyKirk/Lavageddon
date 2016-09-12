@@ -41,7 +41,7 @@ public class managerscript : MonoBehaviour {
     int ArmourBlockCost;
 
     float blockTimer = 0;
-    float blockTime = 0.5f;
+    float blockTime = 0.1f;
 
     //reference to option variables
     GameObject playerManager;
@@ -127,7 +127,7 @@ public class managerscript : MonoBehaviour {
             //    }
             //    //numberOfBlocks += FloatBlockCost;
             //}
-            if (Controller.prevState[player].Triggers.Right < 0.9 && Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.prevState[player].Triggers.Right < 0.4 && Controller.state[player].Triggers.Right > 0.4 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
                 //numberOfBlocks += FloatBlockCost;
@@ -144,7 +144,7 @@ public class managerscript : MonoBehaviour {
                 }
             }
 
-            if (Controller.prevState[player].Triggers.Left < 0.9 && Controller.state[player].Triggers.Left > 0.9)
+            if (Controller.prevState[player].Triggers.Left < 0.4 && Controller.state[player].Triggers.Left > 0.4)
             {
                 RemoveBlock();
             }
@@ -235,6 +235,7 @@ public class managerscript : MonoBehaviour {
         else
         {
             Destroy(block);
+            startConstruction = true;
         }
         //if (!block.GetComponent<buildingblock>().placed)
         //{
@@ -319,7 +320,7 @@ public class managerscript : MonoBehaviour {
                     if(blockType == BlockType.FLOAT3X3X3|| blockType == BlockType.ARMOUR3X3X3)
                     {
                         block.transform.rotation = hit.collider.transform.rotation;
-                        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*3;
+                        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*2;
                     }
                     else
                     {

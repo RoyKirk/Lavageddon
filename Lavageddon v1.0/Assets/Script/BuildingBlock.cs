@@ -10,6 +10,7 @@ public class BuildingBlock : MonoBehaviour {
     public int playerOwner;//this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not
 
     public Vector3 startPos;
+    public Quaternion startRotation;
 
     bool changeState;
 
@@ -22,6 +23,7 @@ public class BuildingBlock : MonoBehaviour {
         GetComponent<WhirlpoolCurrent>().enabled = false;
         GetComponent<FloatFixed>().enabled = false;
         startPos = transform.position;
+        startRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -50,8 +52,12 @@ public class BuildingBlock : MonoBehaviour {
         else if (changeState == true)
         {
             //reset boat
+            
             transform.position = startPos;
-            transform.rotation = Quaternion.identity;
+            transform.rotation = startRotation;
+            //GetComponent<Rigidbody>().MovePosition(startPos);
+            //GetComponent<Rigidbody>().MoveRotation(startRotation);
+            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             changeState = false;
             MakeJoints();
         }
@@ -95,6 +101,7 @@ public class BuildingBlock : MonoBehaviour {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
                 temp.enableCollision = false;
+                temp.enablePreprocessing = false;
                 temp.GetComponent<Collider>().enabled = false;
                 temp.breakForce = 1000.0f;
                 temp.breakTorque = 1000.0f;
@@ -110,6 +117,7 @@ public class BuildingBlock : MonoBehaviour {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
                 temp.enableCollision = false;
+                temp.enablePreprocessing = false;
                 temp.GetComponent<Collider>().enabled = false;
                 temp.breakForce = 1000.0f;
                 temp.breakTorque = 1000.0f;
@@ -125,6 +133,7 @@ public class BuildingBlock : MonoBehaviour {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
                 temp.enableCollision = false;
+                temp.enablePreprocessing = false;
                 temp.GetComponent<Collider>().enabled = false;
                 temp.breakForce = 1000.0f;
                 temp.breakTorque = 1000.0f;
@@ -140,6 +149,7 @@ public class BuildingBlock : MonoBehaviour {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
                 temp.enableCollision = false;
+                temp.enablePreprocessing = false;
                 temp.GetComponent<Collider>().enabled = false;
                 temp.breakForce = 1000.0f;
                 temp.breakTorque = 1000.0f;
@@ -155,6 +165,7 @@ public class BuildingBlock : MonoBehaviour {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
                 temp.enableCollision = false;
+                temp.enablePreprocessing = false;
                 temp.GetComponent<Collider>().enabled = false;
                 temp.breakForce = 1000.0f;
                 temp.breakTorque = 1000.0f;
@@ -170,6 +181,7 @@ public class BuildingBlock : MonoBehaviour {
                 FixedJoint temp = gameObject.AddComponent<FixedJoint>();
                 temp.connectedBody = hit.collider.GetComponent<Rigidbody>();
                 temp.enableCollision = false;
+                temp.enablePreprocessing = false;
                 temp.GetComponent<Collider>().enabled = false;
                 temp.breakForce = 1000.0f;
                 temp.breakTorque = 1000.0f;
