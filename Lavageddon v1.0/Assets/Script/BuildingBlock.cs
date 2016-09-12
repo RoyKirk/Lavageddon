@@ -27,15 +27,17 @@ public class BuildingBlock : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {
+            //ResetBoat();
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<WhirlpoolCurrent>().enabled = true;
             GetComponent<FloatFixed>().enabled = true;
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<BlockDamage>().keystone = false;
-            Debug.Log("not in construction mode");
+            //Debug.Log("not in construction mode");
         }
         else
         {
@@ -43,24 +45,17 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<WhirlpoolCurrent>().enabled = false;
             GetComponent<FloatFixed>().enabled = false;
+            //Debug.Log("else..");
         }
         //this can be optimsed later to only be called once every change, atm its being called every frame which is not needed.
-        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true)
+        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true && changeState == false)
         {
             TestBoat(playerOwner);
             changeState = true;
         }
-        else if (changeState == true)
+        else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false && changeState == true)
         {
-            //reset boat
-            
-            transform.position = startPos;
-            transform.rotation = startRotation;
-            //GetComponent<Rigidbody>().MovePosition(startPos);
-            //GetComponent<Rigidbody>().MoveRotation(startRotation);
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            changeState = false;
-            MakeJoints();
+            ResetBoat();
         }
     }
     // Update is called once per frame
@@ -77,6 +72,18 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<BlockDamage>().keystone = false;
         }
+    }
+
+    public void ResetBoat()
+    {
+        //reset boat
+        transform.position = startPos;
+        transform.rotation = startRotation;
+        //GetComponent<Rigidbody>().MovePosition(startPos);
+        //GetComponent<Rigidbody>().MoveRotation(startRotation);
+        GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        changeState = false;
+        MakeJoints();
     }
 
     //this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not

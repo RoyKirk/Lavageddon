@@ -46,23 +46,13 @@ public class FloatFixed : MonoBehaviour
     
     void Update()
     {
-        if (GameObject.Find("Controller"))
+        if (GameObject.Find("Controller") && GetComponent<BuildingBlock>().enabled == false)
         {
-            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction && GameObject.Find("Player" + 0 + "(Clone)").GetComponent<managerscript>().testingboat == false)
+            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction && GameObject.Find("Player" + 0 + "(Clone)").GetComponent<managerscript>().testingboat == false || !GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
             {
                 GetComponent<BuildingBlock>().enabled = true;
             }
         }
-
-
-        //if (FLOAT)
-        //{
-        //    GetComponent<Renderer>().material.color = Color.green;
-        //}
-        //else
-        //{
-        //    GetComponent<Renderer>().material.color = Color.yellow;
-        //}
 
         for (int i = 0; i < offsetsize; i++)
         {

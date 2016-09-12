@@ -36,12 +36,6 @@ public class SavePrefab : MonoBehaviour
         ReadBoat(false);
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-
-	}
-
     public void WriteBoat()
     {
         string createText = "";
