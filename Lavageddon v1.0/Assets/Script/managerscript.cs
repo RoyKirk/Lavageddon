@@ -400,21 +400,29 @@ public class managerscript : MonoBehaviour {
                         if (blockType == BlockType.FLOAT)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
+                            block.transform.rotation = hit.collider.transform.rotation;
+                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.ARMOUR)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabArmour, hit.collider.transform.position, hit.collider.transform.rotation);
+                            block.transform.rotation = hit.collider.transform.rotation;
+                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.FLOAT3X3X3)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
+                            block.transform.rotation = hit.collider.transform.rotation;
+                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*3;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.ARMOUR3X3X3)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
+                            block.transform.rotation = hit.collider.transform.rotation;
+                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*3;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         startConstruction = false;
