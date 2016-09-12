@@ -6,10 +6,20 @@ public class BuildingBlock : MonoBehaviour {
 
 
     public float blockCast;
-    
+
+    public int playerOwner;//this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not
+
+    public Vector3 startPos;
+
+    void OnAwake()
+    {
+        startPos = transform.position;
+    }
+
     // Use this for initialization
     void Start ()
     {
+<<<<<<< HEAD
         MakeJoints();        
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().useGravity = false;
@@ -64,6 +74,9 @@ public class BuildingBlock : MonoBehaviour {
              Destroy(joint);
         }
 
+=======
+        OnAwake();
+>>>>>>> b9cfa7102b4a25ade4c6bacf80cfbd79b72ef3d5
         GetComponent<BoxCollider>().enabled = false;
         RaycastHit hit;
 
@@ -158,6 +171,62 @@ public class BuildingBlock : MonoBehaviour {
         }
 
         GetComponent<BoxCollider>().enabled = true;
+<<<<<<< HEAD
+=======
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<WhirlpoolCurrent>().enabled = false;
+        GetComponent<FloatFixed>().enabled = false;
+    }
+
+    // Update is called once per frame
+    void Update() {
+        if(!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<WhirlpoolCurrent>().enabled = true;
+            GetComponent<FloatFixed>().enabled = true;
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<BlockDamage>().keystone = false;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<WhirlpoolCurrent>().enabled = false;
+            GetComponent<FloatFixed>().enabled = false;
+        }
+
+        //this can be optimsed later to only be called once every change, atm its being called every frame which is not needed.
+        if(GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true)
+        {
+            TestBoat(playerOwner);
+            changeState = true;
+        }
+        else if (changeState == true)
+        {
+            //reset boat
+            transform.position = startPos;
+            transform.rotation = Quaternion.identity;
+            changeState = false;
+        }
+    }
+
+    bool changeState;
+    
+    //set the block to change state (this is required to be called for the boat testing funtion)
+    public void TestBoat(int owner)
+    {
+        if(playerOwner == owner)
+        {
+            GetComponent<BuildingBlock>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = false;
+            //GetComponent<WhirlpoolCurrent>().enabled = true;
+            GetComponent<FloatFixed>().enabled = true;
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<BlockDamage>().keystone = false;
+        }
+>>>>>>> b9cfa7102b4a25ade4c6bacf80cfbd79b72ef3d5
     }
 
 }
