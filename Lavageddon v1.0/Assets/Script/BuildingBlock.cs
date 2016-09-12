@@ -55,23 +55,6 @@ public class BuildingBlock : MonoBehaviour {
         }
         else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false && changeState == true)
         {
-            //reset boat
-            transform.position = startPos;
-            transform.rotation = startRotation;
-            //GetComponent<Rigidbody>().MovePosition(startPos);
-            //GetComponent<Rigidbody>().MoveRotation(startRotation);
-            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            changeState = false;
-            FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
-            foreach (FixedJoint joint in joints)
-            {
-                if (!joint.connectedBody)
-                {
-                    Destroy(joint);
-                }
-            }
-            MakeJoints();
             ResetBoat();
         }
     }
@@ -99,7 +82,16 @@ public class BuildingBlock : MonoBehaviour {
         //GetComponent<Rigidbody>().MovePosition(startPos);
         //GetComponent<Rigidbody>().MoveRotation(startRotation);
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
         changeState = false;
+        FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
+        foreach (FixedJoint joint in joints)
+        {
+            if (!joint.connectedBody)
+            {
+                Destroy(joint);
+            }
+        }
         MakeJoints();
     }
 
