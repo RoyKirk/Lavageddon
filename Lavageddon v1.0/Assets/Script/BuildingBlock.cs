@@ -6,11 +6,20 @@ public class BuildingBlock : MonoBehaviour {
 
 
     public float blockCast;
-    
+
+    public int playerOwner;//this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not
+
+    public Vector3 startPos;
+
+    void OnAwake()
+    {
+        startPos = transform.position;
+    }
+
     // Use this for initialization
     void Start ()
     {
-
+        OnAwake();
         GetComponent<BoxCollider>().enabled = false;
         RaycastHit hit;
 
@@ -128,14 +137,24 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<WhirlpoolCurrent>().enabled = false;
             GetComponent<FloatFixed>().enabled = false;
         }
+
+        //this can be optimsed later to only be called once every change, atm its being called every frame which is not needed.
         if(GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true)
         {
             TestBoat(playerOwner);
+            changeState = true;
+        }
+        else if (changeState == true)
+        {
+            //reset boat
+            transform.position = startPos;
+            transform.rotation = Quaternion.identity;
+            changeState = false;
         }
     }
 
-    public int playerOwner;//this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not
-
+    bool changeState;
+    
     //set the block to change state (this is required to be called for the boat testing funtion)
     public void TestBoat(int owner)
     {
