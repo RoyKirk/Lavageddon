@@ -106,7 +106,7 @@ public class managerscript : MonoBehaviour {
             #endif
         }
 
-        if (constructionMode)
+        if (constructionMode && !testingboat)
         {
             //if the player presses the left stick in, reset the boat
             if(Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed)
@@ -127,23 +127,26 @@ public class managerscript : MonoBehaviour {
             //    }
             //    //numberOfBlocks += FloatBlockCost;
             //}
+            if (Controller.prevState[player].Triggers.Right < 0.9 && Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            {
+                PlaceBlock();
+                //numberOfBlocks += FloatBlockCost;
+            }
+
+            if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            {
+                blockTimer += Time.deltaTime;
+
+                if (blockTimer >= blockTime)
+                {
+                    PlaceBlock();
+                    blockTimer = 0;
+                }
+            }
 
             if (Controller.prevState[player].Triggers.Left < 0.9 && Controller.state[player].Triggers.Left > 0.9)
             {
-                RaycastHit shot;
-                if (Physics.Raycast(transform.position, transform.forward, out shot))
-                {
-                    Debug.DrawLine(transform.position, shot.point);
-                    if (shot.collider.tag == "Block")
-                    {
-                        if (!shot.collider.GetComponent<BlockDamage>().keystone && shot.collider.GetComponent<BuildingBlock>().playerOwner == player)
-                        {
-                            shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
-                            save.RemovefromList(shot.collider.transform.position);
-                            numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
-                        }
-                    }
-                }
+                RemoveBlock();
             }
             if (Controller.state[player].Triggers.Left > 0.9)
             {
@@ -151,24 +154,11 @@ public class managerscript : MonoBehaviour {
 
                 if (blockTimer >= blockTime)
                 {
-                    RaycastHit shot;
-                    if (Physics.Raycast(transform.position, transform.forward, out shot))
-                    {
-                        Debug.DrawLine(transform.position, shot.point);
-                        if (shot.collider.tag == "Block")
-                        {
-                            if (!shot.collider.GetComponent<BlockDamage>().keystone && shot.collider.GetComponent<BuildingBlock>().playerOwner == player)
-                            {
-                                shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
-                                save.RemovefromList(shot.collider.transform.position);
-                                numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
-                            }
-                        }
-                    }
+                    RemoveBlock();
                     blockTimer = 0;
                 }
             }
-            if (Controller.state[player].Triggers.Left < 0.9)
+            if (Controller.prevState[player].Triggers.Left > 0.9 && Controller.state[player].Triggers.Left < 0.9)
             {
                 blockTimer = 0;
             }
@@ -287,102 +277,7 @@ public class managerscript : MonoBehaviour {
             //    //numberOfBlocks += FloatBlockCost;
             //}
 
-            if (Controller.prevState[player].Triggers.Right < 0.9 && Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
-            {
-                if (blockType == BlockType.FLOAT)
-                {
-                    if (numberOfBlocks + FloatBlockCost >= 0)
-                    {
-                        //change these to a var to set its parent to a refernce
-                        GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
-                        blok.GetComponent<BuildingBlock>().playerOwner = player;
-                        save.AddtoList(blok.transform.position, true);
-                        numberOfBlocks += FloatBlockCost;
-                    }
-                }
-                if (blockType == BlockType.ARMOUR)
-                {
-                    if (numberOfBlocks + ArmourBlockCost >= 0)
-                    {
-                        GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
-                        blok.GetComponent<BuildingBlock>().playerOwner = player;
-                        save.AddtoList(blok.transform.position, false);
-                        numberOfBlocks += ArmourBlockCost;
-                    }
-                }
-                if (blockType == BlockType.FLOAT3X3X3)
-                {
-                    if (numberOfBlocks + FloatBlockCost*27 >= 0)
-                    {
-                        GameObject blok = Instantiate(blockPrefabFloat3X3X3, block.transform.position, block.transform.rotation) as GameObject;
-                        blok.GetComponent<BuildingBlock>().playerOwner = player;
-                        save.AddtoList(blok.transform.position, false);
-                        numberOfBlocks += ArmourBlockCost*27;
-                    }
-                }
-                if (blockType == BlockType.ARMOUR3X3X3)
-                {
-                    if (numberOfBlocks + ArmourBlockCost*27 >= 0)
-                    {
-                        GameObject blok = Instantiate(blockPrefabArmour3X3X3, block.transform.position, block.transform.rotation) as GameObject;
-                        blok.GetComponent<BuildingBlock>().playerOwner = player;
-                        save.AddtoList(blok.transform.position, false);
-                        numberOfBlocks += ArmourBlockCost*27;
-                    }
-                }
-                //numberOfBlocks += FloatBlockCost;
-            }
 
-            if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
-            {
-                blockTimer += Time.deltaTime;
-
-                if (blockTimer >= blockTime)
-                {
-                    if (blockType == BlockType.FLOAT)
-                    {
-                        if (numberOfBlocks + FloatBlockCost >= 0)
-                        {
-                            //change these to a var to set its parent to a refernce
-                            GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
-                            blok.GetComponent<BuildingBlock>().playerOwner = player;
-                            save.AddtoList(blok.transform.position, true);
-                            numberOfBlocks += FloatBlockCost;
-                        }
-                    }
-                    if (blockType == BlockType.ARMOUR)
-                    {
-                        if (numberOfBlocks + ArmourBlockCost >= 0)
-                        {
-                            GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
-                            blok.GetComponent<BuildingBlock>().playerOwner = player;
-                            save.AddtoList(blok.transform.position, false);
-                            numberOfBlocks += ArmourBlockCost;
-                        }
-                    }
-                    if (blockType == BlockType.FLOAT3X3X3)
-                    {
-                        if (numberOfBlocks + FloatBlockCost * 27 >= 0)
-                        {
-                            GameObject blok = Instantiate(blockPrefabFloat3X3X3, block.transform.position, block.transform.rotation) as GameObject;
-                            blok.GetComponent<BuildingBlock>().playerOwner = player;
-                            save.AddtoList(blok.transform.position, false);
-                            numberOfBlocks += ArmourBlockCost * 27;
-                        }
-                    }
-                    if (blockType == BlockType.ARMOUR3X3X3)
-                    {
-                        if (numberOfBlocks + ArmourBlockCost * 27 >= 0)
-                        {
-                            GameObject blok = Instantiate(blockPrefabArmour3X3X3, block.transform.position, block.transform.rotation) as GameObject;
-                            blok.GetComponent<BuildingBlock>().playerOwner = player;
-                            save.AddtoList(blok.transform.position, false);
-                            numberOfBlocks += ArmourBlockCost * 27;
-                        }
-                    }
-                    blockTimer = 0;
-                }
-            }
 
             RaycastHit hit;
 
@@ -400,36 +295,37 @@ public class managerscript : MonoBehaviour {
                         if (blockType == BlockType.FLOAT)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
-                            block.transform.rotation = hit.collider.transform.rotation;
-                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.ARMOUR)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabArmour, hit.collider.transform.position, hit.collider.transform.rotation);
-                            block.transform.rotation = hit.collider.transform.rotation;
-                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.FLOAT3X3X3)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
-                            block.transform.rotation = hit.collider.transform.rotation;
-                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*3;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         if (blockType == BlockType.ARMOUR3X3X3)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
-                            block.transform.rotation = hit.collider.transform.rotation;
-                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*3;
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
                         startConstruction = false;
                     }
 
-                    block.transform.rotation = hit.collider.transform.rotation;
-                    block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
+
+                    if(blockType == BlockType.FLOAT3X3X3|| blockType == BlockType.ARMOUR3X3X3)
+                    {
+                        block.transform.rotation = hit.collider.transform.rotation;
+                        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*3;
+                    }
+                    else
+                    {
+                        block.transform.rotation = hit.collider.transform.rotation;
+                        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
+                    }
 
                 }
                 else if (hit.collider.tag != "Block" && hit.collider.tag != "PlaceBlock")
@@ -471,6 +367,75 @@ public class managerscript : MonoBehaviour {
             if (blockType == BlockType.ARMOUR3X3X3)
             {
                 block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, block.transform.position, block.transform.rotation);
+            }
+        }
+    }
+
+    void PlaceBlock()
+    {
+        if (blockType == BlockType.FLOAT)
+        {
+            if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
+            {
+                //change these to a var to set its parent to a refernce
+                GameObject blok = Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation) as GameObject;
+                blok.GetComponent<BuildingBlock>().playerOwner = player;
+                save.AddtoList(blok.transform.position, true);
+                numberOfBlocks += FloatBlockCost;
+            }
+        }
+        if (blockType == BlockType.ARMOUR)
+        {
+            if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
+            {
+                GameObject blok = Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation) as GameObject;
+                blok.GetComponent<BuildingBlock>().playerOwner = player;
+                save.AddtoList(blok.transform.position, false);
+                numberOfBlocks += ArmourBlockCost;
+            }
+        }
+        if (blockType == BlockType.FLOAT3X3X3)
+        {
+            if (numberOfBlocks + FloatBlockCost * 27 <= maxNumberOfBlocks)
+            {
+                GameObject blok = Instantiate(blockPrefabFloat3X3X3, block.transform.position, block.transform.rotation) as GameObject;
+                foreach (Transform child in blok.transform)
+                {
+                    child.GetComponent<BuildingBlock>().playerOwner = player;
+                    save.AddtoList(child.transform.position, false);
+                    numberOfBlocks += FloatBlockCost;
+                }
+            }
+        }
+        if (blockType == BlockType.ARMOUR3X3X3)
+        {
+            if (numberOfBlocks + ArmourBlockCost * 27 <= maxNumberOfBlocks)
+            {
+                GameObject blok = Instantiate(blockPrefabArmour3X3X3, block.transform.position, block.transform.rotation) as GameObject;
+                foreach (Transform child in blok.transform)
+                {
+                    child.GetComponent<BuildingBlock>().playerOwner = player;
+                    save.AddtoList(child.transform.position, false);
+                    numberOfBlocks += ArmourBlockCost;
+                }
+            }
+        }
+    }
+
+    void RemoveBlock()
+    {
+        RaycastHit shot;
+        if (Physics.Raycast(transform.position, transform.forward, out shot))
+        {
+            Debug.DrawLine(transform.position, shot.point);
+            if (shot.collider.tag == "Block")
+            {
+                if (!shot.collider.GetComponent<BlockDamage>().keystone && shot.collider.GetComponent<BuildingBlock>().playerOwner == player)
+                {
+                    shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
+                    save.RemovefromList(shot.collider.transform.position);
+                    numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
+                }
             }
         }
     }
