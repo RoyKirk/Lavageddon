@@ -12,10 +12,6 @@ public class BuildingBlock : MonoBehaviour {
     public Vector3 startPos;
 
     bool changeState;
-    void OnAwake()
-    {
-        startPos = transform.position;
-    }
 
     // Use this for initialization
     void Start ()
@@ -25,6 +21,7 @@ public class BuildingBlock : MonoBehaviour {
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<WhirlpoolCurrent>().enabled = false;
         GetComponent<FloatFixed>().enabled = false;
+        startPos = transform.position;
     }
 
     // Update is called once per frame
@@ -56,6 +53,7 @@ public class BuildingBlock : MonoBehaviour {
             transform.position = startPos;
             transform.rotation = Quaternion.identity;
             changeState = false;
+            MakeJoints();
         }
     }
     // Update is called once per frame

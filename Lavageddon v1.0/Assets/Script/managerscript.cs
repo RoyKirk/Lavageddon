@@ -255,7 +255,7 @@ public class managerscript : MonoBehaviour {
     {
         if (Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
         {//the right stick is being pressed in, atm we want this to "test the boat"
-            testingboat = true;
+            testingboat = !testingboat;
         } 
         if (constructionMode && !testingboat)
         {
