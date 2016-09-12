@@ -55,7 +55,6 @@ public class BuildingBlock : MonoBehaviour {
         }
         else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false && changeState == true)
         {
-<<<<<<< HEAD
             //reset boat
             transform.position = startPos;
             transform.rotation = startRotation;
@@ -73,9 +72,7 @@ public class BuildingBlock : MonoBehaviour {
                 }
             }
             MakeJoints();
-=======
             ResetBoat();
->>>>>>> 90cfc2206e5ec655bacfb0a6373d6a7a893c9a8b
         }
     }
     // Update is called once per frame
