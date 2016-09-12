@@ -48,7 +48,7 @@ public class FloatFixed : MonoBehaviour
     {
         if (GameObject.Find("Controller"))
         {
-            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction && GameObject.Find("Player" + 0 + "(Clone)").GetComponent<managerscript>().testingboat == false)
             {
                 GetComponent<BuildingBlock>().enabled = true;
             }
