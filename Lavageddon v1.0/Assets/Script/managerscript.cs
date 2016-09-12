@@ -253,12 +253,13 @@ public class managerscript : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (constructionMode)
+        if (Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
+        {//the right stick is being pressed in, atm we want this to "test the boat"
+            testingboat = true;
+        } 
+        if (constructionMode && !testingboat)
         {
-            if(Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
-            {//the right stick is being pressed in, atm we want this to "test the boat"
-                testingboat = true;
-            }
+
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             //{
             //    if (blockType == BlockType.FLOAT)
@@ -329,6 +330,11 @@ public class managerscript : MonoBehaviour {
 
                 }
                 else if (hit.collider.tag != "Block" && hit.collider.tag != "PlaceBlock")
+                {
+                    Destroy(block);
+                    startConstruction = true;
+                }
+                else
                 {
                     Destroy(block);
                     startConstruction = true;
