@@ -259,14 +259,6 @@ public class managerscript : MonoBehaviour {
         } 
         if (constructionMode && !testingboat)
         {
-<<<<<<< HEAD
-
-=======
-            if(Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
-            {//the right stick is being pressed in, atm we want this to "test the boat"
-                testingboat = !testingboat;
-            }
->>>>>>> b9cfa7102b4a25ade4c6bacf80cfbd79b72ef3d5
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             //{
             //    if (blockType == BlockType.FLOAT)
