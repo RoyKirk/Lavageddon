@@ -53,13 +53,21 @@ public class BuildingBlock : MonoBehaviour {
         else if (changeState == true)
         {
             //reset boat
-            
             transform.position = startPos;
             transform.rotation = startRotation;
             //GetComponent<Rigidbody>().MovePosition(startPos);
             //GetComponent<Rigidbody>().MoveRotation(startRotation);
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             changeState = false;
+            FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
+            foreach (FixedJoint joint in joints)
+            {
+                if (!joint.connectedBody)
+                {
+                    Destroy(joint);
+                }
+            }
             MakeJoints();
         }
     }
@@ -86,7 +94,7 @@ public class BuildingBlock : MonoBehaviour {
         FixedJoint[] joints = GetComponents<FixedJoint>();
         foreach (FixedJoint joint in joints)
         {
-             Destroy(joint);
+            Destroy(joint);
         }
 
 
