@@ -15,7 +15,7 @@ public class managerscript : MonoBehaviour {
         ARMOUR3X3X3,
 
     };
-    int numberOfBlockTypes = 4;
+    int numberOfBlockTypes = 2;
     public bool blockdestroyed = false;
     public GameObject blockPlacePrefabFloat;
     public GameObject blockPlacePrefabArmour;
