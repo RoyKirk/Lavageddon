@@ -366,22 +366,22 @@ public class managerscript : MonoBehaviour {
         Destroy(blockInFront);
         if (blockType == BlockType.FLOAT)
         {
-            blockInFront = (GameObject)Instantiate(blockPlacePrefabFloatInFront, transform.position + transform.forward.normalized*blockDistance, transform.rotation);
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabFloatInFront, transform.position + transform.forward.normalized*blockDistance, Quaternion.identity);
             //block.GetComponent<BuildingBlock>().playerOwner = player;
         }
         if (blockType == BlockType.ARMOUR)
         {
-            blockInFront = (GameObject)Instantiate(blockPlacePrefabArmourInFront, transform.position + transform.forward.normalized * blockDistance, transform.rotation);
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabArmourInFront, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
             //block.GetComponent<BuildingBlock>().playerOwner = player;
         }
         if (blockType == BlockType.FLOAT3X3X3)
         {
-            blockInFront = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, transform.rotation);
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
             //block.GetComponent<BuildingBlock>().playerOwner = player;
         }
         if (blockType == BlockType.ARMOUR3X3X3)
         {
-            blockInFront = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, transform.rotation);
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
             //block.GetComponent<BuildingBlock>().playerOwner = player;
         }
         Destroy(block);
