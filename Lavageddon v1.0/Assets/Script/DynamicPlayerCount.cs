@@ -148,6 +148,11 @@ public class DynamicPlayerCount : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().buildIndex == 1 && newScene)
         {
+            for(int i = 0; i<ready.Length; i++)
+            {
+                ready[i] = false;
+            }
+            readyCount = 0;
             gameOver = GameObject.Find("GameOver").GetComponent<Canvas>();
             gameOver.enabled = false;
             restart = GameObject.Find("Restart");
