@@ -21,11 +21,17 @@ public class managerscript : MonoBehaviour {
     public GameObject blockPlacePrefabArmour;
     public GameObject blockPlacePrefabFloat3X3X3;
     public GameObject blockPlacePrefabArmour3X3X3;
+    public GameObject blockPlacePrefabFloatInFront;
+    public GameObject blockPlacePrefabArmourInFront;
+    public GameObject blockPlacePrefabFloat3X3X3InFront;
+    public GameObject blockPlacePrefabArmour3X3X3InFront;
     public GameObject blockPrefabFloat;
     public GameObject blockPrefabArmour;
     public GameObject blockPrefabFloat3X3X3;
     public GameObject blockPrefabArmour3X3X3;
     GameObject block;
+    GameObject blockInFront;
+    public float blockDistance = 5f;
     public float placementReach = 1000f;
     public float placementOffset = 1.2f;
     public bool constructionMode = true;
@@ -298,6 +304,7 @@ public class managerscript : MonoBehaviour {
                 {
                     if (startConstruction)
                     {
+                        Destroy(blockInFront);
                         if (blockType == BlockType.FLOAT)
                         {
                             block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
@@ -336,13 +343,11 @@ public class managerscript : MonoBehaviour {
                 }
                 else if (hit.collider.tag != "Block" && hit.collider.tag != "PlaceBlock")
                 {
-                    Destroy(block);
-                    startConstruction = true;
+                    BlockInFront();
                 }
                 else
                 {
-                    Destroy(block);
-                    startConstruction = true;
+                    BlockInFront();
                 }
 
 
@@ -350,10 +355,36 @@ public class managerscript : MonoBehaviour {
             }
             else
             {
-                Destroy(block);
-                startConstruction = true;
+                BlockInFront();
             }
         }
+    }
+
+    void BlockInFront()
+    {
+        Destroy(blockInFront);
+        if (blockType == BlockType.FLOAT)
+        {
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabFloatInFront, transform.position + transform.forward.normalized*blockDistance, transform.rotation);
+            //block.GetComponent<BuildingBlock>().playerOwner = player;
+        }
+        if (blockType == BlockType.ARMOUR)
+        {
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabArmourInFront, transform.position + transform.forward.normalized * blockDistance, transform.rotation);
+            //block.GetComponent<BuildingBlock>().playerOwner = player;
+        }
+        if (blockType == BlockType.FLOAT3X3X3)
+        {
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, transform.rotation);
+            //block.GetComponent<BuildingBlock>().playerOwner = player;
+        }
+        if (blockType == BlockType.ARMOUR3X3X3)
+        {
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, transform.rotation);
+            //block.GetComponent<BuildingBlock>().playerOwner = player;
+        }
+        Destroy(block);
+        startConstruction = true;
     }
 
     void ResetBlock()
