@@ -83,6 +83,8 @@ public class BuildingBlock : MonoBehaviour {
         //GetComponent<Rigidbody>().MoveRotation(startRotation);
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+        GetComponent<Rigidbody>().maxDepenetrationVelocity = 0.5f;
+        GetComponent<Rigidbody>().inertiaTensorRotation = startRotation;
         changeState = false;
         FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
         foreach (FixedJoint joint in joints)
@@ -206,9 +208,5 @@ public class BuildingBlock : MonoBehaviour {
         }
 
         GetComponent<BoxCollider>().enabled = true;
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<Rigidbody>().useGravity = false;
-        GetComponent<WhirlpoolCurrent>().enabled = false;
-        GetComponent<FloatFixed>().enabled = false;
     }
 }
