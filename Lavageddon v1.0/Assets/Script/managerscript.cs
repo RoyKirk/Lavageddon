@@ -247,6 +247,7 @@ public class managerscript : MonoBehaviour {
         else
         {
             Destroy(block);
+            Destroy(blockInFront);
             startConstruction = true;
         }
         //if (!block.GetComponent<buildingblock>().placed)
