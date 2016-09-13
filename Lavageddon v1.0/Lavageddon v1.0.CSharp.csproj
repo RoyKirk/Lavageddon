@@ -113,7 +113,6 @@
     <Compile Include="Assets\Script\PlayerMovement.cs" />
     <Compile Include="Assets\Script\PlayerReady.cs" />
     <Compile Include="Assets\Script\ProjectileScript.cs" />
-    <Compile Include="Assets\Script\ReadWrite.cs" />
     <Compile Include="Assets\Script\SavePrefab.cs" />
     <Compile Include="Assets\Script\StickyWeightScript.cs" />
     <Compile Include="Assets\Script\SwitchMode.cs" />
