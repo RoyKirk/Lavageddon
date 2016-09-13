@@ -477,10 +477,11 @@ public class managerscript : MonoBehaviour {
 
     public void LoadBoatPlacement(int blockID, Vector3 pos)
     {
-        Debug.Log(blockID);
+        //Debug.Log(numberOfBlocks);
+        Debug.Log(FloatBlockCost);
+        //Debug.Log(maxNumberOfBlocks);
         switch (blockID)
         {
-            
             case 0:
                 if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
                 {
