@@ -34,6 +34,11 @@ public class SavePrefab : MonoBehaviour
         //do some research to get a better path location, preferably this games location
         path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
         ReadBoat(false);
+        if(!File.Exists(path))
+        {
+            string createText = "";
+            File.WriteAllText(path, createText);
+        }
 	}
 	
     public void WriteBoat()
@@ -69,7 +74,8 @@ public class SavePrefab : MonoBehaviour
             {
                 if(create)
                 {
-                    Instantiate(blockFloat, pos, Quaternion.identity);//loads the boat
+                    GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
+                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                 }
                 else
                 {
@@ -80,7 +86,8 @@ public class SavePrefab : MonoBehaviour
             {
                 if (create)
                 {
-                    Instantiate(blockFloat, pos, Quaternion.identity);
+                    GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
+                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                 }
                 else
                 {

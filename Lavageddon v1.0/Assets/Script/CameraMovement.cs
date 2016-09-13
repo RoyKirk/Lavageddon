@@ -24,7 +24,7 @@ public class CameraMovement : MonoBehaviour {
 
     Vector3 thirdPersonPivot;
 
-    public SavePrefab save;
+    //public SavePrefab save;
 
     private Vector3 initialVector = Vector3.forward;
 
@@ -103,7 +103,7 @@ public class CameraMovement : MonoBehaviour {
             GetComponent<PlayerMovement>().enabled = true;
             GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
             //save.CreatePrefab();
-            save.WriteBoat();
+            //save.WriteBoat();
             GetComponent<managerscript>().constructionMode = false;
         }
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)

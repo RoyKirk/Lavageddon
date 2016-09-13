@@ -49,7 +49,7 @@ public class managerscript : MonoBehaviour {
     //GameObject boatParent;
 
     public bool testingboat = false;
-
+    public bool saved;
     public SavePrefab save;
 
     //List<GameObject> boat = new List<GameObject>();
@@ -82,9 +82,11 @@ public class managerscript : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if(!constructionMode)
+        if(!constructionMode && !saved)
         {
             //testingboat = false;
+            save.WriteBoat();
+            saved = true;
         }
         numberText.text = "No. of Blocks = " + (maxNumberOfBlocks - numberOfBlocks);
 
@@ -114,6 +116,7 @@ public class managerscript : MonoBehaviour {
 
         if (constructionMode && !testingboat)
         {
+            saved = false;
             //if the player presses the left stick in, reset the boat
             if(Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed)
             {

@@ -37,18 +37,15 @@ public class FloatFixed : MonoBehaviour
         buoyancyOffset[5] = new Vector3(localScale.x, -localScale.y, -localScale.z);//back right;
         buoyancyOffset[6] = new Vector3(-localScale.x, -localScale.y, localScale.z);//front left;
         buoyancyOffset[7] = new Vector3(localScale.x, -localScale.y, localScale.z);//front right;
-
-        //if (FLOAT)
-        //{
-        //    GetComponent<Renderer>().material.color = Color.green;
-        //}
+        
+        //components
     }
     
     void Update()
     {
         if (GameObject.Find("Controller") && GetComponent<BuildingBlock>().enabled == false)
         {
-            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction && GameObject.Find("Player" + 0 + "(Clone)").GetComponent<managerscript>().testingboat == false || !GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+            if (GameObject.Find("Controller").GetComponent<ModeSwitch>().construction && GameObject.Find("Player" + GetComponent<BuildingBlock>().playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false || !GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
             {
                 GetComponent<BuildingBlock>().enabled = true;
             }
