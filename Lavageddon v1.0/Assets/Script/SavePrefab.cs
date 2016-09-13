@@ -65,6 +65,8 @@ public class SavePrefab : MonoBehaviour
         
         char splitChar = '<';
 
+        managerscript ms = GetComponent<managerscript>();
+
         foreach (string blockLine in File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt"))
         {
             String[] values = blockLine.Split(splitChar);
@@ -74,8 +76,9 @@ public class SavePrefab : MonoBehaviour
             {
                 if(create)
                 {
-                    GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
-                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
+                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    ms.LoadBoatPlacement(0, pos);
                 }
                 else
                 {
@@ -86,8 +89,9 @@ public class SavePrefab : MonoBehaviour
             {
                 if (create)
                 {
-                    GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
-                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
+                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    ms.LoadBoatPlacement(1, pos);
                 }
                 else
                 {
