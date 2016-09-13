@@ -423,31 +423,22 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
             {
-<<<<<<< HEAD
                 BlockPlaceAndCost(blockPrefabFloat, FloatBlockCost);
-=======
-                BlockPlaceAndCost(blockPrefabFloat);
                 save.AddtoList(block.transform.position, true);//these true or false need to be in relation to float or armour
                 numberOfBlocks += FloatBlockCost;
->>>>>>> efdad8b0988d9c7f66369c0f9275275adacceace
             }
         }
         if (blockType == BlockType.ARMOUR)
         {
             if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
             {
-<<<<<<< HEAD
                 BlockPlaceAndCost(blockPrefabArmour, ArmourBlockCost);
-=======
-                BlockPlaceAndCost(blockPrefabArmour);
                 save.AddtoList(block.transform.position, false);//these true or false need to be in relation to float or armour
                 numberOfBlocks += ArmourBlockCost;
->>>>>>> efdad8b0988d9c7f66369c0f9275275adacceace
             }
         }
         if (blockType == BlockType.FLOAT3X3X3)
         {
-<<<<<<< HEAD
             if (numberOfBlocks + FloatBlockCost * 27 <= maxNumberOfBlocks)
             {
                 BlockPlaceAndCost(blockPrefabFloat3X3X3, FloatBlockCost);
@@ -459,13 +450,11 @@ public class managerscript : MonoBehaviour {
             {
                 BlockPlaceAndCost(blockPrefabArmour3X3X3, ArmourBlockCost);
             }
-=======
             BlockPlaceAndCost3X3(blockPrefabFloat3X3X3, FloatBlockCost);
         }
         if (blockType == BlockType.ARMOUR3X3X3)
         {
             BlockPlaceAndCost3X3(blockPrefabArmour3X3X3, ArmourBlockCost);
->>>>>>> efdad8b0988d9c7f66369c0f9275275adacceace
         }
     }
 
@@ -500,18 +489,6 @@ public class managerscript : MonoBehaviour {
     {
         if (numberOfBlocks + blockCost * 27 <= maxNumberOfBlocks)
         {
-<<<<<<< HEAD
-            child.GetComponent<BuildingBlock>().playerOwner = player;
-            if (blockCost == FloatBlockCost)
-            {
-                save.AddtoList(blok.transform.position, true);
-            }
-            else
-            {
-                save.AddtoList(blok.transform.position, false);
-            }
-            numberOfBlocks += blockCost;
-=======
             GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
             foreach (Transform child in blok.transform)
             {
@@ -557,7 +534,6 @@ public class managerscript : MonoBehaviour {
                     Debug.Log("aasdasd");
                 }
                 break;
->>>>>>> efdad8b0988d9c7f66369c0f9275275adacceace
         }
     }
 
