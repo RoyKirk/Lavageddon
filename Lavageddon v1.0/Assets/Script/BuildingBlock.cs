@@ -46,17 +46,19 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<WhirlpoolCurrent>().enabled = false;
             GetComponent<FloatFixed>().enabled = false;
             //Debug.Log("else..");
+
+            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true && changeState == false)
+            {
+                TestBoat(playerOwner);
+                changeState = true;
+            }
+            else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false && changeState == true)
+            {
+                ResetBoat();
+            }
         }
         //this can be optimsed later to only be called once every change, atm its being called every frame which is not needed.
-        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true && changeState == false)
-        {
-            TestBoat(playerOwner);
-            changeState = true;
-        }
-        else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false && changeState == true)
-        {
-            ResetBoat();
-        }
+       
     }
     // Update is called once per frame
 

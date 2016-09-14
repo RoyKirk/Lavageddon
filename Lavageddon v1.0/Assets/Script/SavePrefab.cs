@@ -58,7 +58,7 @@ public class SavePrefab : MonoBehaviour
         if(!File.Exists(path))
         {
             File.WriteAllText(path, "");
-            ResetBoat();
+            createStartBlock();
         }
         string test = "True";
         bool testoutcome;
@@ -128,7 +128,7 @@ public class SavePrefab : MonoBehaviour
         }
     }
 
-    public void ResetBoat()
+    public void createStartBlock()
     {
         //Destroy()
         //0<4.04<16.16< True
@@ -140,9 +140,12 @@ public class SavePrefab : MonoBehaviour
         //        break;
         //    }
         //}
-
-        AddtoList(new Vector3(0, 4.04f, 16.16f), true);
-        Instantiate(blockFloat, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
+        Debug.Log(Boat.Count);
+        //Debug.Log(Boat);
+        if(Boat.Count == 0)
+        {
+            AddtoList(new Vector3(0, 4.04f, 16.16f), true);
+            Instantiate(blockFloat, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
+        }
     }
-
 }
