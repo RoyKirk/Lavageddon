@@ -63,7 +63,7 @@ public class BuildingBlock : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true)
+        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == true)
         {
             MakeJoints();
         }
@@ -108,6 +108,14 @@ public class BuildingBlock : MonoBehaviour {
             Destroy(joint);
         }
 
+        FixedJoint[] jointsDuplicate = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
+        foreach (FixedJoint joint in joints)
+        {
+            if (joint.connectedBody == GetComponent<Rigidbody>())
+            {
+                Destroy(joint);
+            }
+        }
 
         GetComponent<BoxCollider>().enabled = false;
         RaycastHit hit;
