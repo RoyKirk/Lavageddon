@@ -58,6 +58,14 @@ public class BuildingBlock : MonoBehaviour {
             ResetBoat();
         }
     }
+
+    void LateUpdate()
+    {
+        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true)
+        {
+            MakeJoints();
+        }
+    }
     // Update is called once per frame
 
     //set the block to change state (this is required to be called for the boat testing funtion)
@@ -83,18 +91,9 @@ public class BuildingBlock : MonoBehaviour {
         //GetComponent<Rigidbody>().MoveRotation(startRotation);
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
-        GetComponent<Rigidbody>().maxDepenetrationVelocity = 0.5f;
+        GetComponent<Rigidbody>().maxDepenetrationVelocity = 0.1f;
         GetComponent<Rigidbody>().inertiaTensorRotation = startRotation;
         changeState = false;
-        FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
-        foreach (FixedJoint joint in joints)
-        {
-            if (!joint.connectedBody)
-            {
-                Destroy(joint);
-            }
-        }
-        MakeJoints();
     }
 
     //this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not

@@ -55,6 +55,7 @@ public class managerscript : MonoBehaviour {
     //GameObject boatParent;
 
     public bool testingboat = false;
+    public bool rejoin = true;
     public bool saved;
     public SavePrefab save;
 
@@ -142,7 +143,7 @@ public class managerscript : MonoBehaviour {
             //    }
             //    //numberOfBlocks += FloatBlockCost;
             //}
-            if (Controller.prevState[player].Triggers.Right < 0.4 && Controller.state[player].Triggers.Right > 0.4 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.prevState[player].Triggers.Right < 0.4 && Controller.state[player].Triggers.Right > 0.4 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
                 //numberOfBlocks += FloatBlockCost;
@@ -264,15 +265,26 @@ public class managerscript : MonoBehaviour {
         //    block = (GameObject)Instantiate(blockPrefab, transform.position + transform.forward.normalized * blockOffset, transform.rotation);
         //    block.GetComponent<BoxCollider>().enabled = false;
         //}
+        if (Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
+        {//the right stick is being pressed in, atm we want this to "test the boat"
+            if (testingboat)
+            {
+                FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
+                foreach (FixedJoint joint in joints)
+                {
+                    Destroy(joint);
+                }
+            }
+            testingboat = !testingboat;
+            rejoin = !rejoin;
+        }
     }
 
 
     void LateUpdate()
     {
-        if (Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
-        {//the right stick is being pressed in, atm we want this to "test the boat"
-            testingboat = !testingboat;
-        } 
+
+
         if (constructionMode && !testingboat)
         {
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
