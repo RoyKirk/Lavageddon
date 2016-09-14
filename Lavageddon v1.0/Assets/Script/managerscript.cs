@@ -127,7 +127,7 @@ public class managerscript : MonoBehaviour {
             //if the player presses the left stick in, reset the boat
             if(Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed)
             {
-                save.ResetBoat();
+                save.createStartBlock();
             }
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             //{
@@ -436,8 +436,8 @@ public class managerscript : MonoBehaviour {
             if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
             {
                 BlockPlaceAndCost(blockPrefabFloat, FloatBlockCost);
-                save.AddtoList(block.transform.position, true);//these true or false need to be in relation to float or armour
-                numberOfBlocks += FloatBlockCost;
+                //save.AddtoList(block.transform.position, true);//these true or false need to be in relation to float or armour
+                //numberOfBlocks += FloatBlockCost;
             }
         }
         if (blockType == BlockType.ARMOUR)
@@ -445,42 +445,44 @@ public class managerscript : MonoBehaviour {
             if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
             {
                 BlockPlaceAndCost(blockPrefabArmour, ArmourBlockCost);
-                save.AddtoList(block.transform.position, false);//these true or false need to be in relation to float or armour
-                numberOfBlocks += ArmourBlockCost;
+                //save.AddtoList(block.transform.position, false);//these true or false need to be in relation to float or armour
+                //numberOfBlocks += ArmourBlockCost;
             }
         }
         if (blockType == BlockType.FLOAT3X3X3)
         {
             if (numberOfBlocks + FloatBlockCost * 27 <= maxNumberOfBlocks)
             {
-                BlockPlaceAndCost(blockPrefabFloat3X3X3, FloatBlockCost);
+                GameObject blok = Instantiate(blockPrefabFloat3X3X3, block.transform.position, block.transform.rotation) as GameObject;
+                foreach (Transform child in blok.transform)
+                {
+                    child.GetComponent<BuildingBlock>().playerOwner = player;
+                    save.AddtoList(child.transform.position, true);
+                    numberOfBlocks += FloatBlockCost;
+                }
             }
         }
         if (blockType == BlockType.ARMOUR3X3X3)
         {
             if (numberOfBlocks + ArmourBlockCost * 27 <= maxNumberOfBlocks)
             {
-                BlockPlaceAndCost(blockPrefabArmour3X3X3, ArmourBlockCost);
+                GameObject blok = Instantiate(blockPrefabArmour3X3X3, block.transform.position, block.transform.rotation) as GameObject;
+                foreach (Transform child in blok.transform)
+                {
+                    child.GetComponent<BuildingBlock>().playerOwner = player;
+                    save.AddtoList(child.transform.position, false);
+                    numberOfBlocks += ArmourBlockCost;
+                }
             }
-            BlockPlaceAndCost3X3(blockPrefabFloat3X3X3, FloatBlockCost);
         }
-        if (blockType == BlockType.ARMOUR3X3X3)
-        {
-            BlockPlaceAndCost3X3(blockPrefabArmour3X3X3, ArmourBlockCost);
-        }
-    }
-
-    public void LoadingBoat(GameObject blockPrefab, Vector3 pos)
-    {
-        GameObject blok = Instantiate(blockPrefab, pos, block.transform.rotation) as GameObject;
-        blok.GetComponent<BuildingBlock>().playerOwner = player;
     }
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
         GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
         blok.GetComponent<BuildingBlock>().playerOwner = player;
-        if(blockCost == FloatBlockCost)
+        //Debug.Log(block.transform.position);
+        if (blockCost == FloatBlockCost)
         {
             save.AddtoList(blok.transform.position, true);
         }
@@ -491,38 +493,32 @@ public class managerscript : MonoBehaviour {
         numberOfBlocks += blockCost;
     }
 
-    void BlockPlaceAndCost3X3X3(GameObject blockPrefab, int blockCost)
-    {
-        GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
-        blok.GetComponent<BuildingBlock>().playerOwner = player;
-    }
-
-    void BlockPlaceAndCost3X3(GameObject blockPrefab, int blockCost)
-    {
-        if (numberOfBlocks + blockCost * 27 <= maxNumberOfBlocks)
-        {
-            GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
-            foreach (Transform child in blok.transform)
-            {
-                child.GetComponent<BuildingBlock>().playerOwner = player;
-                if(blockCost == ArmourBlockCost)
-                {
-                    save.AddtoList(child.transform.position, false);
-                }
-                else
-                {
-                    save.AddtoList(child.transform.position, true);
-                }
-               
-                numberOfBlocks += blockCost;
-            }
-        }
-    }
+    //void BlockPlaceAndCost3X3(GameObject blockPrefab, int blockCost)
+    //{
+    //    if (numberOfBlocks + blockCost * 27 <= maxNumberOfBlocks)
+    //    {
+    //        GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
+    //        foreach (Transform child in blok.transform)
+    //        {
+    //            child.GetComponent<BuildingBlock>().playerOwner = player;
+    //            if(blockCost == ArmourBlockCost)
+    //            {
+    //                save.AddtoList(child.transform.position, false);
+    //            }
+    //            else
+    //            {
+    //                save.AddtoList(child.transform.position, true);
+    //            }
+    //           
+    //            numberOfBlocks += blockCost;
+    //        }
+    //    }
+    //}
 
     public void LoadBoatPlacement(int blockID, Vector3 pos)
     {
         //Debug.Log(numberOfBlocks);
-        Debug.Log(FloatBlockCost);
+        //Debug.Log(FloatBlockCost);
         //Debug.Log(maxNumberOfBlocks);
         switch (blockID)
         {
@@ -562,6 +558,7 @@ public class managerscript : MonoBehaviour {
                     shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
                     save.RemovefromList(shot.collider.transform.position);
                     numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
+                    //Debug.Log(shot.collider.transform.position);
                 }
             }
         }
