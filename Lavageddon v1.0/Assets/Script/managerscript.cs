@@ -143,7 +143,7 @@ public class managerscript : MonoBehaviour {
             //    }
             //    //numberOfBlocks += FloatBlockCost;
             //}
-            if (Controller.prevState[player].Triggers.Right < 0.4 && Controller.state[player].Triggers.Right > 0.4 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.prevState[player].Triggers.Right < 0.2 && Controller.state[player].Triggers.Right > 0.2 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
                 //numberOfBlocks += FloatBlockCost;
@@ -160,7 +160,7 @@ public class managerscript : MonoBehaviour {
                 }
             }
 
-            if (Controller.prevState[player].Triggers.Left < 0.4 && Controller.state[player].Triggers.Left > 0.4)
+            if (Controller.prevState[player].Triggers.Left < 0.2 && Controller.state[player].Triggers.Left > 0.2)
             {
                 RemoveBlock();
             }
