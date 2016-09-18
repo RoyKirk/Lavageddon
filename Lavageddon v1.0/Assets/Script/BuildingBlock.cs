@@ -14,6 +14,7 @@ public class BuildingBlock : MonoBehaviour {
 
     bool changeState;
 
+
     // Use this for initialization
     void Start ()
     {
@@ -56,6 +57,11 @@ public class BuildingBlock : MonoBehaviour {
             {
                 ResetBoat();
             }
+
+            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == true)
+            {
+                MakeJoints();
+            }
         }
         //this can be optimsed later to only be called once every change, atm its being called every frame which is not needed.
        
@@ -63,10 +69,7 @@ public class BuildingBlock : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == true)
-        {
-            MakeJoints();
-        }
+
     }
     // Update is called once per frame
 
@@ -102,14 +105,14 @@ public class BuildingBlock : MonoBehaviour {
 
     public void MakeJoints()
     {
-        FixedJoint[] joints = GetComponents<FixedJoint>();
-        foreach (FixedJoint joint in joints)
-        {
-            Destroy(joint);
-        }
+        //FixedJoint[] joints = GetComponents<FixedJoint>();
+        //foreach (FixedJoint joint in joints)
+        //{
+        //    Destroy(joint);
+        //}
 
         FixedJoint[] jointsDuplicate = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
-        foreach (FixedJoint joint in joints)
+        foreach (FixedJoint joint in jointsDuplicate)
         {
             if (joint.connectedBody == GetComponent<Rigidbody>())
             {
