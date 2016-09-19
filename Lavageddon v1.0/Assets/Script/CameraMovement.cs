@@ -97,7 +97,8 @@ public class CameraMovement : MonoBehaviour {
         }
 
 
-
+        //this needs to change to check if all players are ready. so this will just change a bool and when all players bools are true it will change state.
+        //this will also check to see if all players have placed their spawn blocks.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
             GetComponent<PlayerMovement>().enabled = true;

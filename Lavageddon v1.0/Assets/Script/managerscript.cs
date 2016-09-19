@@ -406,7 +406,7 @@ public class managerscript : MonoBehaviour {
         }
         if (blockType == BlockType.SPAWN)
         {
-            block = (GameObject)Instantiate(blockPlacePrefabSpawn, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabSpawn, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
         }
         Destroy(block);
         startConstruction = true;
