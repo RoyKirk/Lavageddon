@@ -11,6 +11,7 @@ public class managerscript : MonoBehaviour {
     {
         FLOAT,
         ARMOUR,
+        SPAWN,
         FLOAT3X3X3,
         ARMOUR3X3X3,
 
@@ -29,6 +30,7 @@ public class managerscript : MonoBehaviour {
     public GameObject blockPrefabArmour;
     public GameObject blockPrefabFloat3X3X3;
     public GameObject blockPrefabArmour3X3X3;
+    public GameObject blockPrefabSpawn;
     GameObject block;
     GameObject blockInFront;
     public float blockDistance = 5f;
@@ -316,8 +318,6 @@ public class managerscript : MonoBehaviour {
             //if (Physics.Raycast(ray, out hit, placementReach))
             if (Physics.Raycast(transform.position, transform.forward, out hit, placementReach))
             {
-
-                //Debug.DrawLine(ray.origin, hit.point);
                 Debug.DrawLine(transform.position, hit.point);
 
                 if (hit.collider.tag == "Block")
@@ -345,10 +345,12 @@ public class managerscript : MonoBehaviour {
                             block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
                             //block.GetComponent<BuildingBlock>().playerOwner = player;
                         }
+                        if(blockType == BlockType.SPAWN)
+                        {
+                            block = (GameObject)Instantiate(blockPrefabSpawn, hit.collider.transform.position, hit.collider.transform.rotation);
+                        }
                         startConstruction = false;
                     }
-
-
                     if(blockType == BlockType.FLOAT3X3X3|| blockType == BlockType.ARMOUR3X3X3)
                     {
                         block.transform.rotation = hit.collider.transform.rotation;
@@ -359,7 +361,6 @@ public class managerscript : MonoBehaviour {
                         block.transform.rotation = hit.collider.transform.rotation;
                         block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
                     }
-
                 }
                 else if (hit.collider.tag != "Block" && hit.collider.tag != "PlaceBlock")
                 {
@@ -369,9 +370,6 @@ public class managerscript : MonoBehaviour {
                 {
                     BlockInFront();
                 }
-
-
-
             }
             else
             {
@@ -403,6 +401,10 @@ public class managerscript : MonoBehaviour {
             blockInFront = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3InFront, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
             //block.GetComponent<BuildingBlock>().playerOwner = player;
         }
+        if (blockType == BlockType.SPAWN)
+        {
+            block = (GameObject)Instantiate(blockPrefabSpawn, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
+        }
         Destroy(block);
         startConstruction = true;
     }
@@ -429,6 +431,10 @@ public class managerscript : MonoBehaviour {
             if (blockType == BlockType.ARMOUR3X3X3)
             {
                 block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, block.transform.position, block.transform.rotation);
+            }
+            if (blockType == BlockType.SPAWN)
+            {
+                block = (GameObject)Instantiate(blockPrefabSpawn, block.transform.position, block.transform.rotation);
             }
         }
     }
@@ -513,7 +519,7 @@ public class managerscript : MonoBehaviour {
     //            {
     //                save.AddtoList(child.transform.position, true);
     //            }
-    //           
+    //            
     //            numberOfBlocks += blockCost;
     //        }
     //    }
@@ -521,9 +527,6 @@ public class managerscript : MonoBehaviour {
 
     public void LoadBoatPlacement(int blockID, Vector3 pos)
     {
-        //Debug.Log(numberOfBlocks);
-        //Debug.Log(FloatBlockCost);
-        //Debug.Log(maxNumberOfBlocks);
         switch (blockID)
         {
             case 0:

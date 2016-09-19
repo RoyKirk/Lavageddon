@@ -78,9 +78,6 @@ public class SavePrefab : MonoBehaviour
                 {
                     GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
                     block.GetComponent<BuildingBlock>().playerOwner = playernumber;
-                    //ms.LoadBoatPlacement(0, pos);
-                    //GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
-                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     ms.LoadBoatPlacement(0, pos);
                 }
                 else
@@ -94,9 +91,6 @@ public class SavePrefab : MonoBehaviour
                 {
                     GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
                     block.GetComponent<BuildingBlock>().playerOwner = playernumber;
-                    //ms.LoadBoatPlacement(1, pos);
-                    //GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
-                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     ms.LoadBoatPlacement(1, pos);
                 }
                 else
@@ -140,8 +134,6 @@ public class SavePrefab : MonoBehaviour
         //        break;
         //    }
         //}
-        Debug.Log(Boat.Count);
-        //Debug.Log(Boat);
         if(Boat.Count == 0)
         {
             AddtoList(new Vector3(0, 4.04f, 16.16f), true);
