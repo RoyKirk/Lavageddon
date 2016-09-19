@@ -270,11 +270,11 @@ public class PlayerMovement : MonoBehaviour {
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
-            //else
-            //{
-            //    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
-            //    GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
-            //}
+            else
+            {
+                GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+            }
 
             if (body.transform.position.y < lavaHeight)
             {
