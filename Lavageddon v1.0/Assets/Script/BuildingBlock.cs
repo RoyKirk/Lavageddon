@@ -58,9 +58,10 @@ public class BuildingBlock : MonoBehaviour {
                 ResetBoat();
             }
 
-            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == false)
+            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == true)
             {
                 MakeJoints();
+                changeState = false;
             }
         }
         //this can be optimsed later to only be called once every change, atm its being called every frame which is not needed.
@@ -98,7 +99,6 @@ public class BuildingBlock : MonoBehaviour {
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
         //GetComponent<Rigidbody>().maxDepenetrationVelocity = 0.1f;
         GetComponent<Rigidbody>().inertiaTensorRotation = startRotation;
-        changeState = false;
     }
 
     //this needs to be set when created to determine which player controls this block. this will also be used to determine if the player can destroy it or not
