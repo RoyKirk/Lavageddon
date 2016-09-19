@@ -256,8 +256,10 @@ public class PlayerMovement : MonoBehaviour {
 
             RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+            if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
             {
+                Debug.DrawLine(body.transform.position, hit.point);
+
                 if (hit.collider.tag == "Block")
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
@@ -270,6 +272,87 @@ public class PlayerMovement : MonoBehaviour {
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
+            else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
+            {
+                Debug.DrawLine(body.transform.position, hit.point);
+
+                if (hit.collider.tag == "Block")
+                {
+                    Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
+                }
+                else
+                {
+                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+                }
+            }
+            else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(-1, -1, 0), out hit, frictionCast))
+            {
+                Debug.DrawLine(body.transform.position, hit.point);
+
+                if (hit.collider.tag == "Block")
+                {
+                    Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
+                }
+                else
+                {
+                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+                }
+            }
+            else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 1), out hit, frictionCast))
+            {
+                Debug.DrawLine(body.transform.position, hit.point);
+
+                if (hit.collider.tag == "Block")
+                {
+                    Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
+                }
+                else
+                {
+                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+                }
+            }
+            else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, -1), out hit, frictionCast))
+            {
+                Debug.DrawLine(body.transform.position, hit.point);
+
+                if (hit.collider.tag == "Block")
+                {
+                    Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
+                }
+                else
+                {
+                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+                }
+            }
+
+            //if (Physics.Raycast(body.transform.position, new Vector3(0, -1, 0), out hit, frictionCast))
+            //{
+            //    Debug.DrawLine(body.transform.position, hit.point);
+
+            //    if (hit.collider.tag == "Block")
+            //    {
+            //        Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
+            //        GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+            //        //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
+            //    }
+            //    else
+            //    {
+            //        GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+            //        //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+            //    }
+            //}
             else
             {
                 GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
