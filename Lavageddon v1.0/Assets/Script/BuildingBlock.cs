@@ -58,7 +58,7 @@ public class BuildingBlock : MonoBehaviour {
                 ResetBoat();
             }
 
-            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == true)
+            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == false)
             {
                 MakeJoints();
             }
@@ -96,7 +96,7 @@ public class BuildingBlock : MonoBehaviour {
         //GetComponent<Rigidbody>().MoveRotation(startRotation);
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
-        GetComponent<Rigidbody>().maxDepenetrationVelocity = 0.1f;
+        //GetComponent<Rigidbody>().maxDepenetrationVelocity = 0.1f;
         GetComponent<Rigidbody>().inertiaTensorRotation = startRotation;
         changeState = false;
     }
