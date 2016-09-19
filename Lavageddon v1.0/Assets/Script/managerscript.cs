@@ -16,7 +16,7 @@ public class managerscript : MonoBehaviour {
         ARMOUR3X3X3,
 
     };
-    int numberOfBlockTypes = 2;
+    int numberOfBlockTypes = 3;
     public bool blockdestroyed = false;
     public GameObject blockPlacePrefabFloat;
     public GameObject blockPlacePrefabArmour;
@@ -26,6 +26,7 @@ public class managerscript : MonoBehaviour {
     public GameObject blockPlacePrefabArmourInFront;
     public GameObject blockPlacePrefabFloat3X3X3InFront;
     public GameObject blockPlacePrefabArmour3X3X3InFront;
+    public GameObject blockPlacePrefabSpawn;
     public GameObject blockPrefabFloat;
     public GameObject blockPrefabArmour;
     public GameObject blockPrefabFloat3X3X3;
@@ -60,6 +61,8 @@ public class managerscript : MonoBehaviour {
     public bool rejoin = true;
     public bool saved;
     public SavePrefab save;
+
+    public bool spawnblock;
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
@@ -347,7 +350,7 @@ public class managerscript : MonoBehaviour {
                         }
                         if(blockType == BlockType.SPAWN)
                         {
-                            block = (GameObject)Instantiate(blockPrefabSpawn, hit.collider.transform.position, hit.collider.transform.rotation);
+                            block = (GameObject)Instantiate(blockPlacePrefabSpawn, hit.collider.transform.position, hit.collider.transform.rotation);
                         }
                         startConstruction = false;
                     }
@@ -403,7 +406,7 @@ public class managerscript : MonoBehaviour {
         }
         if (blockType == BlockType.SPAWN)
         {
-            block = (GameObject)Instantiate(blockPrefabSpawn, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
+            block = (GameObject)Instantiate(blockPlacePrefabSpawn, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
         }
         Destroy(block);
         startConstruction = true;
@@ -434,7 +437,7 @@ public class managerscript : MonoBehaviour {
             }
             if (blockType == BlockType.SPAWN)
             {
-                block = (GameObject)Instantiate(blockPrefabSpawn, block.transform.position, block.transform.rotation);
+                block = (GameObject)Instantiate(blockPlacePrefabSpawn, block.transform.position, block.transform.rotation);
             }
         }
     }
@@ -484,6 +487,11 @@ public class managerscript : MonoBehaviour {
                     numberOfBlocks += ArmourBlockCost;
                 }
             }
+        }
+        if(blockType == BlockType.SPAWN && spawnblock == false)
+        {
+            BlockPlaceAndCost(blockPrefabSpawn, 0);
+            spawnblock = true;
         }
     }
 
@@ -565,6 +573,10 @@ public class managerscript : MonoBehaviour {
                     shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
                     save.RemovefromList(shot.collider.transform.position);
                     numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
+                    if(shot.collider.name == "BlockSpawn(Clone)")
+                    {
+                        spawnblock = false;
+                    }
                     //Debug.Log(shot.collider.transform.position);
                 }
             }
