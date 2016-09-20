@@ -76,9 +76,10 @@ public class SavePrefab : MonoBehaviour
             {
                 if(create)
                 {
-                    GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
-                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
+                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     ms.LoadBoatPlacement(0, pos);
+                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().FloatBlockCost;
                 }
                 else
                 {
@@ -89,9 +90,10 @@ public class SavePrefab : MonoBehaviour
             {
                 if (create)
                 {
-                    GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
-                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
+                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     ms.LoadBoatPlacement(1, pos);
+                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().ArmourBlockCost;
                 }
                 else
                 {
@@ -137,7 +139,8 @@ public class SavePrefab : MonoBehaviour
         if(Boat.Count == 0)
         {
             AddtoList(new Vector3(0, 4.04f, 16.16f), true);
-            Instantiate(blockFloat, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
+            GameObject block = (GameObject)Instantiate(blockFloat, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
+            block.GetComponent<BuildingBlock>().playerOwner = playernumber;
         }
     }
 }

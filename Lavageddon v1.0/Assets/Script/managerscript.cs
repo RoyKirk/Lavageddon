@@ -46,8 +46,8 @@ public class managerscript : MonoBehaviour {
     public Text numberText;
     public int player = 0;
 
-    int FloatBlockCost;
-    int ArmourBlockCost;
+    public int FloatBlockCost;
+    public int ArmourBlockCost;
 
     float blockTimer = 0;
     float blockTime = 0.1f;
@@ -66,7 +66,8 @@ public class managerscript : MonoBehaviour {
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
-    void Start ()
+
+    void Awake()
     {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
@@ -75,6 +76,10 @@ public class managerscript : MonoBehaviour {
         maxNumberOfBlocks = (int)DV.BlockRelated[0];
         FloatBlockCost = (int)DV.BlockRelated[2];
         ArmourBlockCost = (int)DV.BlockRelated[6];
+    }
+    void Start ()
+    {
+
 
         if (blockType == BlockType.FLOAT)
         {
@@ -333,44 +338,52 @@ public class managerscript : MonoBehaviour {
 
                 if (hit.collider.tag == "Block")
                 {
-                    if (startConstruction)
+                    if (hit.collider.GetComponent<BuildingBlock>().playerOwner == player)
                     {
-                        Destroy(blockInFront);
-                        if (blockType == BlockType.FLOAT)
+                        if (startConstruction)
                         {
-                            block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
-                            //block.GetComponent<BuildingBlock>().playerOwner = player;
+
+                            Destroy(blockInFront);
+                            if (blockType == BlockType.FLOAT)
+                            {
+                                block = (GameObject)Instantiate(blockPlacePrefabFloat, hit.collider.transform.position, hit.collider.transform.rotation);
+                                //block.GetComponent<BuildingBlock>().playerOwner = player;
+                            }
+                            if (blockType == BlockType.ARMOUR)
+                            {
+                                block = (GameObject)Instantiate(blockPlacePrefabArmour, hit.collider.transform.position, hit.collider.transform.rotation);
+                                //block.GetComponent<BuildingBlock>().playerOwner = player;
+                            }
+                            if (blockType == BlockType.FLOAT3X3X3)
+                            {
+                                block = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
+                                //block.GetComponent<BuildingBlock>().playerOwner = player;
+                            }
+                            if (blockType == BlockType.ARMOUR3X3X3)
+                            {
+                                block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
+                                //block.GetComponent<BuildingBlock>().playerOwner = player;
+                            }
+                            if (blockType == BlockType.SPAWN)
+                            {
+                                block = (GameObject)Instantiate(blockPlacePrefabSpawn, hit.collider.transform.position, hit.collider.transform.rotation);
+                            }
+                            startConstruction = false;
                         }
-                        if (blockType == BlockType.ARMOUR)
+                        if (blockType == BlockType.FLOAT3X3X3 || blockType == BlockType.ARMOUR3X3X3)
                         {
-                            block = (GameObject)Instantiate(blockPlacePrefabArmour, hit.collider.transform.position, hit.collider.transform.rotation);
-                            //block.GetComponent<BuildingBlock>().playerOwner = player;
+                            block.transform.rotation = hit.collider.transform.rotation;
+                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset * 2;
                         }
-                        if (blockType == BlockType.FLOAT3X3X3)
+                        else
                         {
-                            block = (GameObject)Instantiate(blockPlacePrefabFloat3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
-                            //block.GetComponent<BuildingBlock>().playerOwner = player;
+                            block.transform.rotation = hit.collider.transform.rotation;
+                            block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
                         }
-                        if (blockType == BlockType.ARMOUR3X3X3)
-                        {
-                            block = (GameObject)Instantiate(blockPlacePrefabArmour3X3X3, hit.collider.transform.position, hit.collider.transform.rotation);
-                            //block.GetComponent<BuildingBlock>().playerOwner = player;
-                        }
-                        if(blockType == BlockType.SPAWN)
-                        {
-                            block = (GameObject)Instantiate(blockPlacePrefabSpawn, hit.collider.transform.position, hit.collider.transform.rotation);
-                        }
-                        startConstruction = false;
-                    }
-                    if(blockType == BlockType.FLOAT3X3X3|| blockType == BlockType.ARMOUR3X3X3)
-                    {
-                        block.transform.rotation = hit.collider.transform.rotation;
-                        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset*2;
                     }
                     else
                     {
-                        block.transform.rotation = hit.collider.transform.rotation;
-                        block.transform.position = hit.collider.transform.position + hit.normal.normalized * placementOffset;
+                        BlockInFront();
                     }
                 }
                 else if (hit.collider.tag != "Block" && hit.collider.tag != "PlaceBlock")
