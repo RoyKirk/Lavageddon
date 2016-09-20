@@ -106,6 +106,11 @@ public class CameraMovement : MonoBehaviour {
             //save.CreatePrefab();
             //save.WriteBoat();
             GetComponent<managerscript>().constructionMode = false;
+
+            //if(GetComponent<managerscript>().spawnblock)
+            //{
+            //    GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, true);
+            //}
         }
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {

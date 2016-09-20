@@ -83,9 +83,9 @@ public class Continue : MonoBehaviour {
 
     public void ContinueGame()
     {
-        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);
         players = GameObject.FindGameObjectsWithTag("MainCamera");
-
+        
         for(int i = 0; i < players.Length; i++)
         {
             Destroy(players[i]);

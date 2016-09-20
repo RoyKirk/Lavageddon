@@ -7,7 +7,16 @@ public class ModeSwitch : MonoBehaviour {
 
     //test having an array of bools that only change this bool if all others have been changed. maybe a function with a playerID, with the bool of the spawn block.
 
-    bool []ConstructionReady;
+    public bool []ConstructionReady;
+
+    public Continue contScript;
+
+    void Start()
+    {
+        //int playerCount;
+        //Debug.Log(playerCount);
+        //ConstructionReady = new bool[playerCount];
+    }
 
     void Update()
     {

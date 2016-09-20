@@ -99,6 +99,14 @@ public class managerscript : MonoBehaviour {
             //testingboat = false;
             save.WriteBoat();
             saved = true;
+            //get the offset of the camera to move the body pos, to above block and adjust the camera to the correct pos.
+            Vector3 temp = transform.position - GetComponent<PlayerMovement>().body.transform.position;
+            spawnPos.y += 3;
+            //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
+            //transform.position = GetComponent<PlayerMovement>().body.transform.position + temp;
+            //transform.position = spawnPos;
+            //transform.position -= GetComponent<PlayerMovement>().body.transform.localPosition;
+            //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
         }
         numberText.text = "No. of Blocks = " + (maxNumberOfBlocks - numberOfBlocks);
 
@@ -491,9 +499,12 @@ public class managerscript : MonoBehaviour {
         if(blockType == BlockType.SPAWN && spawnblock == false)
         {
             BlockPlaceAndCost(blockPrefabSpawn, 0);
+            spawnPos = block.transform.position;
             spawnblock = true;
         }
     }
+
+    Vector3 spawnPos;
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
@@ -544,7 +555,7 @@ public class managerscript : MonoBehaviour {
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, true);
                     numberOfBlocks += FloatBlockCost;
-                    Debug.Log("asd");
+                    //Debug.Log("asd");
                 }
                 break;
             case 1:
@@ -554,7 +565,7 @@ public class managerscript : MonoBehaviour {
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, false);
                     numberOfBlocks += ArmourBlockCost;
-                    Debug.Log("aasdasd");
+                    //Debug.Log("aasdasd");
                 }
                 break;
         }
