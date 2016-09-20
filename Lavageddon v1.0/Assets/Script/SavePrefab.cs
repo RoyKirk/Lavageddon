@@ -76,8 +76,8 @@ public class SavePrefab : MonoBehaviour
             {
                 if(create)
                 {
-                    GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
-                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
+                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     ms.LoadBoatPlacement(0, pos);
                     GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().FloatBlockCost;
                 }
@@ -90,8 +90,8 @@ public class SavePrefab : MonoBehaviour
             {
                 if (create)
                 {
-                    GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
-                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
+                    //block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     ms.LoadBoatPlacement(1, pos);
                     GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().ArmourBlockCost;
                 }
