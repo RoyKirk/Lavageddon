@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour {
     float rotationX = 0F;
     public int player = 0;
 
-    public float lavaHeight = 1.0f;
+    public float lavaHeight = 2.0f;
     public GameObject redScreen;
 
     public GameObject body;
@@ -121,10 +121,14 @@ public class CameraMovement : MonoBehaviour {
         if (transform.position.y < lavaHeight)
         {
             redScreen.SetActive(true);
+            GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
+            GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
         }
         if (transform.position.y > lavaHeight)
         {
             redScreen.SetActive(false);
+            GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = false;
+            GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = false;
         }
     }
 
