@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool alive = true;
 
-    public float lavaHeight = 1.0f;
+    public float lavaHeight = 2.0f;
 
     public float submergedMinTime = 1.0f;
     float submergedTimer = 0.0f;
