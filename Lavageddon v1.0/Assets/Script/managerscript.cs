@@ -41,7 +41,7 @@ public class managerscript : MonoBehaviour {
     public BlockType blockType = BlockType.FLOAT;
     bool startConstruction = true;
     public float startDistance = 10;
-    int maxNumberOfBlocks = 24;
+    int maxNumberOfBlocks = 100;
     public int numberOfBlocks = 0;
     public Text numberText;
     public int player = 0;
@@ -74,6 +74,7 @@ public class managerscript : MonoBehaviour {
 
         //variables are set to options variables
         maxNumberOfBlocks = (int)DV.BlockRelated[0];
+        Debug.Log("getting var " + (int)DV.BlockRelated[0]);
         FloatBlockCost = (int)DV.BlockRelated[2];
         ArmourBlockCost = (int)DV.BlockRelated[6];
     }
@@ -106,7 +107,8 @@ public class managerscript : MonoBehaviour {
             saved = true;
             //get the offset of the camera to move the body pos, to above block and adjust the camera to the correct pos.
             Vector3 temp = transform.position - GetComponent<PlayerMovement>().body.transform.position;
-            spawnPos.y += 3;
+            spawnPos.y += 1;
+            transform.position = spawnPos + temp;
             //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
             //transform.position = GetComponent<PlayerMovement>().body.transform.position + temp;
             //transform.position = spawnPos;
@@ -559,6 +561,7 @@ public class managerscript : MonoBehaviour {
 
     public void LoadBoatPlacement(int blockID, Vector3 pos)
     {
+        Debug.Log(maxNumberOfBlocks);
         switch (blockID)
         {
             case 0:
@@ -568,7 +571,7 @@ public class managerscript : MonoBehaviour {
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, true);
                     numberOfBlocks += FloatBlockCost;
-                    //Debug.Log("asd");
+                    Debug.Log("asd");
                 }
                 break;
             case 1:
@@ -578,7 +581,7 @@ public class managerscript : MonoBehaviour {
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, false);
                     numberOfBlocks += ArmourBlockCost;
-                    //Debug.Log("aasdasd");
+                    Debug.Log("aasdasd");
                 }
                 break;
         }
