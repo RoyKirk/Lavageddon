@@ -83,28 +83,27 @@ public class Continue : MonoBehaviour {
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(1);
         players = GameObject.FindGameObjectsWithTag("MainCamera");
-        
+        //SceneManager.LoadScene(1);
+        //for(int i = 0; i < players.Length; i++)
+        //{
+        //    Instantiate(playerPrefabs[i]);
+        //}
         for(int i = 0; i < players.Length; i++)
         {
             Destroy(players[i]);
+        }
+        for (int i = 0; i < players.Length; i++)
+        {
+            GameObject player = Instantiate(playerPrefabs[i]);
         }
         MS.construction = true;
         gameover.enabled = false;
         backbtn.gameObject.SetActive(false);
         continuebtn.gameObject.SetActive(false);
         resetbtn.gameObject.SetActive(false);
-        //BoatParents[0] = (GameObject)Resources.Load("player1parent");
-        for (int i = 0; i < DPC.ready.Length; i++)
-        {
-            if(DPC.ready[i] == true)
-            {
-                Instantiate(playerPrefabs[i]);
-                //instantiate boats
-            }
-        }
-        //Instantiate(BoatParents[0]);
+        
+        //need to reset boats to their floating state
     }
 
     public void RestartGame()

@@ -112,15 +112,19 @@ public class DynamicPlayerCount : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        readytostart.ready = false;
-        for (int i = 0; i < 4; i++)
+        if(readytostart != null)
         {
-            if (ready[i])
+            readytostart.ready = false;
+            for (int i = 0; i < 4; i++)
             {
-                //Debug.Log("at least one player is ready");
-                readytostart.ready = true;
+                if (ready[i])
+                {
+                    //Debug.Log("at least one player is ready");
+                    readytostart.ready = true;
+                }
             }
         }
+        
 
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {

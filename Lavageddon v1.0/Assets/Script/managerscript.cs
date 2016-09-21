@@ -74,7 +74,7 @@ public class managerscript : MonoBehaviour {
 
         //variables are set to options variables
         maxNumberOfBlocks = (int)DV.BlockRelated[0];
-        Debug.Log("getting var " + (int)DV.BlockRelated[0]);
+        //Debug.Log("getting var " + (int)DV.BlockRelated[0]);
         FloatBlockCost = (int)DV.BlockRelated[2];
         ArmourBlockCost = (int)DV.BlockRelated[6];
     }

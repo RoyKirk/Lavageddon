@@ -17,6 +17,7 @@ public class SavePrefab : MonoBehaviour
 
     public GameObject blockFloat;
     public GameObject blockArmor;
+    public GameObject blockSpawn;
     public struct blockinfo
     {
         public Vector3 trans;
