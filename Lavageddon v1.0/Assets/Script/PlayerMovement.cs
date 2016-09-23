@@ -122,8 +122,8 @@ public class PlayerMovement : MonoBehaviour {
             //transform.RotateAround(body.transform.position, transform.right, -rotationY);
 
 
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
-
+            //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
+            transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
             transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
             laserTimer += Time.deltaTime;

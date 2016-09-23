@@ -29,17 +29,17 @@ public class CameraMovement : MonoBehaviour {
     private Vector3 initialVector = Vector3.forward;
 
     float initialXRotate;
-    float previousRotate;
+    float previousRotation;
 
     void Update()
     {
         //controller look
-        //float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X * (sensitivityX/10);
+        //float rotationX = transform.locallocalEulerAngles.y + Controller.state[player].ThumbSticks.Right.X * (sensitivityX/10);
 
         //rotationY += Controller.state[player].ThumbSticks.Right.Y * (sensitivityY/10);
         //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-        //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+        //transform.locallocalEulerAngles = new Vector3(-rotationY, rotationX, 0);
 
 
         //thirdPersonPivot = transform.position + transform.forward.normalized * thirdPersonoffset;
@@ -47,22 +47,25 @@ public class CameraMovement : MonoBehaviour {
         rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
         rotationY = Controller.state[player].ThumbSticks.Right.Y *sensitivityY * Time.deltaTime;
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-        transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+        //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
 
+        //transform.localEulerAngles = new Vector3(Mathf.Clamp(transform.localEulerAngles.x, initialXRotate + maximumY, initialXRotate + 360 + minimumY), transform.localEulerAngles.y, transform.localEulerAngles.z);
 
-        //if (transform.eulerAngles.x > initialXRotate + maximumY && transform.eulerAngles.x < initialXRotate + 360 + minimumY)
-        //{
-        //    transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-        //    //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.eulerAngles.x));
-        //}
+        if (transform.localEulerAngles.x >= initialXRotate + maximumY && transform.localEulerAngles.x <= initialXRotate + 360 + minimumY)
+        {
+            //transform.localEulerAngles.x = previousRotation;
+            //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), (previousRotation - transform.localEulerAngles.x));
+            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+            //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
+        }
         //else
         //{
-        //    transform.RotateAround(body.transform.position, body.transform.right, rotationY);
+            transform.RotateAround(body.transform.position, body.transform.right, rotationY);
         //}
 
-        //previousRotate = transform.eulerAngles.x;
-
+        previousRotation = body.transform.localEulerAngles.x;
+        
         //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
         //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
@@ -82,8 +85,8 @@ public class CameraMovement : MonoBehaviour {
         }
 
 
-        transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
-
+        //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
+        transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
         transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
         if (Controller.state[player].Buttons.A == ButtonState.Pressed)
@@ -157,8 +160,8 @@ public class CameraMovement : MonoBehaviour {
         sensitivityY = DV.PlayerRelated[2];
         movementSpeed = DV.PlayerRelated[6];
 
-        initialXRotate = transform.eulerAngles.x;
-        previousRotate = transform.eulerAngles.x;
+        initialXRotate = transform.localEulerAngles.x;
+        previousRotation = transform.localEulerAngles.x;
 
     }
 
