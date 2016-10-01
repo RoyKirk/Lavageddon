@@ -54,17 +54,19 @@ public class CameraMovement : MonoBehaviour {
 
         if (transform.localEulerAngles.x >= initialXRotate + maximumY && transform.localEulerAngles.x <= initialXRotate + 360 + minimumY)
         {
-            //transform.localEulerAngles.x = previousRotation;
+            transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
             //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), (previousRotation - transform.localEulerAngles.x));
-            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
             //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
         }
-        //else
-        //{
+        else
+        {
             transform.RotateAround(body.transform.position, body.transform.right, rotationY);
-        //}
+            previousRotation = body.transform.localEulerAngles.x;
+        }
 
-        previousRotation = body.transform.localEulerAngles.x;
+        
         
         //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
