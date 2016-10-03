@@ -45,19 +45,17 @@ public class CameraMovement : MonoBehaviour {
         //thirdPersonPivot = transform.position + transform.forward.normalized * thirdPersonoffset;
 
         rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
-        rotationY = Controller.state[player].ThumbSticks.Right.Y *sensitivityY * Time.deltaTime;
+        rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
         transform.RotateAround(body.transform.position, body.transform.up, rotationX);
         //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
-
         //transform.localEulerAngles = new Vector3(Mathf.Clamp(transform.localEulerAngles.x, initialXRotate + maximumY, initialXRotate + 360 + minimumY), transform.localEulerAngles.y, transform.localEulerAngles.z);
 
-        if (transform.localEulerAngles.x >= initialXRotate + maximumY && transform.localEulerAngles.x <= initialXRotate + 360 + minimumY)
+        if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
         {
-            transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
-            //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), (previousRotation - transform.localEulerAngles.x));
-
-            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+            //transform.localEulerAngles -= new Vector3(previousRotation - transform.localEulerAngles.x, 0, 0);
+            //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
+            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
             //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
         }
         else
@@ -65,8 +63,6 @@ public class CameraMovement : MonoBehaviour {
             transform.RotateAround(body.transform.position, body.transform.right, rotationY);
             previousRotation = body.transform.localEulerAngles.x;
         }
-
-        
         
         //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
 
@@ -164,7 +160,6 @@ public class CameraMovement : MonoBehaviour {
 
         initialXRotate = transform.localEulerAngles.x;
         previousRotation = transform.localEulerAngles.x;
-
     }
 
 }
