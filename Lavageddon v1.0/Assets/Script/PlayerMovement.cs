@@ -116,14 +116,27 @@ public class PlayerMovement : MonoBehaviour {
             rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
 
             transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+            if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
+            {
+                //transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
+                transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+                //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
+            }
+            else
+            {
+                transform.RotateAround(body.transform.position, body.transform.right, rotationY);
+            }
+
+            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
             //transform.RotateAround(body.transform.position, transform.up, rotationX);
             //transform.RotateAround(body.transform.position, transform.right, -rotationY);
 
 
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
-
+            //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
+            transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
             transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
             laserTimer += Time.deltaTime;
