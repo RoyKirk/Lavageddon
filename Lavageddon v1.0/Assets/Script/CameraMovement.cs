@@ -54,8 +54,8 @@ public class CameraMovement : MonoBehaviour {
         if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
         {
             //transform.localEulerAngles -= new Vector3(previousRotation - transform.localEulerAngles.x, 0, 0);
-            //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
-            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+            transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
+            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
             //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
         }
         else
