@@ -88,27 +88,18 @@ public class CameraMovement : MonoBehaviour {
             transform.position = position;
         }
 
-        //this needs to change to check if all players are ready. so this will just change a bool and when all players bools are true it will change state.
-        //this will also check to see if all players have placed their spawn blocks.
+        //if backbutton is pressed (they are ready) and they have a spawn block placed.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
-            //GetComponent<PlayerMovement>().enabled = true;
-            //GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
-            //save.CreatePrefab();
-            //save.WriteBoat();
-            //GetComponent<managerscript>().constructionMode = false;
-
             if(GetComponent<managerscript>().spawnblock)
             {
                 Debug.Log("trigger battle phase");
-                GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, true);
+                GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player);
             }
         }
-        if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+        if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)//if the mode has changed to battle
         {
             GetComponent<PlayerMovement>().enabled = true;
-            //save.CreatePrefab();
-            //save.createblocks();
             GetComponent<managerscript>().constructionMode = false;
         }
     }

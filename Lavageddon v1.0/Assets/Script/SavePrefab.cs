@@ -144,21 +144,22 @@ public class SavePrefab : MonoBehaviour
 
     public void createStartBlock()
     {
-        //Destroy()
-        //0<4.04<16.16< True
-        //foreach (blockinfo block in Boat)
-        //{
-        //    if (block.trans == pos)
-        //    {
-        //        Boat.Remove(block);
-        //        break;
-        //    }
-        //}
         if(Boat.Count == 0)
         {
             AddtoList(new Vector3(0, 4.04f, 16.16f), 'S');
             GameObject block = (GameObject)Instantiate(blockSpawn, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
             block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+            GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().FloatBlockCost;
+
         }
+    }
+
+    public void DeleteAll(int playerOwner)
+    {
+        GameObject[] AllBlocks = GameObject.FindGameObjectsWithTag("Block");
+        //foreach ( in AllBlocks)
+        //{
+        //
+        //}
     }
 }
