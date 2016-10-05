@@ -112,19 +112,32 @@ public class PlayerMovement : MonoBehaviour {
 
             //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 
-            float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
-            rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
+            float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+            rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
 
             transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+
+            if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
+            {
+                //transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
+                transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+                //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
+            }
+            else
+            {
+                transform.RotateAround(body.transform.position, body.transform.right, rotationY);
+            }
+
+            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
             //transform.RotateAround(body.transform.position, transform.up, rotationX);
             //transform.RotateAround(body.transform.position, transform.right, -rotationY);
 
 
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed;
-
-            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
+            //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
+            transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
+            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
             laserTimer += Time.deltaTime;
             bombTimer += Time.deltaTime;
@@ -378,18 +391,18 @@ public class PlayerMovement : MonoBehaviour {
             //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
             //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-            float rotationX = Controller.state[player].ThumbSticks.Right.X * (sensitivityX / 10);
-            rotationY = Controller.state[player].ThumbSticks.Right.Y * (sensitivityY / 10);
+            float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+            rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
             transform.RotateAround(body.transform.position, body.transform.up, rotationX);
             transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
+            transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed * Time.deltaTime;
 
-            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
+            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
-            transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
+            transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed * Time.deltaTime;
 
-            transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+            transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed * Time.deltaTime;
 
         }
 
@@ -453,7 +466,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             submergeAccumulate = false;
         }
-        movementSpeed = DV.PlayerRelated[7] / 100;
+        movementSpeed = DV.PlayerRelated[7];
 
         //WEAPON RELATED VALUES
         //cannon isnt referenced here
