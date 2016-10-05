@@ -300,6 +300,26 @@ public class managerscript : MonoBehaviour {
                 testingboat = !testingboat;
                 rejoin = !rejoin;
             }
+
+        }
+        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
+        {
+            GameObject[] blocks = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+            foreach (GameObject resetBlock in blocks)
+            {
+                if (resetBlock.tag == "Block")
+                {
+                    resetBlock.GetComponent<BuildingBlock>().ResetBoat();
+                }
+            }
+            foreach (GameObject resetBlock in blocks)
+            {
+                if (resetBlock.tag == "Block")
+                {
+                    resetBlock.GetComponent<BuildingBlock>().MakeJoints();
+                }
+            }
+
         }
 
     }
