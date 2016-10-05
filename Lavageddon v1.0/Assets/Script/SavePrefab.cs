@@ -21,7 +21,7 @@ public class SavePrefab : MonoBehaviour
     public struct blockinfo
     {
         public Vector3 trans;
-        public bool floating;
+        public char Btype;
     }
 
     public List<blockinfo> Boat = new List<blockinfo>();
@@ -49,7 +49,7 @@ public class SavePrefab : MonoBehaviour
         
         foreach (blockinfo block in Boat)
         {
-            string blockN = block.trans.x + "<" + block.trans.y + "<" + block.trans.z + "< " + block.floating + Environment.NewLine;
+            string blockN = block.trans.x + "<" + block.trans.y + "<" + block.trans.z + "< " + block.Btype + Environment.NewLine;
             File.AppendAllText(path, blockN);
         }
     }
@@ -61,7 +61,8 @@ public class SavePrefab : MonoBehaviour
             File.WriteAllText(path, "");
             createStartBlock();
         }
-        string test = "True";
+        string Flo = "F";
+        string Arm = "A";
         bool testoutcome;
         
         char splitChar = '<';
@@ -73,7 +74,7 @@ public class SavePrefab : MonoBehaviour
             String[] values = blockLine.Split(splitChar);
             Vector3 pos = new Vector3((float.Parse(values[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat)),(float.Parse(values[1], System.Globalization.CultureInfo.InvariantCulture.NumberFormat)),(float.Parse(values[2], System.Globalization.CultureInfo.InvariantCulture.NumberFormat)));
 
-            if (testoutcome = blockLine.Contains(test))//float block
+            if (testoutcome = blockLine.Contains(Flo))//float block
             {
                 if(create)
                 {
@@ -84,10 +85,10 @@ public class SavePrefab : MonoBehaviour
                 }
                 else
                 {
-                    AddtoList(pos, true);//adds to the list (this needs to be done in this script
+                    AddtoList(pos, 'F');//adds to the list (this needs to be done in this script
                 }
             }
-            else//armor block
+            else if(testoutcome = blockLine.Contains(Arm))//armor block
             {
                 if (create)
                 {
@@ -98,18 +99,34 @@ public class SavePrefab : MonoBehaviour
                 }
                 else
                 {
-                    AddtoList(pos, false);
+                    AddtoList(pos, 'A');
+                }
+            }
+            else//spawn block
+            {
+                if (create)
+                {
+                    GameObject block = Instantiate(blockSpawn, pos, Quaternion.identity) as GameObject;//loads the boat
+                    block.GetComponent<BuildingBlock>().playerOwner = playernumber;
+                    //ms.LoadBoatPlacement(1, pos);
+                    //GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().ArmourBlockCost;
+                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().spawnblock = true;
+                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().spawnPos = pos;
+                }
+                else
+                {
+                    AddtoList(pos, 'S');
                 }
             }
         }
     }
     
 
-    public void AddtoList(Vector3 pos, bool floating)
+    public void AddtoList(Vector3 pos, char Btype)
     {
         blockinfo block = new blockinfo();
         block.trans = pos;
-        block.floating = floating;
+        block.Btype = Btype;
         Boat.Add(block);
     }
 
@@ -139,8 +156,8 @@ public class SavePrefab : MonoBehaviour
         //}
         if(Boat.Count == 0)
         {
-            AddtoList(new Vector3(0, 4.04f, 16.16f), true);
-            GameObject block = (GameObject)Instantiate(blockFloat, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
+            AddtoList(new Vector3(0, 4.04f, 16.16f), 'S');
+            GameObject block = (GameObject)Instantiate(blockSpawn, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
             block.GetComponent<BuildingBlock>().playerOwner = playernumber;
         }
     }

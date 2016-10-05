@@ -102,16 +102,17 @@ public class CameraMovement : MonoBehaviour {
         //this will also check to see if all players have placed their spawn blocks.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
-            GetComponent<PlayerMovement>().enabled = true;
-            GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
+            //GetComponent<PlayerMovement>().enabled = true;
+            //GameObject.Find("Controller").GetComponent<ModeSwitch>().construction = false;
             //save.CreatePrefab();
             //save.WriteBoat();
-            GetComponent<managerscript>().constructionMode = false;
+            //GetComponent<managerscript>().constructionMode = false;
 
-            //if(GetComponent<managerscript>().spawnblock)
-            //{
-            //    GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, true);
-            //}
+            if(GetComponent<managerscript>().spawnblock)
+            {
+                Debug.Log("trigger battle phase");
+                GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, true);
+            }
         }
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
         {

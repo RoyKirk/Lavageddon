@@ -10,12 +10,12 @@ public class ModeSwitch : MonoBehaviour {
     public bool []ConstructionReady;
 
     public Continue contScript;
-
+    int playerCount;
     void Start()
     {
-        //int playerCount;
-        //Debug.Log(playerCount);
-        //ConstructionReady = new bool[playerCount];
+        playerCount = GameObject.FindGameObjectsWithTag("MainCamera").Length;
+        Debug.Log(playerCount);
+        ConstructionReady = new bool[4];
     }
 
     void Update()
@@ -24,17 +24,28 @@ public class ModeSwitch : MonoBehaviour {
         //{
         //    construction = false;
         //}
+        int counter = 0;
+        for(int i = 0; i < 4; i++)
+        {
+            if(ConstructionReady[i] == true)
+            {
+                counter++;
+            }
+        }
+        if(counter == playerCount)
+        {
+            construction = false;
+        }
     }
 
     public void setBool(int playerID, bool SpawnBlock)
     {
-        //switch(playerID)
+        ConstructionReady[playerID] = true;
+        //switch (playerID)
         //{
         //    case 0:
-        //        if(SpawnBlock)
-        //        {
-        //            ConstructionReady[]
-        //        }
+        //        ConstructionReady[playerID] = true;
+        //        //construction = false;
         //        break;
         //    case 1:
         //        break;
@@ -43,7 +54,7 @@ public class ModeSwitch : MonoBehaviour {
         //    case 3:
         //        break;
         //}
-        ConstructionReady[playerID] = SpawnBlock; 
+        //ConstructionReady[playerID] = SpawnBlock; 
     }
 
 

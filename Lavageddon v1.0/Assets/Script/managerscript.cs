@@ -493,7 +493,7 @@ public class managerscript : MonoBehaviour {
                 foreach (Transform child in blok.transform)
                 {
                     child.GetComponent<BuildingBlock>().playerOwner = player;
-                    save.AddtoList(child.transform.position, true);
+                    save.AddtoList(child.transform.position, 'F');
                     numberOfBlocks += FloatBlockCost;
                 }
             }
@@ -506,7 +506,7 @@ public class managerscript : MonoBehaviour {
                 foreach (Transform child in blok.transform)
                 {
                     child.GetComponent<BuildingBlock>().playerOwner = player;
-                    save.AddtoList(child.transform.position, false);
+                    save.AddtoList(child.transform.position, 'A');
                     numberOfBlocks += ArmourBlockCost;
                 }
             }
@@ -515,11 +515,12 @@ public class managerscript : MonoBehaviour {
         {
             BlockPlaceAndCost(blockPrefabSpawn, 0);
             spawnPos = block.transform.position;
+            save.AddtoList(transform.position, 'S');
             spawnblock = true;
         }
     }
 
-    Vector3 spawnPos;
+    public Vector3 spawnPos;
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
@@ -528,11 +529,15 @@ public class managerscript : MonoBehaviour {
         //Debug.Log(block.transform.position);
         if (blockCost == FloatBlockCost)
         {
-            save.AddtoList(blok.transform.position, true);
+            save.AddtoList(blok.transform.position, 'F');
+        }
+        else if(blockCost == ArmourBlockCost)
+        {
+            save.AddtoList(blok.transform.position, 'A');
         }
         else
         {
-            save.AddtoList(blok.transform.position, false);
+            save.AddtoList(blok.transform.position, 'S');
         }
         numberOfBlocks += blockCost;
     }
@@ -569,7 +574,7 @@ public class managerscript : MonoBehaviour {
                 {
                     GameObject blok = Instantiate(blockPrefabFloat, pos, Quaternion.identity) as GameObject;
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
-                    save.AddtoList(blok.transform.position, true);
+                    save.AddtoList(blok.transform.position, 'F');
                     numberOfBlocks += FloatBlockCost;
                     Debug.Log("asd");
                 }
@@ -579,7 +584,7 @@ public class managerscript : MonoBehaviour {
                 {
                     GameObject blok = Instantiate(blockPrefabArmour, pos, Quaternion.identity) as GameObject;
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
-                    save.AddtoList(blok.transform.position, false);
+                    save.AddtoList(blok.transform.position, 'A');
                     numberOfBlocks += ArmourBlockCost;
                     Debug.Log("aasdasd");
                 }

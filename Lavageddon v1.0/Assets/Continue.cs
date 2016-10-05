@@ -29,8 +29,6 @@ public class Continue : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
-
         for (int i = 0; i < 4; i++)
         {
             //buttons to toggle menu
@@ -46,8 +44,7 @@ public class Continue : MonoBehaviour {
                 continuebtn.gameObject.SetActive(false);
                 resetbtn.gameObject.SetActive(false);
             }
-
-
+            
             //NAVIGATING MENUS WITH BUTTONS
             if(Controller.state[i].DPad.Up == ButtonState.Pressed && Controller.prevState[i].DPad.Up == ButtonState.Released)
             {
@@ -66,7 +63,6 @@ public class Continue : MonoBehaviour {
         {
             select = 0;
         }
-
         switch(select)
         {
             case 0:
