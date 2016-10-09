@@ -84,24 +84,24 @@ public class DynamicPlayerCount : MonoBehaviour {
             {
                 if (readyCount == 1)
                 {
-                    p1C = players[i].GetComponent<Camera>();
+                    p1C = players[i].GetComponentInChildren<Camera>();
                     p1C.rect = new Rect(0, 0, 1, 1);
                     Instantiate(players[i]);//set up player
-                    players[i].GetComponent<SavePrefab>().ReadBoat(true);
+                    players[i].GetComponentInChildren<SavePrefab>().ReadBoat(true);
                 }
                 else if (readyCount == 2)
                 {
-                    p1C = players[i].GetComponent<Camera>();
+                    p1C = players[i].GetComponentInChildren<Camera>();
                     p1C.rect = spot2[spotCount++];
                     Instantiate(players[i]);// set up player
-                    players[i].GetComponent<SavePrefab>().ReadBoat(true);
+                    players[i].GetComponentInChildren<SavePrefab>().ReadBoat(true);
                 }
                 else if (readyCount > 2)
                 {
-                    p1C = players[i].GetComponent<Camera>();
+                    p1C = players[i].GetComponentInChildren<Camera>();
                     p1C.rect = spot4[spotCount++];
                     Instantiate(players[i]);
-                    players[i].GetComponent<SavePrefab>().ReadBoat(true);
+                    players[i].GetComponentInChildren<SavePrefab>().ReadBoat(true);
                 }
                 //Instantiate(BoatParents[i]);//change this to get each player to call create boat in their save code
             }

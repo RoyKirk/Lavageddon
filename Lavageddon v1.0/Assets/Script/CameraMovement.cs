@@ -20,9 +20,8 @@ public class CameraMovement : MonoBehaviour {
 
     public GameObject body;
 
-    public float thirdPersonoffset = 2.0f;
-
-    Vector3 thirdPersonPivot;
+    public Vector3 thirdPersonoffset;
+    
 
     //public SavePrefab save;
 
@@ -72,21 +71,6 @@ public class CameraMovement : MonoBehaviour {
 
         //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
 
-        if (body)
-        {
-            rotationX += Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
-            rotationY -= Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
-
-            rotationY = ClampAngle(rotationY, minimumY, maximumY);
-
-            Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
-            Vector3 position = rotation * new Vector3(0.0f, 0.0f, -thirdPersonoffset) + body.transform.position;
-
-            body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
-
-            transform.rotation = rotation;
-            transform.position = position;
-        }
 
         //if backbutton is pressed (they are ready) and they have a spawn block placed.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
@@ -119,6 +103,21 @@ public class CameraMovement : MonoBehaviour {
             GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = false;
         }
 
+        if (body)
+        {
+            rotationX += Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+            rotationY -= Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
+
+            rotationY = ClampAngle(rotationY, minimumY, maximumY);
+
+            Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
+            Vector3 position = rotation * thirdPersonoffset + body.transform.position;
+
+            body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+
+            transform.rotation = rotation;
+            transform.position = position;
+        }
 
 
     }
@@ -144,8 +143,8 @@ public class CameraMovement : MonoBehaviour {
             GetComponent<Rigidbody>().isKinematic = true;
         }
         
-        rotationY = transform.localEulerAngles.y;
-        rotationX = transform.localEulerAngles.x;
+        rotationY = 0;
+        rotationX = 0;
 
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");

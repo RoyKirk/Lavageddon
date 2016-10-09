@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     public float jumpForce = 1000.0f;
     public float laserForce = 1000.0f;
     float rotationY = 0F;
+    float rotationX = 0F;
 
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
@@ -49,9 +50,13 @@ public class PlayerMovement : MonoBehaviour {
     float submergedTimer = 0.0f;
     public bool submergeAccumulate = true;
 
+    public Vector3 thirdPersonoffset;
+
     public GameObject redScreen;
 
     public GameObject body;
+
+    Rigidbody bodyRB;
 
     //public float shootDistance = 1000.0f;
     void Update()
@@ -62,12 +67,12 @@ public class PlayerMovement : MonoBehaviour {
             {
                 RaycastHit hit;
 
-                if (Physics.Raycast(body.transform.position+ new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
+                if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
                 {
                     if (hit.collider.tag == "Block")
                     {
                         Debug.DrawLine(body.transform.position, hit.point);
-                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                        bodyRB.AddForce(0, jumpForce, 0);
                     }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
@@ -75,7 +80,7 @@ public class PlayerMovement : MonoBehaviour {
                     if (hit.collider.tag == "Block")
                     {
                         Debug.DrawLine(body.transform.position, hit.point);
-                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                        bodyRB.AddForce(0, jumpForce, 0);
                     }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(-1, -1, 0), out hit, frictionCast))
@@ -83,7 +88,7 @@ public class PlayerMovement : MonoBehaviour {
                     if (hit.collider.tag == "Block")
                     {
                         Debug.DrawLine(body.transform.position, hit.point);
-                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                        bodyRB.AddForce(0, jumpForce, 0);
                     }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 1), out hit, frictionCast))
@@ -91,7 +96,7 @@ public class PlayerMovement : MonoBehaviour {
                     if (hit.collider.tag == "Block")
                     {
                         Debug.DrawLine(body.transform.position, hit.point);
-                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                        bodyRB.AddForce(0, jumpForce, 0);
                     }
                 }
                 else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, -1), out hit, frictionCast))
@@ -99,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
                     if (hit.collider.tag == "Block")
                     {
                         Debug.DrawLine(body.transform.position, hit.point);
-                        GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);
+                        bodyRB.AddForce(0, jumpForce, 0);
                     }
                 }
             }
@@ -112,10 +117,10 @@ public class PlayerMovement : MonoBehaviour {
 
             //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 
-            float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
-            rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
+            //float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+           // rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
 
-            transform.RotateAround(body.transform.position, body.transform.up, rotationX);
+            //transform.RotateAround(body.transform.position, body.transform.up, rotationX);
 
             if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
             {
@@ -136,8 +141,8 @@ public class PlayerMovement : MonoBehaviour {
 
 
             //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
-            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
+            //transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
+            //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
             laserTimer += Time.deltaTime;
             bombTimer += Time.deltaTime;
@@ -265,7 +270,21 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (alive)
         {
+            if (body)
+            {
+                rotationX += Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+                rotationY -= Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
 
+                rotationY = ClampAngle(rotationY, minimumY, maximumY);
+
+                Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
+                Vector3 position = rotation * thirdPersonoffset + body.transform.position;
+
+                body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+
+                transform.rotation = rotation;
+                transform.position = position;
+            }
 
             RaycastHit hit;
 
@@ -276,12 +295,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (hit.collider.tag == "Block")
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
-                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    bodyRB.velocity = new Vector3(vel.x, bodyRB.velocity.y, vel.z);
                     //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
                 }
                 else
                 {
-                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    bodyRB.velocity = new Vector3(0, bodyRB.velocity.y, 0);
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
@@ -292,12 +311,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (hit.collider.tag == "Block")
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
-                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    bodyRB.velocity = new Vector3(vel.x, bodyRB.velocity.y, vel.z);
                     //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
                 }
                 else
                 {
-                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    bodyRB.velocity = new Vector3(0, bodyRB.velocity.y, 0);
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
@@ -308,12 +327,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (hit.collider.tag == "Block")
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
-                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    bodyRB.velocity = new Vector3(vel.x, bodyRB.velocity.y, vel.z);
                     //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
                 }
                 else
                 {
-                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    bodyRB.velocity = new Vector3(0, bodyRB.velocity.y, 0);
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
@@ -324,12 +343,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (hit.collider.tag == "Block")
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
-                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    bodyRB.velocity = new Vector3(vel.x, bodyRB.velocity.y, vel.z);
                     //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
                 }
                 else
                 {
-                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    bodyRB.velocity = new Vector3(0, bodyRB.velocity.y, 0);
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
@@ -340,12 +359,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (hit.collider.tag == "Block")
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
-                    GetComponent<Rigidbody>().velocity = new Vector3(vel.x, GetComponent<Rigidbody>().velocity.y, vel.z);
+                    bodyRB.velocity = new Vector3(vel.x, bodyRB.velocity.y, vel.z);
                     //GetComponent<Rigidbody>().angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity;
                 }
                 else
                 {
-                    GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                    bodyRB.velocity = new Vector3(0, bodyRB.velocity.y, 0);
                     //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
                 }
             }
@@ -368,7 +387,7 @@ public class PlayerMovement : MonoBehaviour {
             //}
             else
             {
-                GetComponent<Rigidbody>().velocity = new Vector3(0, GetComponent<Rigidbody>().velocity.y, 0);
+                bodyRB.velocity = new Vector3(0, bodyRB.velocity.y, 0);
                 //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
             }
 
@@ -422,6 +441,16 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+
+    static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < -360)
+            angle += 360;
+        if (angle > 360)
+            angle -= 360;
+        return Mathf.Clamp(angle, min, max);
+    }
+
     //used for setting variables set in menu
     GameObject playerManager;
 
@@ -431,11 +460,13 @@ public class PlayerMovement : MonoBehaviour {
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
         // Make the rigid body not change rotation
-        if (GetComponent<Rigidbody>())
+        bodyRB = body.GetComponent<Rigidbody>();
+
+        if (bodyRB)
         {
-            GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().freezeRotation = true;
-            GetComponent<Rigidbody>().isKinematic = false;
+            bodyRB.useGravity = true;
+            bodyRB.freezeRotation = true;
+            bodyRB.isKinematic = false;
         }
 
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -447,10 +478,11 @@ public class PlayerMovement : MonoBehaviour {
         alive = true;
 
 
+
         //setting the menu variables to the player variables
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-        Rigidbody rb = GetComponent<Rigidbody>();
+        Rigidbody rb = body.GetComponent<Rigidbody>();
 
         //PLAYER RELATED VALUES
         jumpForce = (DV.PlayerRelated[0] * 10);
@@ -490,8 +522,8 @@ public class PlayerMovement : MonoBehaviour {
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
             transform.position = new Vector3(5, 50, -65);
             transform.eulerAngles = new Vector3(45, 0, 0);
-            GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            bodyRB.useGravity = false;
+            bodyRB.velocity = new Vector3(0, 0, 0);
             submergedTimer = 0;
 
             body.GetComponent<CapsuleCollider>().enabled = false;

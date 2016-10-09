@@ -106,9 +106,9 @@ public class managerscript : MonoBehaviour {
             save.WriteBoat();
             saved = true;
             //get the offset of the camera to move the body pos, to above block and adjust the camera to the correct pos.
-            Vector3 temp = transform.position - GetComponent<PlayerMovement>().body.transform.position;
+            //Vector3 temp = transform.position - GetComponent<PlayerMovement>().body.transform.position;
             spawnPos.y += 1;
-            transform.position = spawnPos + temp;
+            GetComponent<PlayerMovement>().body.transform.position = spawnPos;// + temp;
             //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
             //transform.position = GetComponent<PlayerMovement>().body.transform.position + temp;
             //transform.position = spawnPos;

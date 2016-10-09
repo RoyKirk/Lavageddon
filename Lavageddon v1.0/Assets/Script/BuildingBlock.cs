@@ -48,17 +48,17 @@ public class BuildingBlock : MonoBehaviour {
             GetComponent<FloatFixed>().enabled = false;
             //Debug.Log("else..");
 
-            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == true && changeState == false)
+            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponentInChildren<managerscript>().testingboat == true && changeState == false)
             {
                 TestBoat(playerOwner);
                 changeState = true;
             }
-            else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().testingboat == false && changeState == true)
+            else if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponentInChildren<managerscript>().testingboat == false && changeState == true)
             {
                 ResetBoat();
             }
 
-            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponent<managerscript>().rejoin == true && changeState == true)
+            if (GameObject.Find("Player" + playerOwner + "(Clone)").GetComponentInChildren<managerscript>().rejoin == true && changeState == true)
             {
                 MakeJoints();
                 changeState = false;
