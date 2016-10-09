@@ -76,16 +76,17 @@ public class SavePrefab : MonoBehaviour
 
             if (testoutcome = blockLine.Contains(Flo))//float block
             {
-                if(create)
+                if (create)
                 {
                     GameObject block = Instantiate(blockFloat, pos, Quaternion.identity) as GameObject;//loads the boat
                     block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     //ms.LoadBoatPlacement(0, pos);
-                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().FloatBlockCost;
+                    //GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().FloatBlockCost;
                 }
                 else
                 {
                     AddtoList(pos, 'F');//adds to the list (this needs to be done in this script
+                    GetComponent<managerscript>().numberOfBlocks += GetComponent<managerscript>().FloatBlockCost;
                 }
             }
             else if(testoutcome = blockLine.Contains(Arm))//armor block
@@ -95,11 +96,13 @@ public class SavePrefab : MonoBehaviour
                     GameObject block = Instantiate(blockArmor, pos, Quaternion.identity) as GameObject;//loads the boat
                     block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     //ms.LoadBoatPlacement(1, pos);
-                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().ArmourBlockCost;
+                    //GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().ArmourBlockCost;
+                    
                 }
                 else
                 {
                     AddtoList(pos, 'A');
+                    GetComponent<managerscript>().numberOfBlocks += GetComponent<managerscript>().ArmourBlockCost;
                 }
             }
             else//spawn block
@@ -110,8 +113,12 @@ public class SavePrefab : MonoBehaviour
                     block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     //ms.LoadBoatPlacement(1, pos);
                     //GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponent<managerscript>().ArmourBlockCost;
-                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().spawnblock = true;
-                    GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().spawnPos = pos;
+                    //GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().spawnblock = true;
+                    //GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().spawnPos = pos;
+
+                    GetComponent<managerscript>().spawnblock = true;
+                    GetComponent<managerscript>().spawnPos = pos;
+                    Debug.Log(GetComponent<managerscript>().spawnblock + GetComponent<managerscript>().spawnPos.y.ToString());
                 }
                 else
                 {
@@ -142,14 +149,18 @@ public class SavePrefab : MonoBehaviour
         }
     }
 
+    Vector3 spawnorigin = new Vector3(0, 4.04f, 16.16f);
+
     public void createStartBlock()
     {
         if(Boat.Count == 0)
         {
-            AddtoList(new Vector3(0, 4.04f, 16.16f), 'S');
-            GameObject block = (GameObject)Instantiate(blockSpawn, new Vector3(0, 4.04f, 16.16f), Quaternion.identity);
+            AddtoList(spawnorigin, 'S');
+            GameObject block = (GameObject)Instantiate(blockSpawn, spawnorigin, Quaternion.identity);
             block.GetComponent<BuildingBlock>().playerOwner = playernumber;
-            GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().FloatBlockCost;
+            GetComponent<managerscript>().spawnPos = spawnorigin;
+            GetComponent<managerscript>().spawnblock = true;
+            //GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().FloatBlockCost;
 
         }
     }

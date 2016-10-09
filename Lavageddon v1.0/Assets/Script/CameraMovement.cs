@@ -77,7 +77,7 @@ public class CameraMovement : MonoBehaviour {
         {
             if(GetComponent<managerscript>().spawnblock)
             {
-                Debug.Log("trigger battle phase");
+                //Debug.Log("trigger battle phase");
                 GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player);
             }
         }

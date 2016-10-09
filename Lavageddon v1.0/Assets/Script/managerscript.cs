@@ -535,7 +535,7 @@ public class managerscript : MonoBehaviour {
         {
             BlockPlaceAndCost(blockPrefabSpawn, 0);
             spawnPos = block.transform.position;
-            save.AddtoList(transform.position, 'S');
+            //save.AddtoList(transform.position, 'S');
             spawnblock = true;
         }
     }
