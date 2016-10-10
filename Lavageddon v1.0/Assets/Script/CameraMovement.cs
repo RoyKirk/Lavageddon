@@ -32,6 +32,7 @@ public class CameraMovement : MonoBehaviour {
     float initialXRotate;
     float previousRotation;
 
+    //Construction UI elements
     public Text spawnblockWarning;
     public Text readyText;
     public Text pressToReady;
@@ -167,10 +168,19 @@ public class CameraMovement : MonoBehaviour {
         {
             GetComponent<PlayerMovement>().enabled = true;
             MS.constructionMode = false;
+            TurnOffConstructionUI();
         }
     }
 
     bool readystate = false;
+
+    void TurnOffConstructionUI()
+    {
+        spawnblockWarning.text = "";
+        readyText.text = "";
+        pressToReady.text = "";
+        testBoat.text = "";
+    }
 
     void LateUpdate()
     {

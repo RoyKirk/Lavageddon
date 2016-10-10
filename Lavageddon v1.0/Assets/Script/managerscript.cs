@@ -114,8 +114,12 @@ public class managerscript : MonoBehaviour {
             //transform.position = spawnPos;
             //transform.position -= GetComponent<PlayerMovement>().body.transform.localPosition;
             //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
+            numberText.text = "";
         }
-        numberText.text = "No. of Blocks = " + (maxNumberOfBlocks - numberOfBlocks);
+        else
+        {
+            numberText.text = "No. of Blocks = " + (maxNumberOfBlocks - numberOfBlocks);
+        }
 
 	    if(blockdestroyed)
         {
@@ -301,6 +305,10 @@ public class managerscript : MonoBehaviour {
                 rejoin = !rejoin;
             }
 
+        }
+        else
+        {
+            numberText.text = "";
         }
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
