@@ -197,17 +197,17 @@ public class PlayerMovement : MonoBehaviour {
 
             if (laserTimer >= laserResidual*3)
             {
-                GamePad.SetVibration(0, 0f, 0f);
+                GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             }
 
             if (stickyTimer >= projectileResidual)
             {
-                GamePad.SetVibration(0, 0f, 0f);
+                GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             }
 
             if (bombTimer >= projectileResidual)
             {
-                GamePad.SetVibration(0, 0f, 0f);
+                GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             }
 
 
@@ -219,20 +219,20 @@ public class PlayerMovement : MonoBehaviour {
 
                 if (weapon == Weapon.BOMB && bombTimer >= bombMinTime)
                 {
-                    GamePad.SetVibration(0, 1.0f, 1.0f);
+                    GamePad.SetVibration((PlayerIndex)player, 1.0f, 1.0f);
                     bombTimer = 0.0f;
                     GetComponent<FiringScript>().Fire();
                 }
                 if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime)
                 {
-                    GamePad.SetVibration(0, 1.0f, 1.0f);
+                    GamePad.SetVibration((PlayerIndex)player, 1.0f, 1.0f);
                     stickyTimer = 0.0f;
                     GetComponent<FireStickyWeight>().Fire();
                 }
                 if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
                 {
                     laserTimer = 0.0f;
-                    GamePad.SetVibration(0, 0.0f, 1.0f);
+                    GamePad.SetVibration((PlayerIndex)player, 0.0f, 1.0f);
                     //laser.enabled = true;
                     //int i = 0;
                     //while (i < lengthOfLineRenderer)
@@ -494,7 +494,7 @@ public class PlayerMovement : MonoBehaviour {
             redScreen.SetActive(true);
             GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
             GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
-            GamePad.SetVibration(0, 1.0f, 0.0f);
+            GamePad.SetVibration((PlayerIndex)player, 1.0f, 0.0f);
         }
         if (transform.position.y > lavaHeight)
         {
@@ -581,7 +581,7 @@ public class PlayerMovement : MonoBehaviour {
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
-            GamePad.SetVibration(0, 0f, 0f);
+            GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
             body.transform.position = new Vector3(5, 50, -65);
