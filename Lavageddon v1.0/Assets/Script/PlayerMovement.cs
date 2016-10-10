@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour {
     float bombTimer = 0.0f;
     public float stickyMinTime = 0.5f;
     float stickyTimer = 0.0f;
-
+    public float projectileResidual = 0.2f;
     public int player = 0;
 
     public bool alive = true;
@@ -144,9 +144,25 @@ public class PlayerMovement : MonoBehaviour {
             //transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
             //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
-            laserTimer += Time.deltaTime;
-            bombTimer += Time.deltaTime;
-            stickyTimer += Time.deltaTime;
+
+            if (weapon == Weapon.BOMB)
+            {
+                bombTimer += Time.deltaTime;
+                stickyTimer = 0.0f;
+                laserTimer = 0.0f;
+            }
+            if (weapon == Weapon.STICKY)
+            {
+                stickyTimer += Time.deltaTime;
+                laserTimer = 0.0f;
+                bombTimer = 0.0f;
+            }
+            if (weapon == Weapon.LASER)
+            {
+                laserTimer += Time.deltaTime;
+                stickyTimer = 0.0f;
+                bombTimer = 0.0f;
+            }
 
             if (laserTimer >= laserResidual)
             {
@@ -181,24 +197,38 @@ public class PlayerMovement : MonoBehaviour {
                 GamePad.SetVibration(0, 0f, 0f);
             }
 
+            if (stickyTimer >= projectileResidual)
+            {
+                GamePad.SetVibration(0, 0f, 0f);
+            }
+
+            if (bombTimer >= projectileResidual)
+            {
+                GamePad.SetVibration(0, 0f, 0f);
+            }
+
+
+
             //if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1)
             if (Controller.state[player].Triggers.Right > 0.1)
             {
 
                 if (weapon == Weapon.BOMB && bombTimer >= bombMinTime)
                 {
+                    GamePad.SetVibration(0, 1.0f, 1.0f);
                     bombTimer = 0.0f;
                     GetComponent<FiringScript>().Fire();
                 }
                 if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime)
                 {
+                    GamePad.SetVibration(0, 1.0f, 1.0f);
                     stickyTimer = 0.0f;
                     GetComponent<FireStickyWeight>().Fire();
                 }
                 if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
                 {
                     laserTimer = 0.0f;
-                    GamePad.SetVibration(0, 10.0f, 10.0f);
+                    GamePad.SetVibration(0, 0.0f, 1.0f);
                     //laser.enabled = true;
                     //int i = 0;
                     //while (i < lengthOfLineRenderer)
@@ -410,18 +440,35 @@ public class PlayerMovement : MonoBehaviour {
             //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
             //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-            float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
-            rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
-            transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-            transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+            //float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+            //rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
+            //transform.RotateAround(body.transform.position, body.transform.up, rotationX);
+            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
-            transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed * Time.deltaTime;
 
-            transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
+            if (body)
+            {
+                rotationX += Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
+                rotationY -= Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
 
-            transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed * Time.deltaTime;
+                rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
-            transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed * Time.deltaTime;
+                Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
+                Vector3 position = rotation * thirdPersonoffset + body.transform.position;
+
+                body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+
+                transform.rotation = rotation;
+                transform.position = position;
+            }
+
+            //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed * Time.deltaTime;
+
+            //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
+
+            //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed * Time.deltaTime;
+
+            //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed * Time.deltaTime;
 
         }
 
@@ -518,9 +565,10 @@ public class PlayerMovement : MonoBehaviour {
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
+            GamePad.SetVibration(0, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
-            transform.position = new Vector3(5, 50, -65);
+            body.transform.position = new Vector3(5, 50, -65);
             transform.eulerAngles = new Vector3(45, 0, 0);
             bodyRB.useGravity = false;
             bodyRB.velocity = new Vector3(0, 0, 0);
