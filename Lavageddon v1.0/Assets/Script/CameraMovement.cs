@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using XInputDotNetPure;
+using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour {
 
@@ -29,6 +30,9 @@ public class CameraMovement : MonoBehaviour {
 
     float initialXRotate;
     float previousRotation;
+
+    public Text spawnblockWarning;
+    public Text readyText;
 
     void Update()
     {
@@ -70,15 +74,24 @@ public class CameraMovement : MonoBehaviour {
         //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
         //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
+        if (GetComponent<managerscript>().spawnblock)
+        {
+            spawnblockWarning.text = "";
+        }
 
-
-        //if backbutton is pressed (they are ready) and they have a spawn block placed.
-        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
+            //if backbutton is pressed (they are ready) and they have a spawn block placed.
+            if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
             if(GetComponent<managerscript>().spawnblock)
             {
                 //Debug.Log("trigger battle phase");
                 GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player);
+                readyText.text = "Ready!";
+            }
+            else
+            {
+                //turn on UI telling player to place spawn block
+                spawnblockWarning.text = "You need to place a spawn block before you can ready!";
             }
         }
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)//if the mode has changed to battle

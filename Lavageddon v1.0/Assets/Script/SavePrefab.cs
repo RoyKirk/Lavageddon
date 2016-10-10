@@ -118,7 +118,7 @@ public class SavePrefab : MonoBehaviour
 
                     GetComponent<managerscript>().spawnblock = true;
                     GetComponent<managerscript>().spawnPos = pos;
-                    Debug.Log(GetComponent<managerscript>().spawnblock + GetComponent<managerscript>().spawnPos.y.ToString());
+                    //Debug.Log(GetComponent<managerscript>().spawnblock + GetComponent<managerscript>().spawnPos.y.ToString());
                 }
                 else
                 {
