@@ -166,6 +166,7 @@ public class CameraMovement : MonoBehaviour {
         rotationY = 0;
         rotationX = 0;
 
+        thirdPersonoffset = transform.position - body.transform.position;
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
