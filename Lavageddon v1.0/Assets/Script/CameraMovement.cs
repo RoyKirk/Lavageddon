@@ -240,8 +240,8 @@ public class CameraMovement : MonoBehaviour {
             bodyRB.isKinematic = true;
         }
         
-        rotationY = 0;
-        rotationX = 0;
+        rotationY = transform.eulerAngles.y;
+        rotationX = transform.eulerAngles.x;
 
         thirdPersonoffset = transform.position - body.transform.position;
 

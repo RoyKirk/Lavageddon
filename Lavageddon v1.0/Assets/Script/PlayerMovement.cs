@@ -521,6 +521,8 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
         thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;
+        rotationY = transform.eulerAngles.y;
+        rotationX = transform.eulerAngles.x;
         //Cursor.visible = false;
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
