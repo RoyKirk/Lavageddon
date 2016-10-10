@@ -34,6 +34,16 @@ public class CameraMovement : MonoBehaviour {
 
     public Text spawnblockWarning;
     public Text readyText;
+    public Text pressToReady;
+    public Text testBoat;
+
+    public managerscript MS;
+    public bool spawnPosGood = true;
+
+    void Awake()
+    {
+        MS = GetComponent<managerscript>();
+    }
 
     void Update()
     {
@@ -78,32 +88,90 @@ public class CameraMovement : MonoBehaviour {
         //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
         //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
-        if (GetComponent<managerscript>().spawnblock)
+
+
+        //PLAYER HAS PLACED SPAWN BLOCK
+        if (MS.spawnblock && spawnPosGood)
         {
             spawnblockWarning.text = "";
         }
-
-            //if backbutton is pressed (they are ready) and they have a spawn block placed.
-            if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
+        else
         {
-            if(GetComponent<managerscript>().spawnblock)
+            GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, false);
+            readystate = false;
+        }
+
+        //PLAYER IS NOT READY
+        if(readystate == false)
+        {
+            readyText.text = "";
+        }
+        else
+        {
+            readyText.text = "Ready!";//need to turn this off once round starts. maybe have a function that turns all construction UI off?
+        }
+        
+        //PLAYER HAS USED ALL BLOCKS
+        if (MS.numberOfBlocks == MS.maxNumberOfBlocks && readystate == false)
+        {
+            pressToReady.text = "Press Back to Ready";
+        }
+        else
+        {
+            pressToReady.text = "";
+        }
+
+        //player has used 50% of blocks
+        if(MS.numberOfBlocks >= MS.maxNumberOfBlocks/2)
+        {
+            //want a timer for this to turn off after X
+            testBoat.text = "Right Thumbstick to test boat!";
+        }
+        else if(MS.numberOfBlocks == 0)
+        {
+            testBoat.text = "Left Thumbstick to spawn a block";
+        }
+        else
+        {
+            testBoat.text = "";
+        }
+
+        //if backbutton is pressed (they are ready) and they have a spawn block placed.
+        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
+        {
+            if(spawnPosGood == true)
             {
-                //Debug.Log("trigger battle phase");
-                GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player);
-                readyText.text = "Ready!";
+                if (MS.spawnblock)
+                {
+                    //Debug.Log("trigger battle phase");
+                    readystate = !readystate;
+                    GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, readystate);
+                    //readyText.text = "Ready!";
+                }
+                else
+                {
+                    GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, false);
+                    readystate = false;
+                    //turn on UI telling player to place spawn block
+                    spawnblockWarning.text = "You need to place a spawn block before you can ready!";
+                }
             }
             else
             {
-                //turn on UI telling player to place spawn block
-                spawnblockWarning.text = "You need to place a spawn block before you can ready!";
+                //something is obstructing the spawn block.
+                spawnblockWarning.text = "something is obstructing (ontop) of spawn block!";
             }
+            
         }
+
         if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)//if the mode has changed to battle
         {
             GetComponent<PlayerMovement>().enabled = true;
-            GetComponent<managerscript>().constructionMode = false;
+            MS.constructionMode = false;
         }
     }
+
+    bool readystate = false;
 
     void LateUpdate()
     {

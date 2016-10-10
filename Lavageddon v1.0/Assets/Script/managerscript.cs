@@ -41,7 +41,7 @@ public class managerscript : MonoBehaviour {
     public BlockType blockType = BlockType.FLOAT;
     bool startConstruction = true;
     public float startDistance = 10;
-    int maxNumberOfBlocks = 100;
+    public int maxNumberOfBlocks = 100;
     public int numberOfBlocks = 0;
     public Text numberText;
     public int player = 0;
@@ -169,7 +169,7 @@ public class managerscript : MonoBehaviour {
                 //numberOfBlocks += FloatBlockCost;
             }
 
-            if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
             {
                 blockTimer += Time.deltaTime;
 

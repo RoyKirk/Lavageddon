@@ -35,9 +35,9 @@ public class ModeSwitch : MonoBehaviour {
         }
     }
 
-    public void setBool(int playerID)
+    public void setBool(int playerID, bool ready)
     {
-        ConstructionReady[playerID] = true;
+        ConstructionReady[playerID] = ready;
     }
 
 
