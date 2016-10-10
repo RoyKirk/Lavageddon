@@ -22,7 +22,8 @@ public class CameraMovement : MonoBehaviour {
     public GameObject body;
 
     public Vector3 thirdPersonoffset;
-    
+
+    Rigidbody bodyRB;
 
     //public SavePrefab save;
 
@@ -36,6 +37,9 @@ public class CameraMovement : MonoBehaviour {
 
     void Update()
     {
+
+        bodyRB.velocity = new Vector3(0,0,0);
+        bodyRB.angularVelocity = new Vector3(0,0,0);
         //controller look
         //float rotationX = transform.locallocalEulerAngles.y + Controller.state[player].ThumbSticks.Right.X * (sensitivityX/10);
 
@@ -150,10 +154,13 @@ public class CameraMovement : MonoBehaviour {
     {
         Cursor.visible = false;
         // Make the rigid body not change rotation
-        if (GetComponent<Rigidbody>())
+
+        bodyRB = body.GetComponent<Rigidbody>();
+
+        if (bodyRB)
         {
-            GetComponent<Rigidbody>().freezeRotation = true;
-            GetComponent<Rigidbody>().isKinematic = true;
+            bodyRB.freezeRotation = true;
+            bodyRB.isKinematic = true;
         }
         
         rotationY = 0;
