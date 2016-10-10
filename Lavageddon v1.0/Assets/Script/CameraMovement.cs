@@ -135,6 +135,10 @@ public class CameraMovement : MonoBehaviour {
         {
             testBoat.text = "";
         }
+        if(spawnPosGood == false)
+        {
+            spawnblockWarning.text = "something is obstructing the spawn block!";
+        }
 
         //if backbutton is pressed (they are ready) and they have a spawn block placed.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
@@ -155,11 +159,6 @@ public class CameraMovement : MonoBehaviour {
                     //turn on UI telling player to place spawn block
                     spawnblockWarning.text = "You need to place a spawn block before you can ready!";
                 }
-            }
-            else
-            {
-                //something is obstructing the spawn block.
-                spawnblockWarning.text = "something is obstructing (ontop) of spawn block!";
             }
             
         }

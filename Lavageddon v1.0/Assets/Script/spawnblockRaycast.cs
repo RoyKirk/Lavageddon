@@ -17,7 +17,7 @@ public class spawnblockRaycast : MonoBehaviour
     {
         Vector3 up = transform.TransformDirection(Vector3.up);
 
-	    if(Physics.Raycast(transform.position, up))
+	    if(Physics.Raycast(transform.position, up, 3))
         {
             CM.spawnPosGood = false;
         }
