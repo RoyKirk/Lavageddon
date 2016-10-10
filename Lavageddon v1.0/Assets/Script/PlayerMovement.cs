@@ -50,7 +50,10 @@ public class PlayerMovement : MonoBehaviour {
     float submergedTimer = 0.0f;
     public bool submergeAccumulate = true;
 
-    public Vector3 thirdPersonoffset;
+    public float initialFOV = 80.0f;
+    public float zoomFOV = 30.0f;
+
+    Vector3 thirdPersonoffset;
 
     public GameObject redScreen;
 
@@ -209,6 +212,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
+
             //if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1)
             if (Controller.state[player].Triggers.Right > 0.1)
             {
@@ -268,6 +272,14 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
+            if (Controller.state[player].Triggers.Left > 0.1)
+            {
+                GetComponent<Camera>().fieldOfView = zoomFOV;
+            }
+            if (Controller.state[player].Triggers.Left < 0.1)
+            {
+                GetComponent<Camera>().fieldOfView = initialFOV;
+            }
 
             if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)
             {
@@ -300,6 +312,18 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (alive)
         {
+
+            if (body.transform.position.y < lavaHeight)
+            {
+                PlayerDead();
+
+            }
+            else if (body.transform.position.y > lavaHeight && submergeAccumulate)
+            {
+                submergedTimer = 0;
+            }
+
+
             if (body)
             {
                 rotationX += Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
@@ -421,15 +445,7 @@ public class PlayerMovement : MonoBehaviour {
                 //GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
             }
 
-            if (body.transform.position.y < lavaHeight)
-            {
-                PlayerDead();
 
-            }
-            if (body.transform.position.y > lavaHeight && submergeAccumulate)
-            {
-                submergedTimer = 0;
-            }
         }
         else
         {
@@ -478,6 +494,7 @@ public class PlayerMovement : MonoBehaviour {
             redScreen.SetActive(true);
             GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
             GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
+            GamePad.SetVibration(0, 1.0f, 0.0f);
         }
         if (transform.position.y > lavaHeight)
         {
@@ -503,6 +520,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Start()
     {
+        thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;
         //Cursor.visible = false;
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
@@ -524,9 +542,7 @@ public class PlayerMovement : MonoBehaviour {
         lineRenderer.enabled = false;
         alive = true;
 
-
-
-        //setting the menu variables to the player variables
+                //setting the menu variables to the player variables
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         Rigidbody rb = body.GetComponent<Rigidbody>();
@@ -569,7 +585,12 @@ public class PlayerMovement : MonoBehaviour {
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
             body.transform.position = new Vector3(5, 50, -65);
-            transform.eulerAngles = new Vector3(45, 0, 0);
+            MeshRenderer[] meshes = body.GetComponentsInChildren<MeshRenderer>();
+            foreach(MeshRenderer mesh in meshes)
+            {
+                mesh.enabled = false;
+            }
+            //transform.eulerAngles = new Vector3(45, 0, 0);
             bodyRB.useGravity = false;
             bodyRB.velocity = new Vector3(0, 0, 0);
             submergedTimer = 0;
