@@ -160,6 +160,7 @@ public class SavePrefab : MonoBehaviour
 
     public void createStartBlock()
     {
+        DeleteAll();
         if(Boat.Count == 0)
         {
             GameObject block = (GameObject)Instantiate(blockSpawn, spawnorigins[playernumber], Quaternion.identity);
@@ -172,12 +173,17 @@ public class SavePrefab : MonoBehaviour
         }
     }
 
-    public void DeleteAll(int playerOwner)
+    public void DeleteAll()
     {
         GameObject[] AllBlocks = GameObject.FindGameObjectsWithTag("Block");
-        //foreach ( in AllBlocks)
-        //{
-        //
-        //}
+        foreach (GameObject go in AllBlocks)
+        {
+            if(go.GetComponent<BuildingBlock>().playerOwner == playernumber)
+            {
+                RemovefromList(go.transform.position);
+                Destroy(go);
+            }
+        }
+        GetComponent<managerscript>().numberOfBlocks = 0;
     }
 }
