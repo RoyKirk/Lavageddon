@@ -207,9 +207,9 @@ public class CameraMovement : MonoBehaviour {
             Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
             Vector3 position = rotation * thirdPersonoffset + body.transform.position;
 
-            body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+            body.transform.eulerAngles = new Vector3(body.transform.eulerAngles.x, rotation.eulerAngles.y, body.transform.eulerAngles.z);
 
-            transform.localRotation = rotation;
+            transform.rotation = rotation;
             transform.position = position;
         }
 
@@ -240,8 +240,8 @@ public class CameraMovement : MonoBehaviour {
             bodyRB.isKinematic = true;
         }
 
-        rotationY = transform.localEulerAngles.y;
-        rotationX = transform.localEulerAngles.x;
+        rotationY = transform.eulerAngles.y;
+        rotationX = transform.eulerAngles.x;
         thirdPersonoffset = transform.position - body.transform.position;
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");

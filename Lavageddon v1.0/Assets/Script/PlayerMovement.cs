@@ -123,19 +123,19 @@ public class PlayerMovement : MonoBehaviour {
             //float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
            // rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
 
-            //transform.RotateAround(body.transform.position, body.transform.up, rotationX);
+            ////transform.RotateAround(body.transform.position, body.transform.up, rotationX);
 
-            if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
-            {
-                //transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
-                //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
-                transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-                //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
-            }
-            else
-            {
-                transform.RotateAround(body.transform.position, body.transform.right, rotationY);
-            }
+            //if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
+            //{
+            //    //transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
+            //    //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
+            //    transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
+            //    //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
+            //}
+            //else
+            //{
+            //    transform.RotateAround(body.transform.position, body.transform.right, rotationY);
+            //}
 
             //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
 
@@ -334,9 +334,9 @@ public class PlayerMovement : MonoBehaviour {
                 Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
                 Vector3 position = rotation * thirdPersonoffset + body.transform.position;
 
-                body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+                body.transform.eulerAngles = new Vector3(body.transform.eulerAngles.x, rotation.eulerAngles.y, body.transform.eulerAngles.z);
 
-                transform.localRotation = rotation;
+                transform.rotation = rotation;
                 transform.position = position;
             }
 
@@ -473,9 +473,9 @@ public class PlayerMovement : MonoBehaviour {
                 Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
                 Vector3 position = rotation * thirdPersonoffset + body.transform.position;
 
-                body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+                body.transform.eulerAngles = new Vector3(body.transform.eulerAngles.x, rotation.eulerAngles.y, body.transform.eulerAngles.z);
 
-                transform.localRotation = rotation;
+                transform.rotation = rotation;
                 transform.position = position;
             }
 
@@ -527,8 +527,8 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
         thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;
-        rotationY = transform.localEulerAngles.y;
-        rotationX = transform.localEulerAngles.x;
+        rotationY = transform.eulerAngles.y;
+        rotationX = transform.eulerAngles.x;
         //Cursor.visible = false;
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;

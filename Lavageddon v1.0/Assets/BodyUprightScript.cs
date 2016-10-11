@@ -9,9 +9,6 @@ public class BodyUprightScript : MonoBehaviour {
 
     public int player = 0;
 
-
-    float rotationX = 0F;
-
     void Update()
     {
 
