@@ -89,7 +89,10 @@ public class CameraMovement : MonoBehaviour {
         //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
 
         //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
-
+        testBoat.color = Color.green;
+        testBoat.fontSize = 17;
+        spawnblockWarning.color = Color.green;
+        readyText.color = Color.green;
 
         //PLAYER HAS PLACED SPAWN BLOCK
         if (MS.spawnblock && spawnPosGood)
@@ -110,8 +113,19 @@ public class CameraMovement : MonoBehaviour {
         else
         {
             readyText.text = "Ready!";//need to turn this off once round starts. maybe have a function that turns all construction UI off?
+            //readyText.color = Random.ColorHSV(0.25f,0.75f);
+            readyText.fontSize = 20;
         }
         
+        if(MS.resetboatcheck)
+        {
+            testBoat.text = "Press left thumbstick to reset boat";
+        }
+        else
+        {
+            testBoat.text = "";
+        }
+
         //PLAYER HAS USED ALL BLOCKS
         if (MS.numberOfBlocks == MS.maxNumberOfBlocks && readystate == false)
         {
@@ -123,19 +137,19 @@ public class CameraMovement : MonoBehaviour {
         }
 
         //player has used 50% of blocks
-        if(MS.numberOfBlocks >= MS.maxNumberOfBlocks/2)
-        {
-            //want a timer for this to turn off after X
-            testBoat.text = "Right Thumbstick to test boat!";
-        }
-        else if(MS.numberOfBlocks == 0)
-        {
-            testBoat.text = "Left Thumbstick to spawn a block";
-        }
-        else
-        {
-            testBoat.text = "";
-        }
+        //if(MS.numberOfBlocks >= MS.maxNumberOfBlocks/2)
+        //{
+        //    //want a timer for this to turn off after X
+        //    testBoat.text = " Press Right Thumbstick to test boat!";
+        //}
+        //else if(MS.numberOfBlocks == 0 && MS.spawnblock == false)
+        //{
+        //    testBoat.text = "Left Thumbstick to start a new boat!";
+        //}
+        //else
+        //{
+        //    testBoat.text = "";
+        //}
         if(spawnPosGood == false)
         {
             spawnblockWarning.text = "something is obstructing the spawn block!";

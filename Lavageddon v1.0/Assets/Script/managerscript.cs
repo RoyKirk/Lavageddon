@@ -67,6 +67,8 @@ public class managerscript : MonoBehaviour {
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
 
+    Vector3[] randRot = new Vector3[6];
+    
     void Awake()
     {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
@@ -80,7 +82,12 @@ public class managerscript : MonoBehaviour {
     }
     void Start ()
     {
-
+        randRot[0] = new Vector3(0, 0, 0);
+        randRot[1] = new Vector3(90,0,0);
+        randRot[2] = new Vector3(-90, 0, 0);
+        randRot[3] = new Vector3(180, 0, 0);
+        randRot[4] = new Vector3(90, 0, 0);
+        randRot[5] = new Vector3(0, 0, 180);
 
         if (blockType == BlockType.FLOAT)
         {
@@ -96,6 +103,10 @@ public class managerscript : MonoBehaviour {
         //boatParent = GameObject.FindGameObjectWithTag("boatPrefab" + player);
         //save.parent = boatParent;
     }
+
+    public bool resetboatcheck = false;
+    const float resetboatcounterMAX = 2.0f;
+    float resetboutcounter;
 
     // Update is called once per frame
     void Update ()
@@ -148,25 +159,38 @@ public class managerscript : MonoBehaviour {
         if (constructionMode && !testingboat)
         {
             saved = false;
-            //if the player presses the left stick in, reset the boat
-            if(Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed)
+            if (resetboutcounter < 0)
+            {
+                resetboatcheck = false;
+            }
+            else
+            {
+                resetboutcounter -= Time.deltaTime;
+            }
+            if (numberOfBlocks == 0 && spawnblock == false)
+            {
+                resetboatcheck = true;
+            }
+
+            if (Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed && resetboatcheck)
             {
                 save.createStartBlock();
+                resetboatcheck = false;
             }
-            //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
-            //{
-            //    if (blockType == BlockType.FLOAT)
-            //    {
-            //        Instantiate(blockPrefabFloat, block.transform.position, block.transform.rotation);
-            //        numberOfBlocks += FloatBlockCost;
-            //    }
-            //    if (blockType == BlockType.ARMOUR)
-            //    {
-            //        Instantiate(blockPrefabArmour, block.transform.position, block.transform.rotation);
-            //        numberOfBlocks += ArmourBlockCost;
-            //    }
-            //    //numberOfBlocks += FloatBlockCost;
-            //}
+
+            //if the player presses the left stick in, reset the boat // set up a check to confirm they want to reset the boat, unless they have no blocks.
+            if (Controller.prevState[player].Buttons.LeftStick == ButtonState.Released && Controller.state[player].Buttons.LeftStick == ButtonState.Pressed && !resetboatcheck)
+            {
+                //they have pressed it once, que a confirm sentence with a timer. they have to press button again to confirm or not to cancel
+                resetboatcheck = true;//set this to true auto if they have no blocks, so you dont need to confirm.
+                resetboutcounter = resetboatcounterMAX;
+            }
+            //they have confirmed that they want to reset their boat.
+            
+
+            //timer so they have X seconds to press the reset button again before canceling
+            
+
             if (Controller.prevState[player].Triggers.Right < 0.2 && Controller.state[player].Triggers.Right > 0.2 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
@@ -552,7 +576,8 @@ public class managerscript : MonoBehaviour {
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
-        GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
+        int rand = Random.Range(0, 5);
+        GameObject blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[rand])) as GameObject;
         blok.GetComponent<BuildingBlock>().playerOwner = player;
         //Debug.Log(block.transform.position);
         if (blockCost == FloatBlockCost)
@@ -595,12 +620,13 @@ public class managerscript : MonoBehaviour {
     public void LoadBoatPlacement(int blockID, Vector3 pos)
     {
         Debug.Log(maxNumberOfBlocks);
+        int rand = Random.Range(0, 5);
         switch (blockID)
         {
             case 0:
                 if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
                 {
-                    GameObject blok = Instantiate(blockPrefabFloat, pos, Quaternion.identity) as GameObject;
+                    GameObject blok = Instantiate(blockPrefabFloat, pos, Quaternion.Euler(randRot[rand])) as GameObject;
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, 'F');
                     numberOfBlocks += FloatBlockCost;
@@ -610,7 +636,7 @@ public class managerscript : MonoBehaviour {
             case 1:
                 if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
                 {
-                    GameObject blok = Instantiate(blockPrefabArmour, pos, Quaternion.identity) as GameObject;
+                    GameObject blok = Instantiate(blockPrefabArmour, pos, Quaternion.Euler(randRot[rand])) as GameObject;
                     blok.GetComponent<BuildingBlock>().playerOwner = player;
                     save.AddtoList(blok.transform.position, 'A');
                     numberOfBlocks += ArmourBlockCost;
