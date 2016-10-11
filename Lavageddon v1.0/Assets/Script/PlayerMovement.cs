@@ -449,6 +449,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         else
         {
+            GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.0f);
             //controller look
             //float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X;
 
@@ -489,12 +490,17 @@ public class PlayerMovement : MonoBehaviour {
         }
 
 
+        if (body.transform.position.y < lavaHeight)
+        {
+            GamePad.SetVibration((PlayerIndex)player, 1.0f, 0.0f);
+        }
+
+
         if (transform.position.y < lavaHeight)
         {
             redScreen.SetActive(true);
             GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().enabled = true;
             GetComponent<UnityStandardAssets.ImageEffects.GlobalFog>().enabled = true;
-            GamePad.SetVibration((PlayerIndex)player, 1.0f, 0.0f);
         }
         if (transform.position.y > lavaHeight)
         {
