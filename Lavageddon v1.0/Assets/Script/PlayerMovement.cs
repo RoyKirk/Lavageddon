@@ -542,7 +542,7 @@ public class PlayerMovement : MonoBehaviour {
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
         // Make the rigid body not change rotation
-        bodyRB = body.GetComponent<Rigidbody>();
+        bodyRB = body.transform.parent.GetComponent<Rigidbody>();
 
         if (bodyRB)
         {
@@ -562,7 +562,7 @@ public class PlayerMovement : MonoBehaviour {
                 //setting the menu variables to the player variables
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-        Rigidbody rb = body.GetComponent<Rigidbody>();
+        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
 
         //PLAYER RELATED VALUES
         jumpForce = (DV.PlayerRelated[0] * 10);
@@ -590,6 +590,11 @@ public class PlayerMovement : MonoBehaviour {
 
         stickyMinTime = DV.WeaponRelated[7];
 
+    }
+
+    void OnDestroy()
+    {
+        GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
     }
 
     void PlayerDead()

@@ -119,7 +119,13 @@ public class managerscript : MonoBehaviour {
             //get the offset of the camera to move the body pos, to above block and adjust the camera to the correct pos.
             //Vector3 temp = transform.position - GetComponent<PlayerMovement>().body.transform.position;
             spawnPos.y += 1;
-            GetComponent<PlayerMovement>().body.transform.position = spawnPos;// + temp;
+            Vector3 temp1 = transform.localPosition;
+            Vector3 temp2 = GetComponent<PlayerMovement>().body.transform.localPosition;
+            GetComponent<PlayerMovement>().body.transform.parent.transform.position = spawnPos;// + temp;
+            transform.localPosition = temp1;
+            GetComponent<PlayerMovement>().body.transform.localPosition = temp2;
+
+
             //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
             //transform.position = GetComponent<PlayerMovement>().body.transform.position + temp;
             //transform.position = spawnPos;
