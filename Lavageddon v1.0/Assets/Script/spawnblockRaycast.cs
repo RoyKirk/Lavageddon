@@ -5,8 +5,9 @@ public class spawnblockRaycast : MonoBehaviour
 {
     int playerOwner;
     CameraMovement CM;
+    
 
-    void Awake()
+    void Start()
     {
         playerOwner = GetComponent<BuildingBlock>().playerOwner;
         CM = GameObject.Find("Player" + playerOwner + "(Clone)").GetComponentInChildren<CameraMovement>();

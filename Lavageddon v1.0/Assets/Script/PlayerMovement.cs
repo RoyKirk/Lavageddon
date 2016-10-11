@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool alive = true;
 
-    public float lavaHeight = 2.0f;
+    float lavaHeight = 1.5f;
 
     public float submergedMinTime = 1.0f;
     float submergedTimer = 0.0f;
@@ -592,7 +592,7 @@ public class PlayerMovement : MonoBehaviour {
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
-            body.transform.position = new Vector3(5, 50, -65);
+            body.transform.position = new Vector3(0f, 15f, -29f);
             MeshRenderer[] meshes = body.GetComponentsInChildren<MeshRenderer>();
             foreach(MeshRenderer mesh in meshes)
             {
