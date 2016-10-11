@@ -29,9 +29,16 @@ public class SavePrefab : MonoBehaviour
 
     string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat.txt";// this is the write path to print the boat block details to read from later.
 
-	// Use this for initialization
-	void Start ()
+    Vector3[] spawnorigins = new Vector3[4];
+
+    // Use this for initialization
+    void Start ()
     {
+        spawnorigins[0] = new Vector3(2.02f, 5.05f, -24.24001f);
+        spawnorigins[1] = new Vector3(-21.05f, 5.05f, 4.59f);
+        spawnorigins[2] = new Vector3(2.02f, 5.05f, 25.78f);
+        spawnorigins[3] = new Vector3(20.51f, 5.05f, 2.13f);
+
         //do some research to get a better path location, preferably this games location
         path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
         ReadBoat(false);
@@ -149,16 +156,16 @@ public class SavePrefab : MonoBehaviour
         }
     }
 
-    Vector3 spawnorigin = new Vector3(0, 4.04f, 16.16f);
+    
 
     public void createStartBlock()
     {
         if(Boat.Count == 0)
         {
-            AddtoList(spawnorigin, 'S');
-            GameObject block = (GameObject)Instantiate(blockSpawn, spawnorigin, Quaternion.identity);
+            GameObject block = (GameObject)Instantiate(blockSpawn, spawnorigins[playernumber], Quaternion.identity);
             block.GetComponent<BuildingBlock>().playerOwner = playernumber;
-            GetComponent<managerscript>().spawnPos = spawnorigin;
+            AddtoList(spawnorigins[playernumber], 'S');
+            GetComponent<managerscript>().spawnPos = spawnorigins[playernumber];
             GetComponent<managerscript>().spawnblock = true;
             //GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().numberOfBlocks += GameObject.Find("Player" + playernumber + "(Clone)").GetComponentInChildren<managerscript>().FloatBlockCost;
 
