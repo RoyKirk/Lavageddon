@@ -204,13 +204,17 @@ public class CameraMovement : MonoBehaviour {
 
             rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
-            Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
-            Vector3 position = rotation * thirdPersonoffset + body.transform.position;
+            Quaternion rotation = Quaternion.Euler(0, rotationX, 0);
+            Quaternion rotationCam = Quaternion.Euler(rotationY, 0, 0);
+            Quaternion rotationSep = Quaternion.Euler(rotationY, rotationX, 0);
+            Vector3 position = rotationCam * thirdPersonoffset + body.transform.localPosition;
 
-            body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
+            //body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
-            transform.localRotation = rotation;
-            transform.position = position;
+            transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
+            transform.localPosition = position;
+            transform.parent.transform.rotation = rotation;
+            //transform.position = position;
         }
 
 
@@ -240,9 +244,9 @@ public class CameraMovement : MonoBehaviour {
             bodyRB.isKinematic = true;
         }
 
-        rotationY = transform.eulerAngles;
-        rotationX = transform.eulerAngles;
-        thirdPersonoffset = transform.position - body.transform.position;
+        rotationY = transform.eulerAngles.y;
+        rotationX = transform.eulerAngles.x;
+        thirdPersonoffset = transform.localPosition - body.transform.localPosition;
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();

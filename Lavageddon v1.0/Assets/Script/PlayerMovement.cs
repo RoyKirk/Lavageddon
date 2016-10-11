@@ -331,13 +331,17 @@ public class PlayerMovement : MonoBehaviour {
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
-                Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
-                Vector3 position = rotation * thirdPersonoffset + body.transform.position;
+                Quaternion rotation = Quaternion.Euler(0, rotationX, 0);
+                Quaternion rotationCam = Quaternion.Euler(rotationY, 0, 0);
+                Quaternion rotationSep = Quaternion.Euler(rotationY, rotationX, 0);
+                Vector3 position = rotationCam * thirdPersonoffset + body.transform.localPosition;
 
-                body.transform.eulerAngles = new Vector3(body.transform.eulerAngles.x, rotation.eulerAngles.y, body.transform.eulerAngles.z);
+                //body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
-                transform.rotation = rotation;
-                transform.position = position;
+                transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                transform.localPosition = position;
+                transform.parent.transform.rotation = rotation;
+                //transform.position = position;
             }
 
             RaycastHit hit;
@@ -470,13 +474,17 @@ public class PlayerMovement : MonoBehaviour {
 
                 rotationY = ClampAngle(rotationY, minimumY, maximumY);
 
-                Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0);
-                Vector3 position = rotation * thirdPersonoffset + body.transform.position;
+                Quaternion rotation = Quaternion.Euler(0, rotationX, 0);
+                Quaternion rotationCam = Quaternion.Euler(rotationY, 0, 0);
+                Quaternion rotationSep = Quaternion.Euler(rotationY, rotationX, 0);
+                Vector3 position = rotationCam * thirdPersonoffset + body.transform.localPosition;
 
-                body.transform.eulerAngles = new Vector3(body.transform.eulerAngles.x, rotation.eulerAngles.y, body.transform.eulerAngles.z);
+                //body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
-                transform.rotation = rotation;
-                transform.position = position;
+                transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                transform.localPosition = position;
+                transform.parent.transform.rotation = rotation;
+                //transform.position = position;
             }
 
             //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed * Time.deltaTime;
@@ -529,6 +537,7 @@ public class PlayerMovement : MonoBehaviour {
         thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;
         rotationY = transform.eulerAngles.y;
         rotationX = transform.eulerAngles.x;
+
         //Cursor.visible = false;
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
