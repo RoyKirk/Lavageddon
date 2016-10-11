@@ -12,8 +12,8 @@ public class CameraMovement : MonoBehaviour {
     public float maximumX = 360F;
     public float minimumY = -60F;
     public float maximumY = 60F;
-    float rotationY = 0F;
-    float rotationX = 0F;
+    float rotationY;
+    float rotationX;
     public int player = 0;
 
     public float lavaHeight = 2.0f;
@@ -209,7 +209,7 @@ public class CameraMovement : MonoBehaviour {
 
             body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
-            transform.rotation = rotation;
+            transform.localRotation = rotation;
             transform.position = position;
         }
 
@@ -239,10 +239,9 @@ public class CameraMovement : MonoBehaviour {
             bodyRB.freezeRotation = true;
             bodyRB.isKinematic = true;
         }
-        
-        rotationY = transform.eulerAngles.y;
-        rotationX = transform.eulerAngles.x;
 
+        rotationY = transform.localEulerAngles.y;
+        rotationX = transform.localEulerAngles.x;
         thirdPersonoffset = transform.position - body.transform.position;
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");

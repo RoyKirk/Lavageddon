@@ -25,8 +25,8 @@ public class PlayerMovement : MonoBehaviour {
     public float frictionCast = 1.0f;
     public float jumpForce = 1000.0f;
     public float laserForce = 1000.0f;
-    float rotationY = 0F;
-    float rotationX = 0F;
+    float rotationY;
+    float rotationX;
 
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
@@ -336,7 +336,7 @@ public class PlayerMovement : MonoBehaviour {
 
                 body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
-                transform.rotation = rotation;
+                transform.localRotation = rotation;
                 transform.position = position;
             }
 
@@ -474,7 +474,7 @@ public class PlayerMovement : MonoBehaviour {
 
                 body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
-                transform.rotation = rotation;
+                transform.localRotation = rotation;
                 transform.position = position;
             }
 
@@ -521,8 +521,8 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
         thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;
-        rotationY = transform.eulerAngles.y;
-        rotationX = transform.eulerAngles.x;
+        rotationY = transform.localEulerAngles.y;
+        rotationX = transform.localEulerAngles.x;
         //Cursor.visible = false;
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
@@ -592,7 +592,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 mesh.enabled = false;
             }
-            //transform.eulerAngles = new Vector3(45, 0, 0);
+            //transform.localEulerAngles = new Vector3(45, 0, 0);
             bodyRB.useGravity = false;
             bodyRB.velocity = new Vector3(0, 0, 0);
             submergedTimer = 0;
