@@ -89,7 +89,7 @@ public class CameraMovement : MonoBehaviour {
 
         if(MS.resetboatcheck)
         {
-            testBoat.text = "Press Thumbstick to reset boat!";
+            testBoat.text = "Press Left Thumbstick to reset boat!";
         }
         else if(MS.numberOfBlocks == 0 && MS.spawnblock == false)
         {
