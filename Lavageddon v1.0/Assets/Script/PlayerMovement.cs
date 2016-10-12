@@ -606,7 +606,12 @@ public class PlayerMovement : MonoBehaviour {
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
-            body.transform.position = new Vector3(0f, 15f, -29f);
+            Vector3 temp1 = transform.localPosition;
+            Vector3 temp2 = GetComponent<PlayerMovement>().body.transform.localPosition;
+            GetComponent<PlayerMovement>().body.transform.parent.transform.position = new Vector3(0f, 15f, -29f);// + temp;
+            transform.localPosition = temp1;
+            GetComponent<PlayerMovement>().body.transform.localPosition = temp2;
+            //body.transform.position = new Vector3(0f, 15f, -29f);
             MeshRenderer[] meshes = body.GetComponentsInChildren<MeshRenderer>();
             foreach(MeshRenderer mesh in meshes)
             {
