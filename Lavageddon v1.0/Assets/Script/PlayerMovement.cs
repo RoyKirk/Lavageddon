@@ -476,15 +476,11 @@ public class PlayerMovement : MonoBehaviour {
 
                 Quaternion rotation = Quaternion.Euler(0, rotationX, 0);
                 Quaternion rotationCam = Quaternion.Euler(rotationY, 0, 0);
-                Quaternion rotationSep = Quaternion.Euler(rotationY, rotationX, 0);
                 Vector3 position = rotationCam * thirdPersonoffset + body.transform.localPosition;
-
-                //body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
                 transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
                 transform.localPosition = position;
                 transform.parent.transform.rotation = rotation;
-                //transform.position = position;
             }
 
             //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed * Time.deltaTime;

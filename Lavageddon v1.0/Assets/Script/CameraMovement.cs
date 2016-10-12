@@ -174,7 +174,7 @@ public class CameraMovement : MonoBehaviour {
 
             transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
             transform.localPosition = position;
-            transform.parent.transform.rotation = rotation;
+            transform.parent.transform.eulerAngles = new Vector3(transform.parent.transform.eulerAngles.x, rotationX, transform.parent.transform.eulerAngles.z);
             //transform.position = position;
         }
 
@@ -205,8 +205,8 @@ public class CameraMovement : MonoBehaviour {
             bodyRB.isKinematic = true;
         }
 
-        rotationY = transform.eulerAngles.y;
-        rotationX = transform.eulerAngles.x;
+        rotationY = transform.parent.transform.eulerAngles.x;
+        rotationX = transform.parent.transform.eulerAngles.y;
         thirdPersonoffset = transform.localPosition - body.transform.localPosition;
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");
