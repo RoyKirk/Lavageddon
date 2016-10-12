@@ -317,14 +317,7 @@ public class managerscript : MonoBehaviour {
         {
             if (Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
             {//the right stick is being pressed in, atm we want this to "test the boat"
-                //if (testingboat)
-                //{
-                //    FixedJoint[] joints = FindObjectsOfType(typeof(FixedJoint)) as FixedJoint[];
-                //    foreach (FixedJoint joint in joints)
-                //    {
-                //        Destroy(joint);
-                //    }
-                //}
+                theyHaveTestedBoat = true;
                 testingboat = !testingboat;
                 rejoin = !rejoin;
             }
@@ -356,6 +349,7 @@ public class managerscript : MonoBehaviour {
 
     }
 
+    public bool theyHaveTestedBoat = false;
 
     void LateUpdate()
     {
@@ -590,6 +584,7 @@ public class managerscript : MonoBehaviour {
         }
         else
         {
+            blok.transform.rotation = Quaternion.identity;
             save.AddtoList(blok.transform.position, 'S');
         }
         numberOfBlocks += blockCost;

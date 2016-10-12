@@ -121,6 +121,9 @@
     <Compile Include="Assets\Script\managerscript.cs" />
     <Compile Include="Assets\Script\spawnblockRaycast.cs" />
     <Compile Include="Assets\Script\startButton.cs" />
+    <Compile Include="Assets\TypeOut\Scripts\GUIScript.cs" />
+    <Compile Include="Assets\TypeOut\Scripts\TypeOutEditor.cs" />
+    <Compile Include="Assets\TypeOut\Scripts\TypeOutScript.cs" />
     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
   </ItemGroup>
   <ItemGroup>

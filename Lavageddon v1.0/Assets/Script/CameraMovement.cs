@@ -111,9 +111,13 @@ public class CameraMovement : MonoBehaviour {
         {
             readyText.text = "Ready!";//need to turn this off once round starts. maybe have a function that turns all construction UI off?
         }
-        
+
         //PLAYER HAS USED ALL BLOCKS
-        if (MS.numberOfBlocks == MS.maxNumberOfBlocks && readystate == false)
+        if (MS.numberOfBlocks == MS.maxNumberOfBlocks && MS.spawnblock == false)
+        {
+            pressToReady.text = "Spawn block needed to Ready";
+        }
+        else if(MS.numberOfBlocks == MS.maxNumberOfBlocks && readystate == false)
         {
             pressToReady.text = "Press Back to Ready";
         }
@@ -122,20 +126,23 @@ public class CameraMovement : MonoBehaviour {
             pressToReady.text = "";
         }
 
-        //player has used 50% of blocks
-        if(MS.numberOfBlocks >= MS.maxNumberOfBlocks/2)
+        if(MS.resetboatcheck)
         {
-            //want a timer for this to turn off after X
-            testBoat.text = "Right Thumbstick to test boat!";
+            testBoat.text = "Press Thumbstick to reset boat!";
         }
-        else if(MS.numberOfBlocks == 0)
+        else if(MS.numberOfBlocks == 0 && MS.spawnblock == false)
         {
             testBoat.text = "Left Thumbstick to spawn a block";
+        }
+        else if(MS.numberOfBlocks >= MS.maxNumberOfBlocks / 2 && MS.theyHaveTestedBoat == false)
+        {
+            testBoat.text = "Right Thumbstick to test your boat";
         }
         else
         {
             testBoat.text = "";
         }
+        
         if(spawnPosGood == false)
         {
             spawnblockWarning.text = "something is obstructing the spawn block!";
