@@ -476,15 +476,11 @@ public class PlayerMovement : MonoBehaviour {
 
                 Quaternion rotation = Quaternion.Euler(0, rotationX, 0);
                 Quaternion rotationCam = Quaternion.Euler(rotationY, 0, 0);
-                Quaternion rotationSep = Quaternion.Euler(rotationY, rotationX, 0);
                 Vector3 position = rotationCam * thirdPersonoffset + body.transform.localPosition;
-
-                //body.transform.localEulerAngles = new Vector3(body.transform.localEulerAngles.x, rotation.eulerAngles.y, body.transform.localEulerAngles.z);
 
                 transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
                 transform.localPosition = position;
                 transform.parent.transform.rotation = rotation;
-                //transform.position = position;
             }
 
             //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed * Time.deltaTime;
@@ -542,7 +538,7 @@ public class PlayerMovement : MonoBehaviour {
         GetComponent<CameraMovement>().enabled = false;
         //GetComponent<WhirlpoolCurrent>().enabled = true;
         // Make the rigid body not change rotation
-        bodyRB = body.GetComponent<Rigidbody>();
+        bodyRB = body.transform.parent.GetComponent<Rigidbody>();
 
         if (bodyRB)
         {
@@ -562,7 +558,7 @@ public class PlayerMovement : MonoBehaviour {
                 //setting the menu variables to the player variables
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-        Rigidbody rb = body.GetComponent<Rigidbody>();
+        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
 
         //PLAYER RELATED VALUES
         jumpForce = (DV.PlayerRelated[0] * 10);
@@ -592,6 +588,11 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    void OnDestroy()
+    {
+        GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
+    }
+
     void PlayerDead()
     {
 
@@ -601,7 +602,12 @@ public class PlayerMovement : MonoBehaviour {
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
-            body.transform.position = new Vector3(0f, 15f, -29f);
+            Vector3 temp1 = transform.localPosition;
+            Vector3 temp2 = GetComponent<PlayerMovement>().body.transform.localPosition;
+            GetComponent<PlayerMovement>().body.transform.parent.transform.position = new Vector3(0f, 15f, -29f);// + temp;
+            transform.localPosition = temp1;
+            GetComponent<PlayerMovement>().body.transform.localPosition = temp2;
+            //body.transform.position = new Vector3(0f, 15f, -29f);
             MeshRenderer[] meshes = body.GetComponentsInChildren<MeshRenderer>();
             foreach(MeshRenderer mesh in meshes)
             {

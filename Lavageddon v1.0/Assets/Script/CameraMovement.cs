@@ -51,45 +51,6 @@ public class CameraMovement : MonoBehaviour {
 
         bodyRB.velocity = new Vector3(0,0,0);
         bodyRB.angularVelocity = new Vector3(0,0,0);
-        //controller look
-        //float rotationX = transform.locallocalEulerAngles.y + Controller.state[player].ThumbSticks.Right.X * (sensitivityX/10);
-
-        //rotationY += Controller.state[player].ThumbSticks.Right.Y * (sensitivityY/10);
-        //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
-
-        //transform.locallocalEulerAngles = new Vector3(-rotationY, rotationX, 0);
-
-
-        //thirdPersonPivot = transform.position + transform.forward.normalized * thirdPersonoffset;
-
-        //rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
-        //rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
-        //transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-        ////transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-
-        ////transform.localEulerAngles = new Vector3(Mathf.Clamp(transform.localEulerAngles.x, initialXRotate + maximumY, initialXRotate + 360 + minimumY), transform.localEulerAngles.y, transform.localEulerAngles.z);
-
-        //if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
-        //{
-        //    //transform.localEulerAngles -= new Vector3(previousRotation - transform.localEulerAngles.x, 0, 0);
-        //    transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
-        //    //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-        //    //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
-        //}
-        //else
-        //{
-        //    transform.RotateAround(body.transform.position, body.transform.right, rotationY);
-        //    previousRotation = body.transform.localEulerAngles.x;
-        //}
-
-        //transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward.normalized * movementSpeed;
-
-        //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed;
-
-        //transform.position += Controller.state[player].Triggers.Right * transform.up.normalized * movementSpeed;
-
-        //transform.position -= Controller.state[player].Triggers.Left * transform.up.normalized * movementSpeed;
-
 
         //PLAYER HAS PLACED SPAWN BLOCK
         if (MS.spawnblock && spawnPosGood)
@@ -220,7 +181,7 @@ public class CameraMovement : MonoBehaviour {
 
             transform.localEulerAngles = new Vector3(rotationY, transform.localEulerAngles.y, transform.localEulerAngles.z);
             transform.localPosition = position;
-            transform.parent.transform.rotation = rotation;
+            transform.parent.transform.eulerAngles = new Vector3(transform.parent.transform.eulerAngles.x, rotationX, transform.parent.transform.eulerAngles.z);
             //transform.position = position;
         }
 
@@ -243,7 +204,7 @@ public class CameraMovement : MonoBehaviour {
         Cursor.visible = false;
         // Make the rigid body not change rotation
 
-        bodyRB = body.GetComponent<Rigidbody>();
+        bodyRB = body.transform.parent.GetComponent<Rigidbody>();
 
         if (bodyRB)
         {
@@ -251,8 +212,8 @@ public class CameraMovement : MonoBehaviour {
             bodyRB.isKinematic = true;
         }
 
-        rotationY = transform.eulerAngles.y;
-        rotationX = transform.eulerAngles.x;
+        rotationY = transform.parent.transform.eulerAngles.x;
+        rotationX = transform.parent.transform.eulerAngles.y;
         thirdPersonoffset = transform.localPosition - body.transform.localPosition;
 
         playerManager = GameObject.FindGameObjectWithTag("Manager");
