@@ -321,6 +321,25 @@ public class managerscript : MonoBehaviour {
         //}
         if (constructionMode)
         {
+            if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
+            {
+                GameObject[] blocks = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+                foreach (GameObject resetBlock in blocks)
+                {
+                    if (resetBlock.tag == "Block")
+                    {
+                        resetBlock.GetComponent<BuildingBlock>().ResetBoat();
+                    }
+                }
+                foreach (GameObject resetBlock in blocks)
+                {
+                    if (resetBlock.tag == "Block")
+                    {
+                        resetBlock.GetComponent<BuildingBlock>().MakeJoints();
+                    }
+                }
+
+            }
             if (Controller.prevState[player].Buttons.RightStick == ButtonState.Released && Controller.state[player].Buttons.RightStick == ButtonState.Pressed)
             {//the right stick is being pressed in, atm we want this to "test the boat"
                 //if (testingboat)
@@ -340,25 +359,7 @@ public class managerscript : MonoBehaviour {
         {
             numberText.text = "";
         }
-        if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
-        {
-            GameObject[] blocks = FindObjectsOfType(typeof(GameObject)) as GameObject[];
-            foreach (GameObject resetBlock in blocks)
-            {
-                if (resetBlock.tag == "Block")
-                {
-                    resetBlock.GetComponent<BuildingBlock>().ResetBoat();
-                }
-            }
-            foreach (GameObject resetBlock in blocks)
-            {
-                if (resetBlock.tag == "Block")
-                {
-                    resetBlock.GetComponent<BuildingBlock>().MakeJoints();
-                }
-            }
 
-        }
 
     }
 
