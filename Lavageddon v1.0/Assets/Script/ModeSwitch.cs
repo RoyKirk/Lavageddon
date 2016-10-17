@@ -11,8 +11,15 @@ public class ModeSwitch : MonoBehaviour {
 
     public Continue contScript;
     int playerCount;
+
+    float countdownMAX = 3.0f;
+    public float countdown;
+
+    public bool CDhappening = false;
+
     void Start()
     {
+        countdown = countdownMAX;
         playerCount = GameObject.FindGameObjectsWithTag("MainCamera").Length;
         //Debug.Log(playerCount);
         ConstructionReady = new bool[4];
@@ -28,9 +35,17 @@ public class ModeSwitch : MonoBehaviour {
                 counter++;
             }
         }
+
+        //make a counter so it starts a X second timer before it actually changes to the next phase.
         //if everyone in the game is ready then start the combat phase
-        if(counter == playerCount)
+        if(counter == playerCount && countdown >= -0.1)
         {
+            CDhappening = true;
+            countdown -= Time.deltaTime;
+        }
+        if(countdown <= 0)
+        {
+            CDhappening = false;
             construction = false;
         }
     }

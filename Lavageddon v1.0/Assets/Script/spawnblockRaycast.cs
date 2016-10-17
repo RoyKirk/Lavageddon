@@ -18,9 +18,19 @@ public class spawnblockRaycast : MonoBehaviour
     {
         Vector3 up = transform.TransformDirection(Vector3.up);
 
-	    if(Physics.Raycast(transform.position, up, 3))
+        RaycastHit hit;
+
+	    if(Physics.Raycast(transform.position, up,out hit, 3))
         {
-            CM.spawnPosGood = false;
+            if(hit.collider.name != "Body")
+            {
+                CM.spawnPosGood = false;
+            }
+            else
+            {
+                //object hit is player so ignore.
+            }
+            
         }
         else
         {

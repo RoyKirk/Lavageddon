@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour {
             //transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
             //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
 
-
+            // CROSSHAIR NOTE use this to reference which weapon is being used and which cross hair should be active!
             if (weapon == Weapon.BOMB)
             {
                 bombTimer += Time.deltaTime;
@@ -260,13 +260,16 @@ public class PlayerMovement : MonoBehaviour {
                             lineRenderer.SetPosition(i, pos);
                             i++;
                         }
+
                         Debug.DrawLine(transform.position, shot.point, Color.green);
                         if (shot.collider.tag == "Block")
                         {
-
                             shot.collider.GetComponent<BlockDamage>().Damage(laserDamage);
                             shot.collider.GetComponent<Rigidbody>().AddForceAtPosition(transform.forward.normalized * laserForce, shot.point);
-
+                        }
+                        else if(shot.collider.tag == "Body")//shot another player with the laser
+                        {
+                            //set a bool here to reference from GUI code and write "player is invincible"
                         }
                     }
                 }

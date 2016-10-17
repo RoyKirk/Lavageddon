@@ -41,9 +41,12 @@ public class CameraMovement : MonoBehaviour {
     public managerscript MS;
     public bool spawnPosGood = true;
 
+    public ModeSwitch modeSwitch;
+
     void Awake()
     {
         MS = GetComponent<managerscript>();
+        modeSwitch = GameObject.Find("Controller").GetComponent<ModeSwitch>();
     }
 
     void Update()
@@ -59,7 +62,7 @@ public class CameraMovement : MonoBehaviour {
         }
         else
         {
-            GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, false);
+            modeSwitch.setBool(player, false);
             readystate = false;
         }
 
@@ -109,6 +112,12 @@ public class CameraMovement : MonoBehaviour {
             spawnblockWarning.text = "something is obstructing the spawn block!";
         }
 
+        //print the countdown timer to start combat phase.
+        if(modeSwitch.CDhappening)
+        {
+            readyText.text = ((int)modeSwitch.countdown +1).ToString();
+        }
+
         //if backbutton is pressed (they are ready) and they have a spawn block placed.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
         {
@@ -118,12 +127,18 @@ public class CameraMovement : MonoBehaviour {
                 {
                     //Debug.Log("trigger battle phase");
                     readystate = !readystate;
-                    GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, readystate);
+                    modeSwitch.setBool(player, readystate);
+                    MS.spawnPos.y += 1;
+                    Vector3 temp1 = transform.localPosition;
+                    Vector3 temp2 = GetComponent<PlayerMovement>().body.transform.localPosition;
+                    GetComponent<PlayerMovement>().body.transform.parent.transform.position = MS.spawnPos;// + temp;
+                    transform.localPosition = temp1;
+                    GetComponent<PlayerMovement>().body.transform.localPosition = temp2;
                     //readyText.text = "Ready!";
                 }
                 else
                 {
-                    GameObject.Find("Controller").GetComponent<ModeSwitch>().setBool(player, false);
+                    modeSwitch.setBool(player, false);
                     readystate = false;
                     //turn on UI telling player to place spawn block
                     spawnblockWarning.text = "You need to place a spawn block before you can ready!";
@@ -132,7 +147,7 @@ public class CameraMovement : MonoBehaviour {
             
         }
 
-        if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)//if the mode has changed to battle
+        if (!modeSwitch.construction)//if the mode has changed to battle
         {
             GetComponent<PlayerMovement>().enabled = true;
             MS.constructionMode = false;
