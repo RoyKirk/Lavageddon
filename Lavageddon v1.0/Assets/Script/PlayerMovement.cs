@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using XInputDotNetPure;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -62,6 +63,16 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject body;
 
     Rigidbody bodyRB;
+
+    //these are the crosshairs
+    public GameObject explosionImage;
+    public GameObject LaserImage;
+    public GameObject WeightImage;
+
+    //these are the weapon images
+    public GameObject explosion;
+    public GameObject Laser;
+    public GameObject Weight;
 
     //public float shootDistance = 1000.0f;
     void Update()
@@ -155,18 +166,36 @@ public class PlayerMovement : MonoBehaviour {
                 bombTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
                 laserTimer = 0.0f;
+
+                //set the crosshairs
+                explosionImage.SetActive(true);
+                LaserImage.SetActive(false);
+                WeightImage.SetActive(false);
+
+                //change the images
+                explosion.transform.position = new Vector3(0, 120, 0);
             }
             if (weapon == Weapon.STICKY)
             {
                 stickyTimer += Time.deltaTime;
                 laserTimer = 0.0f;
                 bombTimer = 0.0f;
+                explosionImage.SetActive(false);
+                LaserImage.SetActive(false);
+                WeightImage.SetActive(true);
+
+                Weight.transform.position = new Vector3(0, 120, 0);
             }
             if (weapon == Weapon.LASER)
             {
                 laserTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
                 bombTimer = 0.0f;
+                explosionImage.SetActive(false);
+                LaserImage.SetActive(true);
+                WeightImage.SetActive(false);
+
+                Laser.transform.position = new Vector3(0, 120, 0);
             }
 
             if (laserTimer >= laserResidual)
