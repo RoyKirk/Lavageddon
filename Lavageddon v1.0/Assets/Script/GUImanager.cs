@@ -16,11 +16,23 @@ public class GUImanager : MonoBehaviour
     public Text testBoat;
 
     //Combat UI elements;
+    public Text playerinvincible;
+
 
     //other
     public bool spawnPosGood;
     int player;
-    bool readystate;
+    public bool readystate;
+    public bool Hitplayer;
+
+
+    /* UI things that still need to be done:
+     *  - LB and RB buttons appearing if they havnt pressed them after 30 seconds
+     *  - Replace the spawn block to a new placed one when confirmed.
+     *  
+     *  - Crosshair's have to be managed to whichever weapon you are using 
+     * */
+
 
     // Use this for initialization
     void Awake ()
@@ -37,6 +49,12 @@ public class GUImanager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        //player is hitting someone with lazer
+        if(Hitplayer)
+        {
+            playerinvincible.text = "Players are Bullet Proof!!";
+        }
+
         //PLAYER HAS PLACED SPAWN BLOCK
         if (MS.spawnblock && spawnPosGood)
         {

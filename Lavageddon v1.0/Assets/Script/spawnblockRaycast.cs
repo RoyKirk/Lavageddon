@@ -4,13 +4,13 @@ using System.Collections;
 public class spawnblockRaycast : MonoBehaviour
 {
     int playerOwner;
-    CameraMovement CM;
+    GUImanager CM;
     
 
     void Start()
     {
         playerOwner = GetComponent<BuildingBlock>().playerOwner;
-        CM = GameObject.Find("Player" + playerOwner + "(Clone)").GetComponentInChildren<CameraMovement>();
+        CM = GameObject.Find("Player" + playerOwner + "(Clone)").GetComponentInChildren<GUImanager>();
     }
 
 	// Update is called once per frame

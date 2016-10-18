@@ -564,6 +564,7 @@ public class managerscript : MonoBehaviour {
                 }
             }
         }
+        //set up a bool that checks if they want to place a spawn block anyway, delete last spawn block and create a new one
         if(blockType == BlockType.SPAWN && spawnblock == false)
         {
             BlockPlaceAndCost(blockPrefabSpawn, 0);

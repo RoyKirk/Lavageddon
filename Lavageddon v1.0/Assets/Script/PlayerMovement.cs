@@ -270,8 +270,8 @@ public class PlayerMovement : MonoBehaviour {
                         else if(shot.collider.tag == "Body")//shot another player with the laser
                         {
                             //set a bool here to reference from GUI code and write "player is invincible"
-                            //cant be referenced in the camera movement script, as it gets turned off
-                            //potentially write a new script just for UI things.
+                            //this needs to be turned off after timer, maybe trigger it in guimanager
+                            GetComponent<GUImanager>().Hitplayer = true;
                         }
                     }
                 }
