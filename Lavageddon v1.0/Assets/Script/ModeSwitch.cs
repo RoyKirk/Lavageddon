@@ -35,8 +35,7 @@ public class ModeSwitch : MonoBehaviour {
                 counter++;
             }
         }
-
-        //make a counter so it starts a X second timer before it actually changes to the next phase.
+        
         //if everyone in the game is ready then start the combat phase
         if(counter == playerCount && countdown >= -0.1)
         {
@@ -54,6 +53,5 @@ public class ModeSwitch : MonoBehaviour {
     {
         ConstructionReady[playerID] = ready;
     }
-
-
+    
 }
