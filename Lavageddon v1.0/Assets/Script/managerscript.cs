@@ -577,9 +577,19 @@ public class managerscript : MonoBehaviour {
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
+        GameObject blok;
         int rand = Random.Range(0, 5);
-        GameObject blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[rand])) as GameObject;
-        blok.GetComponent<BuildingBlock>().playerOwner = player;
+        if(blockCost == 0)
+        {
+            blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[0])) as GameObject;
+            blok.GetComponent<BuildingBlock>().playerOwner = player;
+        }
+        else
+        {
+            blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[rand])) as GameObject;
+            blok.GetComponent<BuildingBlock>().playerOwner = player;
+        }
+        
         //Debug.Log(block.transform.position);
         if (blockCost == FloatBlockCost)
         {

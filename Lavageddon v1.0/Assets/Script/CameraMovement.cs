@@ -33,14 +33,15 @@ public class CameraMovement : MonoBehaviour {
     float previousRotation;
 
     //Construction UI elements
-    public Text spawnblockWarning;
-    public Text readyText;
-    public Text pressToReady;
-    public Text testBoat;
+    //public Text spawnblockWarning;
+    //public Text readyText;
+    //public Text pressToReady;
+    //public Text testBoat;
 
     public managerscript MS;
     public bool spawnPosGood = true;
 
+    bool readystate = false;
     public ModeSwitch modeSwitch;
 
     void Awake()
@@ -56,67 +57,67 @@ public class CameraMovement : MonoBehaviour {
         bodyRB.angularVelocity = new Vector3(0,0,0);
 
         //PLAYER HAS PLACED SPAWN BLOCK
-        if (MS.spawnblock && spawnPosGood)
-        {
-            spawnblockWarning.text = "";
-        }
-        else
-        {
-            modeSwitch.setBool(player, false);
-            readystate = false;
-        }
+        //if (MS.spawnblock && spawnPosGood)
+        //{
+        //    spawnblockWarning.text = "";
+        //}
+        //else
+        //{
+        //    modeSwitch.setBool(player, false);
+        //    readystate = false;
+        //}
 
         //PLAYER IS NOT READY
-        if(readystate == false)
-        {
-            readyText.text = "";
-        }
-        else
-        {
-            readyText.text = "Ready!";//need to turn this off once round starts. maybe have a function that turns all construction UI off?
-        }
+        //if(readystate == false)
+        //{
+        //    readyText.text = "";
+        //}
+        //else
+        //{
+        //    readyText.text = "Ready!";
+        //}
 
         //PLAYER HAS USED ALL BLOCKS
-        if (MS.numberOfBlocks == MS.maxNumberOfBlocks && MS.spawnblock == false)
-        {
-            pressToReady.text = "Spawn block needed to Ready";
-        }
-        else if(MS.numberOfBlocks == MS.maxNumberOfBlocks && readystate == false)
-        {
-            pressToReady.text = "Press Back to Ready";
-        }
-        else
-        {
-            pressToReady.text = "";
-        }
-
-        if(MS.resetboatcheck)
-        {
-            testBoat.text = "Press Left Thumbstick to reset boat!";
-        }
-        else if(MS.numberOfBlocks == 0 && MS.spawnblock == false)
-        {
-            testBoat.text = "Left Thumbstick to spawn a block";
-        }
-        else if(MS.numberOfBlocks >= MS.maxNumberOfBlocks / 2 && MS.theyHaveTestedBoat == false)
-        {
-            testBoat.text = "Right Thumbstick to test your boat";
-        }
-        else
-        {
-            testBoat.text = "";
-        }
+        //if (MS.numberOfBlocks == MS.maxNumberOfBlocks && MS.spawnblock == false)
+        //{
+        //    pressToReady.text = "Spawn block needed to Ready";
+        //}
+        //else if(MS.numberOfBlocks == MS.maxNumberOfBlocks && readystate == false)
+        //{
+        //    pressToReady.text = "Press Back to Ready";
+        //}
+        //else
+        //{
+        //    pressToReady.text = "";
+        //}
+        //
+        //if(MS.resetboatcheck)
+        //{
+        //    testBoat.text = "Press Left Thumbstick to reset boat!";
+        //}
+        //else if(MS.numberOfBlocks == 0 && MS.spawnblock == false)
+        //{
+        //    testBoat.text = "Left Thumbstick to spawn a block";
+        //}
+        //else if(MS.numberOfBlocks >= MS.maxNumberOfBlocks / 2 && MS.theyHaveTestedBoat == false)
+        //{
+        //    testBoat.text = "Right Thumbstick to test your boat";
+        //}
+        //else
+        //{
+        //    testBoat.text = "";
+        //}
         
-        if(spawnPosGood == false)
-        {
-            spawnblockWarning.text = "something is obstructing the spawn block!";
-        }
+        //if(spawnPosGood == false)
+        //{
+        //    spawnblockWarning.text = "something is obstructing the spawn block!";
+        //}
 
         //print the countdown timer to start combat phase.
-        if(modeSwitch.CDhappening)
-        {
-            readyText.text = ((int)modeSwitch.countdown +1).ToString();
-        }
+        //if(modeSwitch.CDhappening)
+        //{
+        //    readyText.text = ((int)modeSwitch.countdown +1).ToString();
+        //}
 
         //if backbutton is pressed (they are ready) and they have a spawn block placed.
         if (Controller.prevState[player].Buttons.Back == ButtonState.Released && Controller.state[player].Buttons.Back == ButtonState.Pressed)
@@ -141,7 +142,7 @@ public class CameraMovement : MonoBehaviour {
                     modeSwitch.setBool(player, false);
                     readystate = false;
                     //turn on UI telling player to place spawn block
-                    spawnblockWarning.text = "You need to place a spawn block before you can ready!";
+                    GetComponent<GUImanager>().spawnblockWarning.text = "You need to place a spawn block before you can ready!";
                 }
             }
             
@@ -151,18 +152,8 @@ public class CameraMovement : MonoBehaviour {
         {
             GetComponent<PlayerMovement>().enabled = true;
             MS.constructionMode = false;
-            TurnOffConstructionUI();
+            GetComponent<GUImanager>().TurnOffConstructionUI();
         }
-    }
-
-    bool readystate = false;
-
-    void TurnOffConstructionUI()
-    {
-        spawnblockWarning.text = "";
-        readyText.text = "";
-        pressToReady.text = "";
-        testBoat.text = "";
     }
 
     void LateUpdate()
