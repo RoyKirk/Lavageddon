@@ -85,6 +85,7 @@ public class CameraMovement : MonoBehaviour {
             GetComponent<PlayerMovement>().enabled = true;
             MS.constructionMode = false;
             GetComponent<GUImanager>().TurnOffConstructionUI();
+            GetComponent<GUImanager>().readystate = false;
         }
     }
 

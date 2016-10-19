@@ -212,6 +212,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if(reloading)
             {
+                GetComponent<GUImanager>().playerinvincible.text = "Reloading";
                 reloadTimer += Time.deltaTime;
                 if(reloadTimer >= reloadTime)
                 {
@@ -226,6 +227,10 @@ public class PlayerMovement : MonoBehaviour {
                     }
                     reloading = false;
                 }
+            }
+            else
+            {
+                GetComponent<GUImanager>().playerinvincible.text = "";
             }
 
             if (Controller.state[player].Buttons.X == ButtonState.Pressed)
