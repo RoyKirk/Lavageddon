@@ -122,6 +122,11 @@ public class CameraMovement : MonoBehaviour {
             transform.parent.transform.eulerAngles = new Vector3(transform.parent.transform.eulerAngles.x, rotationX, transform.parent.transform.eulerAngles.z);
             //transform.position = position;
         }
+        //GamePad.SetVibration((PlayerIndex)player, Controller.state[player].Triggers.Right, Controller.state[player].Triggers.Left);
+        ////Debug.Log(Controller.state[player].Triggers.Right);
+        ////Debug.Log(Controller.state[player].Triggers.Left);
+        //GetComponent<GUImanager>().spawnblockWarning.text = Controller.state[player].Triggers.Left.ToString();
+        //GetComponent<GUImanager>().pressToReady.text = Controller.state[player].Triggers.Right.ToString();
 
 
     }

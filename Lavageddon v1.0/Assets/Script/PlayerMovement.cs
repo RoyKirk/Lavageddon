@@ -34,13 +34,26 @@ public class PlayerMovement : MonoBehaviour {
 
     public float laserMinTime = 0.5f;
     public float laserResidual = 0.3f;
-    float laserTimer = 0.0f;
+    float laserTimer = 0.0f;//laser cooldown if overheated
+    float laserOverheat = 0.0f;
+    bool laserOverheated = false;
+    public float laserOverheatTime = 1.0f;
+    public float coolDownFactor = 1.2f;
+    public float overheatedCoolDownFactor = 0.5f;
     public float bombMinTime = 0.5f;
-    float bombTimer = 0.0f;
+    int bombsLeft;//number of bombs left
+    public int bombClipSize = 6;
+    float bombTimer = 0.0f;//time between bombs
     public float stickyMinTime = 0.5f;
-    float stickyTimer = 0.0f;
+    float stickyTimer = 0.0f;//time between stickies
+    int stickiesLeft;//number of stickies left
+    public int stickyClipSize = 4;
     public float projectileResidual = 0.2f;
     public int player = 0;
+
+    public float reloadTime = 1.0f;
+    float reloadTimer = 0.0f;
+    bool reloading = false;
 
     public bool alive = true;
 
@@ -114,92 +127,31 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
-            //controller look
-            //float rotationX = transform.localEulerAngles.y + Controller.state[player].ThumbSticks.Right.X*(sensitivityX/10);
-
-            //rotationY += Controller.state[player].ThumbSticks.Right.Y * (sensitivityY/10);
-            //rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
-
-            //transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-
-            //float rotationX = Controller.state[player].ThumbSticks.Right.X * sensitivityX * Time.deltaTime;
-           // rotationY = Controller.state[player].ThumbSticks.Right.Y * sensitivityY * Time.deltaTime;
-
-            ////transform.RotateAround(body.transform.position, body.transform.up, rotationX);
-
-            //if (transform.localEulerAngles.x >= maximumY && transform.localEulerAngles.x <= 360 + minimumY)
-            //{
-            //    //transform.localEulerAngles = new Vector3(previousRotation, transform.localEulerAngles.y, transform.localEulerAngles.z);
-            //    //transform.RotateAround(body.transform.position, body.transform.right, (previousRotation - transform.localEulerAngles.x));
-            //    transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-            //    //transform.RotateAround(body.transform.position, new Vector3(1, 0, 0), 100 * (previousRotate - transform.localEulerAngles.x));
-            //}
-            //else
-            //{
-            //    transform.RotateAround(body.transform.position, body.transform.right, rotationY);
-            //}
-
-            //transform.RotateAround(body.transform.position, body.transform.right, -rotationY);
-
-            //transform.RotateAround(body.transform.position, transform.up, rotationX);
-            //transform.RotateAround(body.transform.position, transform.right, -rotationY);
-
-
-            //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
-            //transform.position += Controller.state[player].ThumbSticks.Left.Y * body.transform.forward * movementSpeed * Time.deltaTime;
-            //transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
-
             // CROSSHAIR NOTE use this to reference which weapon is being used and which cross hair should be active!
             if (weapon == Weapon.BOMB)
             {
                 bombTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
                 laserTimer = 0.0f;
+                if(bombsLeft <= 0)
+                {
+                    reloading = true;
+                }
             }
             if (weapon == Weapon.STICKY)
             {
                 stickyTimer += Time.deltaTime;
                 laserTimer = 0.0f;
                 bombTimer = 0.0f;
+                if (stickiesLeft <= 0)
+                {
+                    reloading = true;
+                }
             }
             if (weapon == Weapon.LASER)
             {
-                laserTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
                 bombTimer = 0.0f;
-            }
-
-            if (laserTimer >= laserResidual)
-            {
-                LineRenderer lineRenderer = GetComponent<LineRenderer>();
-                lineRenderer.enabled = false;
-            }
-
-
-            if (laserTimer < laserMinTime)
-            {
-                RaycastHit shot;
-                if (Physics.Raycast(transform.position, transform.forward, out shot))
-                {
-
-                    LineRenderer lineRenderer = GetComponent<LineRenderer>();
-                    int i = 0;
-                    while (i < lengthOfLineRenderer)
-                    {
-                        //Vector3 pos = (transform.position + transform.right.normalized*(lengthOfLineRenderer-i+1)/20) + (transform.forward.normalized * i - transform.right.normalized / (lengthOfLineRenderer - i + 1) / 20);
-                        //Vector3 pos = transform.position + transform.forward.normalized * i;
-                        //Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
-
-                        Vector3 pos = (body.transform.position + new Vector3(0,1,0)) + i * ((shot.point - body.transform.position) / lengthOfLineRenderer);
-                        lineRenderer.SetPosition(i, pos);
-                        i++;
-                    }
-                }
-            }
-
-            if (laserTimer >= laserResidual*3)
-            {
-                GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             }
 
             if (stickyTimer >= projectileResidual)
@@ -212,29 +164,74 @@ public class PlayerMovement : MonoBehaviour {
                 GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             }
 
+            if(laserTimer >= laserOverheatTime)
+            {
+                laserOverheated = true;
+                laserTimer = laserOverheatTime;
+            }
 
+            if(laserTimer < 0)
+            {
+                laserTimer = 0;
+            }
 
+            if(laserOverheated)
+            {
+                laserTimer -= Time.deltaTime*overheatedCoolDownFactor;
+                if(laserTimer <= 0)
+                {
+                    laserOverheated = false;
+                }
+                GamePad.SetVibration((PlayerIndex)player, 0, 0);
+                LineRenderer lineRenderer = GetComponent<LineRenderer>();
+                lineRenderer.enabled = false;
+            }
+
+            if(reloading)
+            {
+                reloadTimer += Time.deltaTime;
+                if(reloadTimer >= reloadTime)
+                {
+                    reloadTimer = 0;
+                    if (weapon == Weapon.BOMB)
+                    {
+                        BombReload();
+                    }
+                    if (weapon == Weapon.STICKY)
+                    {
+                        StickyReload();
+                    }
+                    reloading = false;
+                }
+            }
+
+            if (Controller.state[player].Buttons.X == ButtonState.Pressed)
+            {
+                reloading = true;
+            }
 
             //if (Controller.prevState[player].Triggers.Right < 0.1 && Controller.state[player].Triggers.Right > 0.1)
             if (Controller.state[player].Triggers.Right > 0.1)
             {
 
-                if (weapon == Weapon.BOMB && bombTimer >= bombMinTime)
+                if (weapon == Weapon.BOMB && bombTimer >= bombMinTime && bombsLeft > 0)
                 {
-                    GamePad.SetVibration((PlayerIndex)player, 1.0f, 1.0f);
+                    bombsLeft--;
+                    GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     bombTimer = 0.0f;
                     GetComponent<FiringScript>().Fire();
                 }
-                if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime)
+                if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime && stickiesLeft > 0)
                 {
-                    GamePad.SetVibration((PlayerIndex)player, 1.0f, 1.0f);
+                    stickiesLeft--;
+                    GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     stickyTimer = 0.0f;
                     GetComponent<FireStickyWeight>().Fire();
                 }
-                if (weapon == Weapon.LASER && laserTimer >= laserMinTime)
+                if (weapon == Weapon.LASER && !laserOverheated)
                 {
-                    laserTimer = 0.0f;
-                    GamePad.SetVibration((PlayerIndex)player, 0.0f, 1.0f);
+                    laserTimer += Time.deltaTime;
+                    GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.3f);
                     //laser.enabled = true;
                     //int i = 0;
                     //while (i < lengthOfLineRenderer)
@@ -277,6 +274,15 @@ public class PlayerMovement : MonoBehaviour {
                         }
                     }
                 }
+
+            }
+
+            if (Controller.state[player].Triggers.Right < 0.1)
+            {
+                laserTimer -= Time.deltaTime * coolDownFactor;
+                GamePad.SetVibration((PlayerIndex)player, 0, 0);
+                LineRenderer lineRenderer = GetComponent<LineRenderer>();
+                lineRenderer.enabled = false;
             }
 
             if (Controller.state[player].Triggers.Left > 0.1)
@@ -313,6 +319,15 @@ public class PlayerMovement : MonoBehaviour {
             //}
         }
 
+    }
+
+    void BombReload()
+    {
+        bombsLeft = bombClipSize;
+    }
+    void StickyReload()
+    {
+        stickiesLeft = stickyClipSize;
     }
 
     void LateUpdate()
@@ -503,7 +518,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (body.transform.position.y < lavaHeight)
         {
-            GamePad.SetVibration((PlayerIndex)player, 1.0f, 0.0f);
+            GamePad.SetVibration((PlayerIndex)player, 0.08f, 0.15f);
         }
 
 
@@ -592,6 +607,9 @@ public class PlayerMovement : MonoBehaviour {
         laserForce = DV.WeaponRelated[5];
 
         stickyMinTime = DV.WeaponRelated[7];
+
+        bombsLeft = bombClipSize;
+        stickiesLeft = stickyClipSize;
 
     }
 
