@@ -146,7 +146,10 @@ public class PlayerMovement : MonoBehaviour {
                 bombTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
                 laserTimer = 0.0f;
-
+                if (bombsLeft <= 0)
+                {
+                    reloading = true;
+                }
                 //set the crosshairs
                 explosionImage.SetActive(true);
                 LaserImage.SetActive(false);
@@ -160,6 +163,10 @@ public class PlayerMovement : MonoBehaviour {
                 stickyTimer += Time.deltaTime;
                 laserTimer = 0.0f;
                 bombTimer = 0.0f;
+                if (stickiesLeft <= 0)
+                {
+                    reloading = true;
+                }
                 explosionImage.SetActive(false);
                 LaserImage.SetActive(false);
                 WeightImage.SetActive(true);
