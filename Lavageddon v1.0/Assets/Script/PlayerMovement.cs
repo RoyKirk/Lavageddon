@@ -69,10 +69,12 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject LaserImage;
     public GameObject WeightImage;
 
-    //these are the weapon images
-    public GameObject explosion;
-    public GameObject Laser;
-    public GameObject Weight;
+    public GameObject weaponTurner;
+
+    ////these are the weapon images
+    //public GameObject explosion;
+    //public GameObject Laser;
+    //public GameObject Weight;
 
     //public float shootDistance = 1000.0f;
     void Update()
@@ -173,7 +175,7 @@ public class PlayerMovement : MonoBehaviour {
                 WeightImage.SetActive(false);
 
                 //change the images
-                explosion.transform.position = new Vector3(0, 120, 0);
+                //explosion.transform.position = new Vector3(0, 120, 0);
             }
             if (weapon == Weapon.STICKY)
             {
@@ -184,7 +186,7 @@ public class PlayerMovement : MonoBehaviour {
                 LaserImage.SetActive(false);
                 WeightImage.SetActive(true);
 
-                Weight.transform.position = new Vector3(0, 120, 0);
+               // Weight.transform.position = new Vector3(0, 120, 0);
             }
             if (weapon == Weapon.LASER)
             {
@@ -195,7 +197,7 @@ public class PlayerMovement : MonoBehaviour {
                 LaserImage.SetActive(true);
                 WeightImage.SetActive(false);
 
-                Laser.transform.position = new Vector3(0, 120, 0);
+                //Laser.transform.position = new Vector3(0, 120, 0);
             }
 
             if (laserTimer >= laserResidual)
@@ -320,10 +322,14 @@ public class PlayerMovement : MonoBehaviour {
             if (Controller.prevState[player].Buttons.RightShoulder == ButtonState.Released && Controller.state[player].Buttons.RightShoulder == ButtonState.Pressed)
             {
                 weapon++;
+                //rotate clockwise
+                weaponTurner.transform.Rotate(0, 0, 120);
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 weapon--;
+                //rotate counter clockwise
+                weaponTurner.transform.Rotate(0, 0, -120);
             }
 
             if ((int)weapon == numberOfWeapons)
@@ -343,6 +349,8 @@ public class PlayerMovement : MonoBehaviour {
         }
 
     }
+
+    float x;
 
     void LateUpdate()
     {
