@@ -249,14 +249,14 @@ public class PlayerMovement : MonoBehaviour {
             if (Controller.state[player].Triggers.Right > 0.1)
             {
 
-                if (weapon == Weapon.BOMB && bombTimer >= bombMinTime && bombsLeft > 0)
+                if (weapon == Weapon.BOMB && bombTimer >= bombMinTime && bombsLeft > 0 && !reloading)
                 {
                     bombsLeft--;
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     bombTimer = 0.0f;
                     GetComponent<FiringScript>().Fire();
                 }
-                if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime && stickiesLeft > 0)
+                if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime && stickiesLeft > 0 && !reloading)
                 {
                     stickiesLeft--;
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
