@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour {
 
     float lavaHeight = 1.5f;
 
-    float angularFriction = 0.8f;
+    public float angularFriction = 0.8f;
 
     public float submergedMinTime = 1.0f;
     float submergedTimer = 0.0f;
@@ -425,7 +425,7 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     Vector3 vel = hit.collider.GetComponent<Rigidbody>().velocity;
                     bodyRB.velocity = new Vector3(vel.x, bodyRB.velocity.y, vel.z);
-                    bodyRB.angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity * angularFriction;
+                    //bodyRB.angularVelocity = hit.collider.GetComponent<Rigidbody>().angularVelocity * angularFriction;
                 }
                 else
                 {
