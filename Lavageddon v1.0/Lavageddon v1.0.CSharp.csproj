@@ -78,8 +78,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BodyUprightScript.cs" />
-    <Compile Include="Assets\Continue.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\Sample Supporting Emitters\DetonatorSprayHelper.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\Detonator.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorBurstEmitter.cs" />
@@ -95,11 +93,12 @@
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSound.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSparks.cs" />
     <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSpray.cs" />
-    <Compile Include="Assets\RestartMenu.cs" />
     <Compile Include="Assets\Script\BlockDamage.cs" />
+    <Compile Include="Assets\Script\BodyUprightScript.cs" />
     <Compile Include="Assets\Script\BuildingBlock.cs" />
     <Compile Include="Assets\Script\ButtonManager.cs" />
     <Compile Include="Assets\Script\CameraMovement.cs" />
+    <Compile Include="Assets\Script\Continue.cs" />
     <Compile Include="Assets\Script\Controller.cs" />
     <Compile Include="Assets\Script\DynamicPlayerCount.cs" />
     <Compile Include="Assets\Script\DynamicVariables.cs" />
@@ -114,9 +113,11 @@
     <Compile Include="Assets\Script\PlayerMovement.cs" />
     <Compile Include="Assets\Script\PlayerReady.cs" />
     <Compile Include="Assets\Script\ProjectileScript.cs" />
+    <Compile Include="Assets\Script\RestartMenu.cs" />
     <Compile Include="Assets\Script\SavePrefab.cs" />
     <Compile Include="Assets\Script\StickyWeightScript.cs" />
     <Compile Include="Assets\Script\SwitchMode.cs" />
+    <Compile Include="Assets\Script\VolumeBuildUpScript.cs" />
     <Compile Include="Assets\Script\WhirlpoolCurrent.cs" />
     <Compile Include="Assets\Script\WhirlpoolOffest.cs" />
     <Compile Include="Assets\Script\managerscript.cs" />
