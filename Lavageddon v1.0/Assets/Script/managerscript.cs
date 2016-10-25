@@ -64,6 +64,12 @@ public class managerscript : MonoBehaviour {
 
     public bool spawnblock;
 
+    public GameObject BlockTurner;
+
+    public Animator anim;
+
+    public GameObject ConstructionCrosshair;
+
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
 
@@ -124,7 +130,8 @@ public class managerscript : MonoBehaviour {
             GetComponent<PlayerMovement>().body.transform.parent.transform.position = spawnPos;// + temp;
             transform.localPosition = temp1;
             GetComponent<PlayerMovement>().body.transform.localPosition = temp2;
-
+            BlockTurner.SetActive(false);
+            ConstructionCrosshair.SetActive(false);
 
             //GetComponent<PlayerMovement>().body.transform.position = spawnPos;
             //transform.position = GetComponent<PlayerMovement>().body.transform.position + temp;
@@ -238,11 +245,13 @@ public class managerscript : MonoBehaviour {
             {
                 blockType++;
                 ResetBlock();
+                BlockTurner.transform.Rotate(0, 0, 120);
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 blockType--;
                 ResetBlock();
+                BlockTurner.transform.Rotate(0, 0, -120);
             }
 
             if((int)blockType == numberOfBlockTypes)
@@ -361,7 +370,6 @@ public class managerscript : MonoBehaviour {
     void LateUpdate()
     {
 
-
         if (constructionMode && !testingboat)
         {
             //if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
@@ -397,7 +405,6 @@ public class managerscript : MonoBehaviour {
                     {
                         if (startConstruction)
                         {
-
                             Destroy(blockInFront);
                             if (blockType == BlockType.FLOAT)
                             {
@@ -578,6 +585,8 @@ public class managerscript : MonoBehaviour {
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
+        anim.SetTrigger("green");
+        //anim.SetBool("GREEN", true);
         GameObject blok;
         int rand = Random.Range(0, 5);
         if(blockCost == 0)
@@ -606,6 +615,7 @@ public class managerscript : MonoBehaviour {
             save.AddtoList(blok.transform.position, 'S');
         }
         numberOfBlocks += blockCost;
+        //anim.SetBool("GREEN", false);
     }
 
     //void BlockPlaceAndCost3X3(GameObject blockPrefab, int blockCost)
@@ -661,6 +671,7 @@ public class managerscript : MonoBehaviour {
 
     void RemoveBlock()
     {
+        anim.SetTrigger("red");
         RaycastHit shot;
         if (Physics.Raycast(transform.position, transform.forward, out shot))
         {
@@ -680,5 +691,6 @@ public class managerscript : MonoBehaviour {
                 }
             }
         }
+        //anim.SetBool("RED", false);
     }
 }
