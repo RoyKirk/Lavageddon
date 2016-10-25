@@ -73,7 +73,7 @@ public class managerscript : MonoBehaviour {
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
 
-    Vector3[] randRot = new Vector3[6];
+    Vector3[] randRot = new Vector3[27];
     
     void Awake()
     {
@@ -89,11 +89,38 @@ public class managerscript : MonoBehaviour {
     void Start ()
     {
         randRot[0] = new Vector3(0, 0, 0);
-        randRot[1] = new Vector3(90,0,0);
-        randRot[2] = new Vector3(-90, 0, 0);
-        randRot[3] = new Vector3(180, 0, 0);
-        randRot[4] = new Vector3(90, 0, 0);
-        randRot[5] = new Vector3(0, 0, 180);
+
+        randRot[1] = new Vector3(0, 90, 0);
+        randRot[2] = new Vector3(0, 180, 0);
+        randRot[3] = new Vector3(0, 0, 90);
+        randRot[4] = new Vector3(0, 0, 180);
+        randRot[5] = new Vector3(0, 90, 90);
+        randRot[6] = new Vector3(0, 180, 180);
+        randRot[7] = new Vector3(0, 90, 180);
+        randRot[8] = new Vector3(0, 180, 90);
+
+        randRot[9] = new Vector3(90, 0, 0);
+                                 
+        randRot[10] = new Vector3(90, 90, 0);
+        randRot[11] = new Vector3(90, 180, 0);
+        randRot[12] = new Vector3(90, 0, 90);
+        randRot[13] = new Vector3(90, 0, 180);
+        randRot[14] = new Vector3(90, 90, 90);
+        randRot[15] = new Vector3(90, 180, 180);
+        randRot[16] = new Vector3(90, 90, 180);
+        randRot[17] = new Vector3(90, 180, 90);
+
+        randRot[18] = new Vector3(180, 0, 0);
+                                 
+        randRot[19] = new Vector3(180, 90, 0);
+        randRot[20] = new Vector3(180, 180, 0);
+        randRot[21] = new Vector3(180, 0, 90);
+        randRot[22] = new Vector3(180, 0, 180);
+        randRot[23] = new Vector3(180, 90, 90);
+        randRot[24] = new Vector3(180, 180, 180);
+        randRot[25] = new Vector3(180, 90, 180);
+        randRot[26] = new Vector3(180, 180, 90);
+
 
         if (blockType == BlockType.FLOAT)
         {
@@ -582,13 +609,15 @@ public class managerscript : MonoBehaviour {
     }
 
     public Vector3 spawnPos;
+    
+
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
         anim.SetTrigger("green");
         //anim.SetBool("GREEN", true);
         GameObject blok;
-        int rand = Random.Range(0, 5);
+        int rand = Random.Range(0, 26);
         if(blockCost == 0)
         {
             blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[0])) as GameObject;

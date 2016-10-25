@@ -31,6 +31,7 @@ public class ProjectileScript : MonoBehaviour
     {
         if(c.tag == "Block")
         {
+            //get the owner of this projectile and tell them they hit something.
             c.GetComponent<BlockDamage>().Damage(dmg);
             Instantiate(explosion, transform.position, Quaternion.identity);
             Instantiate(bombEffect, transform.position, Quaternion.identity);

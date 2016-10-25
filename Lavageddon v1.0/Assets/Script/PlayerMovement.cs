@@ -84,6 +84,11 @@ public class PlayerMovement : MonoBehaviour {
 
     public GameObject weaponTurner;
 
+    //crosshair animators
+    public Animator CannonAnim;
+    public Animator LaserAnim;
+    public Animator WeightAnim;
+
     ////these are the weapon images
     //public GameObject explosion;
     //public GameObject Laser;
@@ -308,6 +313,7 @@ public class PlayerMovement : MonoBehaviour {
                         {
                             shot.collider.GetComponent<BlockDamage>().Damage(laserDamage);
                             shot.collider.GetComponent<Rigidbody>().AddForceAtPosition(transform.forward.normalized * laserForce, shot.point);
+                            LaserAnim.SetTrigger("Orange");
                         }
                         else if(shot.collider.tag == "Body")//shot another player with the laser
                         {
