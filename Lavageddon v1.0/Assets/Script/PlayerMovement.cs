@@ -17,15 +17,15 @@ public class PlayerMovement : MonoBehaviour {
     public Weapon weapon = Weapon.BOMB;
     public int laserDamage = 1;
     public float movementSpeed;
-    public float sensitivityX = 15F;
-    public float sensitivityY = 15F;
-    public float minimumX = -360F;
-    public float maximumX = 360F;
-    public float minimumY = -60F;
-    public float maximumY = 60F;
-    public float frictionCast = 1.0f;
-    public float jumpForce = 1000.0f;
-    public float laserForce = 1000.0f;
+    public float sensitivityX;
+    public float sensitivityY;
+    public float minimumX;
+    public float maximumX;
+    public float minimumY;
+    public float maximumY;
+    public float frictionCast;
+    public float jumpForce;
+    public float laserForce;
     float rotationY;
     float rotationX;
 
