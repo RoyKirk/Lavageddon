@@ -15,19 +15,22 @@ public class PlayerMovement : MonoBehaviour {
 
     int numberOfWeapons = 3;
     public Weapon weapon = Weapon.BOMB;
-    public int laserDamage = 1;
-    public float movementSpeed;
-    public float sensitivityX;
-    public float sensitivityY;
+    int laserDamage = 1;
+    float movementSpeed;
+    float sensitivityX;
+    float sensitivityY;
     public float minimumX;
     public float maximumX;
     public float minimumY;
     public float maximumY;
     public float frictionCast;
-    public float jumpForce;
-    public float laserForce;
+    float jumpForce;
+    float laserForce;
     float rotationY;
     float rotationX;
+
+    public GameObject jumpParticle;
+    public GameObject laserParticle;
 
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
@@ -109,6 +112,9 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
             {
+
+                jumpParticle.GetComponent<ParticleSystem>().Play();
+
                 RaycastHit hit;
 
                 if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
@@ -293,7 +299,10 @@ public class PlayerMovement : MonoBehaviour {
                     RaycastHit shot;
                     if (Physics.Raycast(transform.position, transform.forward, out shot))
                     {
- 
+
+                        GameObject laserHit = (GameObject)Instantiate(laserParticle, shot.transform.position, new Quaternion(0, 0, 0, 0));
+                        laserHit.transform.up = shot.normal;
+
                         LineRenderer lineRenderer = GetComponent<LineRenderer>();
                         lineRenderer.enabled = true;
                         int i = 0;

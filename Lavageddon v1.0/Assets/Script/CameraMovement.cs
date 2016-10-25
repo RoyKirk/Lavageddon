@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour {
 
-    public float movementSpeed;
-    public float sensitivityX;
-    public float sensitivityY;
+    float movementSpeed;
+    float sensitivityX;
+    float sensitivityY;
     public float minimumX;
     public float maximumX;
     public float minimumY;
