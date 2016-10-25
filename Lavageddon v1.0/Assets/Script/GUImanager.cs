@@ -15,10 +15,12 @@ public class GUImanager : MonoBehaviour
     public Text pressToReady;
     public Text testBoat;
 
+    //Crosshairs constr
+
+    
     //Combat UI elements;
     public Text playerinvincible;
-
-
+    
     //other
     public bool spawnPosGood;
     int player;

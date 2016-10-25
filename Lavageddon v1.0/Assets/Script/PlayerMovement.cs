@@ -78,9 +78,9 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody bodyRB;
 
     //these are the crosshairs
-    public GameObject explosionImage;
-    public GameObject LaserImage;
-    public GameObject WeightImage;
+    public GameObject explosionCrosshair;
+    public GameObject LaserCrosshair;
+    public GameObject WeightCrosshair;
 
     public GameObject weaponTurner;
 
@@ -90,6 +90,14 @@ public class PlayerMovement : MonoBehaviour {
     //public GameObject Weight;
 
     //public float shootDistance = 1000.0f;
+
+    
+   //void Start()
+   //{
+   //    weaponTurner.SetActive(true);
+   //    Debug.Log("weapon turner has been set to active");
+   //}
+    
     void Update()
     {
         if (alive)
@@ -151,9 +159,9 @@ public class PlayerMovement : MonoBehaviour {
                     reloading = true;
                 }
                 //set the crosshairs
-                explosionImage.SetActive(true);
-                LaserImage.SetActive(false);
-                WeightImage.SetActive(false);
+                explosionCrosshair.SetActive(true);
+                LaserCrosshair.SetActive(false);
+                WeightCrosshair.SetActive(false);
 
                 //change the images
                 //explosion.transform.position = new Vector3(0, 120, 0);
@@ -167,9 +175,9 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     reloading = true;
                 }
-                explosionImage.SetActive(false);
-                LaserImage.SetActive(false);
-                WeightImage.SetActive(true);
+                explosionCrosshair.SetActive(false);
+                LaserCrosshair.SetActive(false);
+                WeightCrosshair.SetActive(true);
 
                // Weight.transform.position = new Vector3(0, 120, 0);
             }
@@ -177,9 +185,9 @@ public class PlayerMovement : MonoBehaviour {
             {
                 stickyTimer = 0.0f;
                 bombTimer = 0.0f;
-                explosionImage.SetActive(false);
-                LaserImage.SetActive(true);
-                WeightImage.SetActive(false);
+                explosionCrosshair.SetActive(false);
+                LaserCrosshair.SetActive(true);
+                WeightCrosshair.SetActive(false);
 
                 //Laser.transform.position = new Vector3(0, 120, 0);
             }
@@ -593,6 +601,8 @@ public class PlayerMovement : MonoBehaviour {
 
     void Start()
     {
+        weaponTurner.SetActive(true);
+
         thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;
         rotationY = transform.eulerAngles.y;
         rotationX = transform.eulerAngles.x;
