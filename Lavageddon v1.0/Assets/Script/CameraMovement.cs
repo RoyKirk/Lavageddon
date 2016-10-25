@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class CameraMovement : MonoBehaviour {
 
     public float movementSpeed;
-    public float sensitivityX = 15F;
-    public float sensitivityY = 15F;
-    public float minimumX = -360F;
-    public float maximumX = 360F;
-    public float minimumY = -60F;
-    public float maximumY = 60F;
+    public float sensitivityX;
+    public float sensitivityY;
+    public float minimumX;
+    public float maximumX;
+    public float minimumY;
+    public float maximumY;
     float rotationY;
     float rotationX;
     public int player = 0;
