@@ -10,9 +10,14 @@ public class ProjectileScript : MonoBehaviour
     GameObject playerManager;
     Rigidbody rb;
 
-	// Use this for initialization
-	void Start ()
+    public int playerOwner;
+
+    GameObject PLAYER;
+
+    // Use this for initialization
+    void Start ()
     {
+        PLAYER = GameObject.Find("Player" + playerOwner + "(Clone)");
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         rb = GetComponent<Rigidbody>();
@@ -35,6 +40,7 @@ public class ProjectileScript : MonoBehaviour
         if(c.tag == "Block")
         {
             //get the owner of this projectile and tell them they hit something.
+            PLAYER.GetComponentInChildren<PlayerMovement>().CannonAnim.SetTrigger("Orange");
             c.GetComponent<BlockDamage>().Damage(dmg);
             Instantiate(explosion, transform.position, Quaternion.identity);
             Instantiate(bombEffect, transform.position, Quaternion.identity);
