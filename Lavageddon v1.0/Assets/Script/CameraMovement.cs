@@ -32,11 +32,11 @@ public class CameraMovement : MonoBehaviour {
     float initialXRotate;
     float previousRotation;
     
-    public managerscript MS;
+    managerscript MS;
     public bool spawnPosGood = true;
 
     bool readystate = false;
-    public ModeSwitch modeSwitch;
+    ModeSwitch modeSwitch;
 
     void Awake()
     {
