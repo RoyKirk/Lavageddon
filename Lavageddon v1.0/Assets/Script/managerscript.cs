@@ -641,9 +641,12 @@ public class managerscript : MonoBehaviour {
                 findSpawnBlock = GameObject.Find("BlockSpawn(Clone)");
                 if (findSpawnBlock.GetComponent<BuildingBlock>().playerOwner == player)
                 {
+                    save.RemovefromList(findSpawnBlock.transform.position);
                     Destroy(findSpawnBlock);
                 }
+                spawnPos = block.transform.position;
                 BlockPlaceAndCost(blockPrefabSpawn, 0);
+                spawnblock = true;
             }
             testNewSpawnBlock = true;
 

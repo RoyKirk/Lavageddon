@@ -720,6 +720,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Awake()
     {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
 
