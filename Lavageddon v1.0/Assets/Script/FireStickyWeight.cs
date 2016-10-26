@@ -8,9 +8,10 @@ public class FireStickyWeight : MonoBehaviour {
 
     public float speed = 100;
 
-    public void Fire()
+    public void Fire(int owner)
     {
         GameObject bullet = Instantiate(projectile, FiringPoint.transform.position, FiringPoint.transform.rotation) as GameObject;
+        bullet.GetComponent<StickyWeightScript>().playerOwner = owner;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddRelativeForce(Vector3.forward * speed);
     }

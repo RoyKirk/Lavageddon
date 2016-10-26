@@ -91,7 +91,7 @@ public class SavePrefab : MonoBehaviour
             {
                 if (create)
                 {
-                    Debug.Log(randRot[rand]);
+                    //Debug.Log(randRot[rand]);
                     GameObject block = Instantiate(blockFloat, pos, Quaternion.Euler(randRot[rand])) as GameObject;//loads the boat
                     block.GetComponent<BuildingBlock>().playerOwner = playernumber;
                     //ms.LoadBoatPlacement(0, pos);
