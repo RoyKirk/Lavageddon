@@ -15,22 +15,16 @@ public class PlayerMovement : MonoBehaviour {
 
     int numberOfWeapons = 3;
     public Weapon weapon = Weapon.BOMB;
-    [System.NonSerialized]
     private int laserDamage = 1;
-    [System.NonSerialized]
     private float movementSpeed;
-    [System.NonSerialized]
     private float sensitivityX;
-    [System.NonSerialized]
     private float sensitivityY;
     public float minimumX;
     public float maximumX;
     public float minimumY;
     public float maximumY;
     public float frictionCast;
-    [System.NonSerialized]
     private float jumpForce;
-    [System.NonSerialized]
     private float laserForce;
     float rotationY;
     float rotationX;
