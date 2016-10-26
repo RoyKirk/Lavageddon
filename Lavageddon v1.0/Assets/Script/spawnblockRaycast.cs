@@ -5,7 +5,8 @@ public class spawnblockRaycast : MonoBehaviour
 {
     int playerOwner;
     GUImanager CM;
-    
+
+    public bool construction = true;
 
     void Start()
     {
@@ -16,25 +17,29 @@ public class spawnblockRaycast : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        Vector3 up = transform.TransformDirection(Vector3.up);
-
-        RaycastHit hit;
-
-	    if(Physics.Raycast(transform.position, up,out hit, 3))
+        if(CM.turnOffUI == false)
         {
-            if(hit.collider.name != "Body")
+            Vector3 up = transform.TransformDirection(Vector3.up);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, up, out hit, 3))
             {
-                CM.spawnPosGood = false;
+                if (hit.collider.name != "Body")
+                {
+                    CM.spawnPosGood = false;
+                }
+                else
+                {
+                    //object hit is player so ignore.
+                }
+
             }
             else
             {
-                //object hit is player so ignore.
+                CM.spawnPosGood = true;
             }
-            
-        }
-        else
-        {
-            CM.spawnPosGood = true;
         }
 	}
+
 }

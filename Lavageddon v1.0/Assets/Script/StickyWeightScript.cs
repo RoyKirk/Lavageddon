@@ -6,6 +6,7 @@ public class StickyWeightScript : MonoBehaviour {
     {
         if (other.tag == "Block")
         {
+            PLAYER.GetComponentInChildren<PlayerMovement>().WeightAnim.SetTrigger("Orange");
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             FixedJoint temp = gameObject.AddComponent<FixedJoint>();
@@ -19,9 +20,14 @@ public class StickyWeightScript : MonoBehaviour {
 
     GameObject playerManager;
 
+    public int playerOwner;
+
+    GameObject PLAYER;
+
     void Start()
     {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
+        PLAYER = GameObject.Find("Player" + playerOwner + "(Clone)");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         Rigidbody rb = GetComponent<Rigidbody>();
 

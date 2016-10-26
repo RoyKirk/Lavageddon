@@ -61,7 +61,7 @@ public class CameraMovement : MonoBehaviour {
                     //Debug.Log("trigger battle phase");
                     GetComponent<GUImanager>().readystate = !GetComponent<GUImanager>().readystate;
                     modeSwitch.setBool(player, GetComponent<GUImanager>().readystate);
-                    MS.spawnPos.y += 1;
+                    //MS.spawnPos.y;// += 1;
                     Vector3 temp1 = transform.localPosition;
                     Vector3 temp2 = GetComponent<PlayerMovement>().body.transform.localPosition;
                     GetComponent<PlayerMovement>().body.transform.parent.transform.position = MS.spawnPos;// + temp;

@@ -9,9 +9,14 @@ public class ProjectileScript : MonoBehaviour
 
     GameObject playerManager;
 
+    public int playerOwner;
+
+    GameObject PLAYER;
+
 	// Use this for initialization
 	void Start ()
     {
+        PLAYER = GameObject.Find("Player" + playerOwner + "(Clone)");
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
 
@@ -21,7 +26,11 @@ public class ProjectileScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	    if(transform.position.y < -5)
+        if(PLAYER == null)
+        {
+            PLAYER = GameObject.Find("Player" + playerOwner + "(Clone)");
+        }
+	    if (transform.position.y < -5)
         {
             Destroy(this.gameObject);
         }
@@ -31,6 +40,7 @@ public class ProjectileScript : MonoBehaviour
     {
         if(c.tag == "Block")
         {
+            PLAYER.GetComponentInChildren<PlayerMovement>().CannonAnim.SetTrigger("Orange");
             //get the owner of this projectile and tell them they hit something.
             c.GetComponent<BlockDamage>().Damage(dmg);
             Instantiate(explosion, transform.position, Quaternion.identity);

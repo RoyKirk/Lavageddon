@@ -267,14 +267,14 @@ public class PlayerMovement : MonoBehaviour {
                     bombsLeft--;
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     bombTimer = 0.0f;
-                    GetComponent<FiringScript>().Fire();
+                    GetComponent<FiringScript>().Fire(player);
                 }
                 if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime && stickiesLeft > 0 && !reloading)
                 {
                     stickiesLeft--;
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     stickyTimer = 0.0f;
-                    GetComponent<FireStickyWeight>().Fire();
+                    GetComponent<FireStickyWeight>().Fire(player);
                 }
                 if (weapon == Weapon.LASER && !laserOverheated)
                 {
