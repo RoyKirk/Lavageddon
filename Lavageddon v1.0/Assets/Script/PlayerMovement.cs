@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
     private float laserForce;
     float rotationY;
     float rotationX;
+    public GameObject overheatBar;
 
     public GameObject jumpParticle;
     public GameObject laserParticle;
@@ -205,7 +206,7 @@ public class PlayerMovement : MonoBehaviour {
                 explosionCrosshair.SetActive(false);
                 LaserCrosshair.SetActive(true);
                 WeightCrosshair.SetActive(false);
-
+                overheatBar.GetComponent<Image>().GetComponent<Material>().SetFloat("node_7559", 100 * (laserTimer / laserOverheatTime));
                 //Laser.transform.position = new Vector3(0, 120, 0);
             }
 
