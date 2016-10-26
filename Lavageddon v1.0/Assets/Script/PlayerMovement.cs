@@ -15,19 +15,22 @@ public class PlayerMovement : MonoBehaviour {
 
     int numberOfWeapons = 3;
     public Weapon weapon = Weapon.BOMB;
-    public int laserDamage = 1;
-    public float movementSpeed;
-    public float sensitivityX;
-    public float sensitivityY;
+    private int laserDamage = 1;
+    private float movementSpeed;
+    private float sensitivityX;
+    private float sensitivityY;
     public float minimumX;
     public float maximumX;
     public float minimumY;
     public float maximumY;
     public float frictionCast;
-    public float jumpForce;
-    public float laserForce;
+    private float jumpForce;
+    private float laserForce;
     float rotationY;
     float rotationX;
+
+    public GameObject jumpParticle;
+    public GameObject laserParticle;
 
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
@@ -105,10 +108,45 @@ public class PlayerMovement : MonoBehaviour {
     
     void Update()
     {
+
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
+
+        //PLAYER RELATED VALUES
+        jumpForce = (DV.PlayerRelated[0] * 10);
+        sensitivityX = DV.PlayerRelated[1];
+        sensitivityY = DV.PlayerRelated[2];
+        rb.mass = DV.PlayerRelated[3];
+        submergedMinTime = DV.PlayerRelated[4];
+        if (DV.PlayerRelated[5] == 1)
+        {
+            submergeAccumulate = true;
+        }
+        else
+        {
+            submergeAccumulate = false;
+        }
+        movementSpeed = DV.PlayerRelated[7];
+
+        //WEAPON RELATED VALUES
+        //cannon isnt referenced here
+        bombMinTime = DV.WeaponRelated[2];
+
+        laserDamage = (int)DV.WeaponRelated[3];
+        laserMinTime = DV.WeaponRelated[4];
+        laserForce = DV.WeaponRelated[5];
+
+        stickyMinTime = DV.WeaponRelated[7];
+
+
+
+
         if (alive)
         {
             if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
             {
+
+
                 RaycastHit hit;
 
                 if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
@@ -117,40 +155,41 @@ public class PlayerMovement : MonoBehaviour {
                     {
                         Debug.DrawLine(body.transform.position, hit.point);
                         bodyRB.AddForce(0, jumpForce, 0);
+                        jumpParticle.GetComponent<ParticleSystem>().Play();
                     }
                 }
-                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
-                {
-                    if (hit.collider.tag == "Block")
-                    {
-                        Debug.DrawLine(body.transform.position, hit.point);
-                        bodyRB.AddForce(0, jumpForce, 0);
-                    }
-                }
-                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(-1, -1, 0), out hit, frictionCast))
-                {
-                    if (hit.collider.tag == "Block")
-                    {
-                        Debug.DrawLine(body.transform.position, hit.point);
-                        bodyRB.AddForce(0, jumpForce, 0);
-                    }
-                }
-                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 1), out hit, frictionCast))
-                {
-                    if (hit.collider.tag == "Block")
-                    {
-                        Debug.DrawLine(body.transform.position, hit.point);
-                        bodyRB.AddForce(0, jumpForce, 0);
-                    }
-                }
-                else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, -1), out hit, frictionCast))
-                {
-                    if (hit.collider.tag == "Block")
-                    {
-                        Debug.DrawLine(body.transform.position, hit.point);
-                        bodyRB.AddForce(0, jumpForce, 0);
-                    }
-                }
+                //else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
+                //{
+                //    if (hit.collider.tag == "Block")
+                //    {
+                //        Debug.DrawLine(body.transform.position, hit.point);
+                //        bodyRB.AddForce(0, jumpForce, 0);
+                //    }
+                //}
+                //else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(-1, -1, 0), out hit, frictionCast))
+                //{
+                //    if (hit.collider.tag == "Block")
+                //    {
+                //        Debug.DrawLine(body.transform.position, hit.point);
+                //        bodyRB.AddForce(0, jumpForce, 0);
+                //    }
+                //}
+                //else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 1), out hit, frictionCast))
+                //{
+                //    if (hit.collider.tag == "Block")
+                //    {
+                //        Debug.DrawLine(body.transform.position, hit.point);
+                //        bodyRB.AddForce(0, jumpForce, 0);
+                //    }
+                //}
+                //else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, -1), out hit, frictionCast))
+                //{
+                //    if (hit.collider.tag == "Block")
+                //    {
+                //        Debug.DrawLine(body.transform.position, hit.point);
+                //        bodyRB.AddForce(0, jumpForce, 0);
+                //    }
+                //}
             }
 
             // CROSSHAIR NOTE use this to reference which weapon is being used and which cross hair should be active!
@@ -293,7 +332,10 @@ public class PlayerMovement : MonoBehaviour {
                     RaycastHit shot;
                     if (Physics.Raycast(transform.position, transform.forward, out shot))
                     {
- 
+
+                        GameObject laserHit = (GameObject)Instantiate(laserParticle, shot.transform.position, new Quaternion(0, 0, 0, 0));
+                        laserHit.transform.up = shot.normal;
+
                         LineRenderer lineRenderer = GetComponent<LineRenderer>();
                         lineRenderer.enabled = true;
                         int i = 0;
@@ -668,6 +710,38 @@ public class PlayerMovement : MonoBehaviour {
         bombsLeft = bombClipSize;
         stickiesLeft = stickyClipSize;
 
+    }
+
+    void Awake()
+    {
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
+
+        //PLAYER RELATED VALUES
+        jumpForce = (DV.PlayerRelated[0] * 10);
+        sensitivityX = DV.PlayerRelated[1];
+        sensitivityY = DV.PlayerRelated[2];
+        rb.mass = DV.PlayerRelated[3];
+        submergedMinTime = DV.PlayerRelated[4];
+        if (DV.PlayerRelated[5] == 1)
+        {
+            submergeAccumulate = true;
+        }
+        else
+        {
+            submergeAccumulate = false;
+        }
+        movementSpeed = DV.PlayerRelated[7];
+
+        //WEAPON RELATED VALUES
+        //cannon isnt referenced here
+        bombMinTime = DV.WeaponRelated[2];
+
+        laserDamage = (int)DV.WeaponRelated[3];
+        laserMinTime = DV.WeaponRelated[4];
+        laserForce = DV.WeaponRelated[5];
+
+        stickyMinTime = DV.WeaponRelated[7];
     }
 
     void OnDestroy()
