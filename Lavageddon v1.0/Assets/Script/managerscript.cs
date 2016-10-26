@@ -74,14 +74,7 @@ public class managerscript : MonoBehaviour {
     // Use this for initialization
 
     Vector3[] randRot = new Vector3[27];
-
-    //these are for reseting the spawn block if placed a second
-    GameObject findSpawnBlock;
-    public bool testNewSpawnBlock = false;
-    bool confirm = false;
-    const float newSpawnCounterMax = 1;
-    float newSpawnCounter;
-
+    
     void Awake()
     {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
@@ -128,7 +121,6 @@ public class managerscript : MonoBehaviour {
         randRot[25] = new Vector3(180, 90, 180);
         randRot[26] = new Vector3(180, 180, 90);
 
-        newSpawnCounter = newSpawnCounterMax;
 
         if (blockType == BlockType.FLOAT)
         {
@@ -254,25 +246,6 @@ public class managerscript : MonoBehaviour {
                     PlaceBlock();
                     blockTimer = 0;
                 }
-            }
-
-            if(Controller.state[player].Triggers.Right  < 0.2 && testNewSpawnBlock)
-            {
-                confirm = true;
-            }
-            else
-            {
-                confirm = false;
-            }
-
-            if(testNewSpawnBlock)
-            {
-                newSpawnCounter -= Time.deltaTime;
-            }
-            if(newSpawnCounter <= 0)
-            {
-                testNewSpawnBlock = false;
-                newSpawnCounter = newSpawnCounterMax;
             }
 
             if (Controller.prevState[player].Triggers.Left < 0.2 && Controller.state[player].Triggers.Left > 0.2)
@@ -625,6 +598,7 @@ public class managerscript : MonoBehaviour {
                 }
             }
         }
+        //set up a bool that checks if they want to place a spawn block anyway, delete last spawn block and create a new one
         if(blockType == BlockType.SPAWN && spawnblock == false)
         {
             BlockPlaceAndCost(blockPrefabSpawn, 0);
@@ -632,28 +606,11 @@ public class managerscript : MonoBehaviour {
             //save.AddtoList(transform.position, 'S');
             spawnblock = true;
         }
-        else if (blockType == BlockType.SPAWN && spawnblock == true)
-        {
-            //they are trying to place another spawn block
-            if(confirm)
-            {
-                findSpawnBlock = GameObject.Find("BlockSpawn(Clone)");
-                if(findSpawnBlock.GetComponent<BuildingBlock>().playerOwner == player)
-                {
-                    Destroy(findSpawnBlock);
-                }
-                BlockPlaceAndCost(blockPrefabSpawn, 0);
-            }
-            testNewSpawnBlock = true;
-            
-        }
     }
 
-
-
     public Vector3 spawnPos;
+    
 
-    int prevRand = 0;
 
     void BlockPlaceAndCost(GameObject blockPrefab, int blockCost)
     {
@@ -661,12 +618,6 @@ public class managerscript : MonoBehaviour {
         //anim.SetBool("GREEN", true);
         GameObject blok;
         int rand = Random.Range(0, 26);
-        if(rand == prevRand)
-        {
-            rand = Random.Range(0, 26);
-        }
-        prevRand = rand;
-        Debug.Log(rand);
         if(blockCost == 0)
         {
             blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[0])) as GameObject;

@@ -27,7 +27,7 @@ public class GUImanager : MonoBehaviour
     public bool readystate;
     public bool Hitplayer;
 
-    public bool turnOffUI = false;
+
     /* UI things that still need to be done:
      *  - LB and RB buttons appearing if they havnt pressed them after 30 seconds
      *  - Replace the spawn block to a new placed one when confirmed.
@@ -114,11 +114,6 @@ public class GUImanager : MonoBehaviour
             spawnblockWarning.text = "something is obstructing the spawn block!";
         }
 
-        if(MS.testNewSpawnBlock)
-        {
-            spawnblockWarning.text = "Press Right trigger to replace Spawn block";
-        }
-
         //print the countdown timer to start combat phase.
         if (modeSwitch.CDhappening)
         {
@@ -128,7 +123,6 @@ public class GUImanager : MonoBehaviour
 
     public void TurnOffConstructionUI()
     {
-        turnOffUI = true;
         spawnblockWarning.text = "";
         readyText.text = "";
         pressToReady.text = "";

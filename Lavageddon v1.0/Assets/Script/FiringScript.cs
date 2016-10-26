@@ -10,7 +10,6 @@ public class FiringScript : MonoBehaviour
 
     GameObject playerManager;
 
-    int playerowner;
     // Use this for initialization
     void Start()
     {
@@ -20,10 +19,9 @@ public class FiringScript : MonoBehaviour
         speed = DV.WeaponRelated[0];
     }
 
-    public void Fire(int owner)
+    public void Fire()
     {
         GameObject bullet = Instantiate(projectile, FiringPoint.transform.position, FiringPoint.transform.rotation) as GameObject;
-        bullet.GetComponent<ProjectileScript>().playerOwner = owner;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddRelativeForce(Vector3.forward * speed);
     }

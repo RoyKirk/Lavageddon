@@ -15,22 +15,16 @@ public class PlayerMovement : MonoBehaviour {
 
     int numberOfWeapons = 3;
     public Weapon weapon = Weapon.BOMB;
-    [System.NonSerialized]
     private int laserDamage = 1;
-    [System.NonSerialized]
     private float movementSpeed;
-    [System.NonSerialized]
     private float sensitivityX;
-    [System.NonSerialized]
     private float sensitivityY;
     public float minimumX;
     public float maximumX;
     public float minimumY;
     public float maximumY;
     public float frictionCast;
-    [System.NonSerialized]
     private float jumpForce;
-    [System.NonSerialized]
     private float laserForce;
     float rotationY;
     float rotationX;
@@ -312,14 +306,14 @@ public class PlayerMovement : MonoBehaviour {
                     bombsLeft--;
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     bombTimer = 0.0f;
-                    GetComponent<FiringScript>().Fire(player);
+                    GetComponent<FiringScript>().Fire();
                 }
                 if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime && stickiesLeft > 0 && !reloading)
                 {
                     stickiesLeft--;
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     stickyTimer = 0.0f;
-                    GetComponent<FireStickyWeight>().Fire(player);
+                    GetComponent<FireStickyWeight>().Fire();
                 }
                 if (weapon == Weapon.LASER && !laserOverheated)
                 {
