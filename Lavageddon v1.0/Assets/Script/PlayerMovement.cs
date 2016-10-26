@@ -114,39 +114,6 @@ public class PlayerMovement : MonoBehaviour {
     
     void Update()
     {
-
-        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
-
-        //PLAYER RELATED VALUES
-        jumpForce = (DV.PlayerRelated[0] * 10);
-        sensitivityX = DV.PlayerRelated[1];
-        sensitivityY = DV.PlayerRelated[2];
-        rb.mass = DV.PlayerRelated[3];
-        submergedMinTime = DV.PlayerRelated[4];
-        if (DV.PlayerRelated[5] == 1)
-        {
-            submergeAccumulate = true;
-        }
-        else
-        {
-            submergeAccumulate = false;
-        }
-        movementSpeed = DV.PlayerRelated[7];
-
-        //WEAPON RELATED VALUES
-        //cannon isnt referenced here
-        bombMinTime = DV.WeaponRelated[2];
-
-        laserDamage = (int)DV.WeaponRelated[3];
-        laserMinTime = DV.WeaponRelated[4];
-        laserForce = DV.WeaponRelated[5];
-
-        stickyMinTime = DV.WeaponRelated[7];
-
-
-
-
         if (alive)
         {
             if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
@@ -396,12 +363,18 @@ public class PlayerMovement : MonoBehaviour {
                 weapon++;
                 //rotate clockwise
                 weaponTurner.transform.Rotate(0, 0, 120);
+
+                stickyTimer = stickyMinTime;
+                bombTimer = bombMinTime;
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 weapon--;
                 //rotate counter clockwise
                 weaponTurner.transform.Rotate(0, 0, -120);
+
+                stickyTimer = stickyMinTime;
+                bombTimer = bombMinTime;
             }
 
             if ((int)weapon == numberOfWeapons)
@@ -718,37 +691,7 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
-    void Awake()
-    {
-        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
 
-        //PLAYER RELATED VALUES
-        jumpForce = (DV.PlayerRelated[0] * 10);
-        sensitivityX = DV.PlayerRelated[1];
-        sensitivityY = DV.PlayerRelated[2];
-        rb.mass = DV.PlayerRelated[3];
-        submergedMinTime = DV.PlayerRelated[4];
-        if (DV.PlayerRelated[5] == 1)
-        {
-            submergeAccumulate = true;
-        }
-        else
-        {
-            submergeAccumulate = false;
-        }
-        movementSpeed = DV.PlayerRelated[7];
-
-        //WEAPON RELATED VALUES
-        //cannon isnt referenced here
-        bombMinTime = DV.WeaponRelated[2];
-
-        laserDamage = (int)DV.WeaponRelated[3];
-        laserMinTime = DV.WeaponRelated[4];
-        laserForce = DV.WeaponRelated[5];
-
-        stickyMinTime = DV.WeaponRelated[7];
-    }
 
     void OnDestroy()
     {
