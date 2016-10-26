@@ -8,13 +8,14 @@ public class ProjectileScript : MonoBehaviour
     public GameObject bombEffect;
 
     GameObject playerManager;
+    Rigidbody rb;
 
 	// Use this for initialization
 	void Start ()
     {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
-
+        rb = GetComponent<Rigidbody>();
         dmg = DV.WeaponRelated[1];
     }
 	
@@ -25,6 +26,8 @@ public class ProjectileScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        transform.forward = rb.velocity.normalized;
 	}
 
     void OnTriggerEnter(Collider c)
