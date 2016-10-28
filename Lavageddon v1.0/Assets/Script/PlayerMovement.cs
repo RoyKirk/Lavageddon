@@ -656,6 +656,39 @@ public class PlayerMovement : MonoBehaviour {
     //used for setting variables set in menu
     GameObject playerManager;
 
+
+    void OnEnable()
+    {
+        playerManager = GameObject.FindGameObjectWithTag("Manager");
+        DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
+        Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
+
+        //PLAYER RELATED VALUES
+        jumpForce = (DV.PlayerRelated[0] * 10);
+        sensitivityX = DV.PlayerRelated[1];
+        sensitivityY = DV.PlayerRelated[2];
+        rb.mass = DV.PlayerRelated[3];
+        submergedMinTime = DV.PlayerRelated[4];
+        if (DV.PlayerRelated[5] == 1)
+        {
+            submergeAccumulate = true;
+        }
+        else
+        {
+            submergeAccumulate = false;
+        }
+        movementSpeed = DV.PlayerRelated[7];
+
+        //WEAPON RELATED VALUES
+        //cannon isnt referenced here
+        bombMinTime = DV.WeaponRelated[2];
+
+        laserDamage = (int)DV.WeaponRelated[3];
+        laserMinTime = DV.WeaponRelated[4];
+        laserForce = DV.WeaponRelated[5];
+
+        stickyMinTime = DV.WeaponRelated[7];
+    }
     void Start()
     {
         laserFiring = (GameObject)Instantiate(laserFireSound, transform.position, new Quaternion(0, 0, 0, 0));
