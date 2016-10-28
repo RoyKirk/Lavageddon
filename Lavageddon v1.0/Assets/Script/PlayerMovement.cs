@@ -39,6 +39,15 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject jumpParticle;
     public GameObject laserParticle;
 
+    public GameObject laserFireSound;
+    GameObject laserFiring;
+    public GameObject laserHitSound;
+    GameObject laserHitting;
+    public GameObject cannonFireSound;
+    public GameObject weightGunFireSound;
+    public GameObject jumpSound;
+    public GameObject jumpLandingSound;
+
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
     int lengthOfLineRenderer = 10;
@@ -130,6 +139,7 @@ public class PlayerMovement : MonoBehaviour {
                         Debug.DrawLine(body.transform.position, hit.point);
                         bodyRB.AddForce(0, jumpForce, 0);
                         jumpParticle.GetComponent<ParticleSystem>().Play();
+                        Instantiate(jumpSound, transform.position, Quaternion.identity);
                     }
                 }
                 //else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
@@ -206,7 +216,7 @@ public class PlayerMovement : MonoBehaviour {
                 explosionCrosshair.SetActive(false);
                 LaserCrosshair.SetActive(true);
                 WeightCrosshair.SetActive(false);
-                overheatBar.GetComponent<Image>().GetComponent<Material>().SetFloat("node_7559", 100 * (laserTimer / laserOverheatTime));
+                //overheatBar.GetComponent<Image>().GetComponent<Material>().SetFloat("node_7559", 100 * (laserTimer / laserOverheatTime));
                 //Laser.transform.position = new Vector3(0, 120, 0);
             }
 
@@ -281,6 +291,7 @@ public class PlayerMovement : MonoBehaviour {
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     bombTimer = 0.0f;
                     GetComponent<FiringScript>().Fire(player);
+                    Instantiate(cannonFireSound, transform.position, new Quaternion(0, 0, 0, 0));
                 }
                 if (weapon == Weapon.STICKY && stickyTimer >= stickyMinTime && stickiesLeft > 0 && !reloading)
                 {
@@ -288,9 +299,14 @@ public class PlayerMovement : MonoBehaviour {
                     GamePad.SetVibration((PlayerIndex)player, 0.6f, 0.3f);
                     stickyTimer = 0.0f;
                     GetComponent<FireStickyWeight>().Fire(player);
+                    Instantiate(weightGunFireSound, transform.position, new Quaternion(0, 0, 0, 0));
                 }
                 if (weapon == Weapon.LASER && !laserOverheated)
                 {
+                    if(!laserFiring.activeSelf)
+                    {
+                        laserFiring.SetActive(true);
+                    }
                     laserTimer += Time.deltaTime;
                     GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.3f);
                     //laser.enabled = true;
@@ -307,8 +323,7 @@ public class PlayerMovement : MonoBehaviour {
                     if (Physics.Raycast(transform.position, transform.forward, out shot))
                     {
 
-                        GameObject laserHit = (GameObject)Instantiate(laserParticle, shot.transform.position, new Quaternion(0, 0, 0, 0));
-                        laserHit.transform.up = shot.normal;
+
 
                         LineRenderer lineRenderer = GetComponent<LineRenderer>();
                         lineRenderer.enabled = true;
@@ -327,6 +342,12 @@ public class PlayerMovement : MonoBehaviour {
                         Debug.DrawLine(transform.position, shot.point, Color.green);
                         if (shot.collider.tag == "Block")
                         {
+                            if (!laserHitting.activeSelf)
+                            {
+                                laserHitting.SetActive(true);
+                            }
+                            GameObject laserHit = (GameObject)Instantiate(laserParticle, shot.transform.position, new Quaternion(0, 0, 0, 0));
+                            laserHit.transform.up = shot.normal;
                             shot.collider.GetComponent<BlockDamage>().Damage(laserDamage);
                             shot.collider.GetComponent<Rigidbody>().AddForceAtPosition(transform.forward.normalized * laserForce, shot.point);
                             LaserAnim.SetTrigger("Orange");
@@ -338,8 +359,16 @@ public class PlayerMovement : MonoBehaviour {
                             GetComponent<GUImanager>().Hitplayer = true;
                         }
                     }
+                    else
+                    {
+                        laserHitting.SetActive(false);
+                    }
                 }
-
+            }
+            else
+            {
+                laserFiring.SetActive(false);
+                laserHitting.SetActive(false);
             }
 
             if (Controller.state[player].Triggers.Right < 0.1)
@@ -629,6 +658,12 @@ public class PlayerMovement : MonoBehaviour {
 
     void Start()
     {
+        laserFiring = (GameObject)Instantiate(laserFireSound, transform.position, new Quaternion(0, 0, 0, 0));
+        laserFiring.SetActive(false);
+
+        laserHitting = (GameObject)Instantiate(laserHitSound, transform.position, new Quaternion(0, 0, 0, 0));
+        laserHitting.SetActive(false);
+
         weaponTurner.SetActive(true);
 
         thirdPersonoffset = GetComponent<CameraMovement>().thirdPersonoffset;

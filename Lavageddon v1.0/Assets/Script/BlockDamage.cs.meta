@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 4e524a70ff2e26f4b84db7d5da6fc500
-timeCreated: 1469768983
+timeCreated: 1477635247
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BlockDestructionSound: {fileID: 1000013294453562, guid: f16f17b9b9dac424986f6ead48ff267c,
+      type: 2}
+  - BlockDeleteSound: {fileID: 1000013510496496, guid: 76d08fb83341b9346b102cc211eb7b62,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

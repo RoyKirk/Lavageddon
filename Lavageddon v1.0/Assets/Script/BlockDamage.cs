@@ -3,7 +3,8 @@ using System.Collections;
 
 public class BlockDamage : MonoBehaviour {
 
-
+    public GameObject BlockDestructionSound;
+    public GameObject BlockDeleteSound;
 
     public float HitPoints = 1;
     float hp;
@@ -49,6 +50,14 @@ public class BlockDamage : MonoBehaviour {
         hp -= damage;
         if(hp<=0)
         {
+            if (!GameObject.Find("Controller").GetComponent<ModeSwitch>().construction)
+            {
+                Instantiate(BlockDestructionSound, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(BlockDeleteSound, transform.position, Quaternion.identity);
+            }
             transform.DetachChildren();
             Destroy(gameObject);
         }
@@ -60,6 +69,8 @@ public class BlockDamage : MonoBehaviour {
 
     void OnDestroy()
     {
+
+
         //destruction
         if (GameObject.Find("Player"))
         {

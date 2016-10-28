@@ -1,10 +1,29 @@
 fileFormatVersion: 2
 guid: fc567249cc2e8ec4db341f77cd32be7e
-timeCreated: 1469768984
+timeCreated: 1477630275
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - overheatBar: {instanceID: 0}
+  - jumpParticle: {instanceID: 0}
+  - laserParticle: {fileID: 1000013931442110, guid: 4b544bcb2d8e47049a93cbc16e2ea2d3,
+      type: 2}
+  - laserFireSound: {fileID: 1000012100884578, guid: f2a2a79984446644db203468bc4ff0af,
+      type: 2}
+  - cannonFireSound: {fileID: 1000012536972072, guid: d824704cb981e774681712cb572fae2e,
+      type: 2}
+  - weightGunFireSound: {fileID: 1000011863098268, guid: d604d2e72e1794944a9292337fd46555,
+      type: 2}
+  - redScreen: {instanceID: 0}
+  - body: {instanceID: 0}
+  - explosionCrosshair: {instanceID: 0}
+  - LaserCrosshair: {instanceID: 0}
+  - WeightCrosshair: {instanceID: 0}
+  - weaponTurner: {instanceID: 0}
+  - CannonAnim: {instanceID: 0}
+  - LaserAnim: {instanceID: 0}
+  - WeightAnim: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

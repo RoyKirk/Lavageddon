@@ -14,6 +14,8 @@ public class ProjectileScript : MonoBehaviour
 
     GameObject PLAYER;
 
+    public GameObject cannonHitSound;
+
     // Use this for initialization
     void Start ()
     {
@@ -39,6 +41,7 @@ public class ProjectileScript : MonoBehaviour
     {
         if(c.tag == "Block")
         {
+            Instantiate(cannonHitSound, transform.position, Quaternion.identity);
             //get the owner of this projectile and tell them they hit something.
             PLAYER.GetComponentInChildren<PlayerMovement>().CannonAnim.SetTrigger("Orange");
             c.GetComponent<BlockDamage>().Damage(dmg);
@@ -48,6 +51,7 @@ public class ProjectileScript : MonoBehaviour
         }
         else if(c.tag == "Wall")
         {
+            Instantiate(cannonHitSound, transform.position, Quaternion.identity);
             Instantiate(explosion, transform.position, Quaternion.identity);
             Instantiate(bombEffect, transform.position, Quaternion.identity);
             Destroy(this.gameObject);

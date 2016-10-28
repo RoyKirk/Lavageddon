@@ -70,6 +70,9 @@ public class managerscript : MonoBehaviour {
 
     public GameObject ConstructionCrosshair;
 
+    public GameObject FloatBlockPlacementAudio;
+    public GameObject ArmourBlockPlacementAudio;
+
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
 
@@ -585,6 +588,7 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
             {
+                Instantiate(FloatBlockPlacementAudio,transform.position,Quaternion.identity);
                 BlockPlaceAndCost(blockPrefabFloat, FloatBlockCost);
                 //save.AddtoList(block.transform.position, true);//these true or false need to be in relation to float or armour
                 //numberOfBlocks += FloatBlockCost;
@@ -594,6 +598,7 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
             {
+                Instantiate(ArmourBlockPlacementAudio, transform.position, Quaternion.identity);
                 BlockPlaceAndCost(blockPrefabArmour, ArmourBlockCost);
                 //save.AddtoList(block.transform.position, false);//these true or false need to be in relation to float or armour
                 //numberOfBlocks += ArmourBlockCost;
