@@ -35,22 +35,48 @@ public class GUImanager : MonoBehaviour
      *  - Crosshair's have to be managed to whichever weapon you are using 
      * */
 
+    //size of these must = var of clip size. change SetActive as number changes.
+    public GameObject[] CannonAmmoUI;
+    public GameObject[] StickyAmmoUI;
+
+    PlayerMovement PM;
 
     // Use this for initialization
     void Awake ()
     {
+        PM = GetComponent<PlayerMovement>();
         MS = GetComponent<managerscript>();
         modeSwitch = GameObject.Find("Controller").GetComponent<ModeSwitch>();
 	}
 
     void Start()
     {
+        //CannonAmmoUI = new GameObject[PM.bombClipSize];
+        //StickyAmmoUI = new GameObject[PM.stickyClipSize];
        player = MS.player;
+        RESET_AMMO_UI();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        //need to set up a change of which UI element it is showing on screen, to only show current weapon.
+        //for (int i = 0; i < (PM.bombClipSize - PM.bombsLeft); i++)
+        //{
+        //    Debug.Log("removing a bullet");
+        //    CannonAmmoUI[i].SetActive(false);
+        //}
+        //
+        //if (PM.bombsLeft == PM.bombClipSize)//reloaded
+        //{
+        //    for (int i = 0; i < PM.bombClipSize; i++)
+        //    {
+        //        Debug.Log("reseting bullets");
+        //        CannonAmmoUI[i].SetActive(true);
+        //    }
+        //}
+
+
         //player is hitting someone with lazer
         if(Hitplayer)
         {
@@ -134,4 +160,46 @@ public class GUImanager : MonoBehaviour
         pressToReady.text = "";
         testBoat.text = "";
     }
+
+    public void ChangeWeaponUI(int currentWeapon)
+    {
+        if (currentWeapon == 0)//bomb is being used
+        {
+            RESET_AMMO_UI();
+            for (int i = 0; i < PM.bombsLeft; i++)
+            {
+                CannonAmmoUI[i].SetActive(true);
+            }
+        }
+        else if (currentWeapon == 1)//sticky
+        {
+            RESET_AMMO_UI();
+            for (int i = 0; i < PM.stickiesLeft; i++)
+            {
+                StickyAmmoUI[i].SetActive(true);
+            }
+        }
+        else//laser
+        {
+            RESET_AMMO_UI();
+        }
+
+    }
+
+    //this gets called everytime stickyLeft / bombLeft changes. can be used to incr / decr.
+    void RESET_AMMO_UI()
+    {
+        //set both to false
+        for (int i = 0; i < PM.bombClipSize; i++)
+        {
+            CannonAmmoUI[i].SetActive(false);
+        }
+
+        for (int i = 0; i < PM.stickyClipSize; i++)
+        {
+            StickyAmmoUI[i].SetActive(false);
+        }
+    }
+
+
 }

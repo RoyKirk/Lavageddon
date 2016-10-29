@@ -61,12 +61,12 @@ public class PlayerMovement : MonoBehaviour {
     public float coolDownFactor = 1.2f;
     public float overheatedCoolDownFactor = 0.5f;
     public float bombMinTime = 0.5f;
-    int bombsLeft;//number of bombs left
+    public int bombsLeft;//number of bombs left
     public int bombClipSize = 6;
     float bombTimer = 0.0f;//time between bombs
     public float stickyMinTime = 0.5f;
     float stickyTimer = 0.0f;//time between stickies
-    int stickiesLeft;//number of stickies left
+    public int stickiesLeft;//number of stickies left
     public int stickyClipSize = 4;
     public float projectileResidual = 0.2f;
     public int player = 0;
@@ -179,6 +179,7 @@ public class PlayerMovement : MonoBehaviour {
             // CROSSHAIR NOTE use this to reference which weapon is being used and which cross hair should be active!
             if (weapon == Weapon.BOMB)
             {
+                GetComponent<GUImanager>().ChangeWeaponUI(0);
                 bombTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
                 laserTimer = 0.0f;
@@ -196,6 +197,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             if (weapon == Weapon.STICKY)
             {
+                GetComponent<GUImanager>().ChangeWeaponUI(1);
                 stickyTimer += Time.deltaTime;
                 laserTimer = 0.0f;
                 bombTimer = 0.0f;
@@ -211,6 +213,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             if (weapon == Weapon.LASER)
             {
+                GetComponent<GUImanager>().ChangeWeaponUI(2);
                 stickyTimer = 0.0f;
                 bombTimer = 0.0f;
                 explosionCrosshair.SetActive(false);
@@ -303,7 +306,7 @@ public class PlayerMovement : MonoBehaviour {
                 }
                 if (weapon == Weapon.LASER && !laserOverheated)
                 {
-                    if(!laserFiring.activeSelf)
+                    if (!laserFiring.activeSelf)
                     {
                         laserFiring.SetActive(true);
                     }
