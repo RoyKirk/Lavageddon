@@ -108,6 +108,9 @@ public class PlayerMovement : MonoBehaviour {
     public Animator LaserAnim;
     public Animator WeightAnim;
 
+    public Slider laserOverheatSlider;
+    public GameObject laserSlider;
+
     ////these are the weapon images
     //public GameObject explosion;
     //public GameObject Laser;
@@ -179,6 +182,7 @@ public class PlayerMovement : MonoBehaviour {
             // CROSSHAIR NOTE use this to reference which weapon is being used and which cross hair should be active!
             if (weapon == Weapon.BOMB)
             {
+                laserSlider.SetActive(false);
                 GetComponent<GUImanager>().ChangeWeaponUI(0);
                 bombTimer += Time.deltaTime;
                 stickyTimer = 0.0f;
@@ -197,6 +201,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             if (weapon == Weapon.STICKY)
             {
+                laserSlider.SetActive(false);
                 GetComponent<GUImanager>().ChangeWeaponUI(1);
                 stickyTimer += Time.deltaTime;
                 laserTimer = 0.0f;
@@ -213,6 +218,8 @@ public class PlayerMovement : MonoBehaviour {
             }
             if (weapon == Weapon.LASER)
             {
+                laserSlider.SetActive(true);
+                laserOverheatSlider.value = laserTimer;
                 GetComponent<GUImanager>().ChangeWeaponUI(2);
                 stickyTimer = 0.0f;
                 bombTimer = 0.0f;
@@ -694,6 +701,8 @@ public class PlayerMovement : MonoBehaviour {
     }
     void Start()
     {
+        laserOverheatSlider.maxValue = laserOverheatTime;
+
         laserFiring = (GameObject)Instantiate(laserFireSound, transform.position, new Quaternion(0, 0, 0, 0));
         laserFiring.SetActive(false);
 
