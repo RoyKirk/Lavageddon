@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject weightGunFireSound;
     public GameObject jumpSound;
     public GameObject jumpLandingSound;
+    public GameObject playerDeathAudio;
+    public GameObject itemSwitchAudio;
 
     public Color c1 = Color.yellow;
     public Color c2 = Color.red;
@@ -181,8 +183,8 @@ public class PlayerMovement : MonoBehaviour {
             {
                 GetComponent<GUImanager>().ChangeWeaponUI(0);
                 bombTimer += Time.deltaTime;
-                stickyTimer = 0.0f;
-                laserTimer = 0.0f;
+                //stickyTimer = 0.0f;
+                //laserTimer = 0.0f;
                 if (bombsLeft <= 0)
                 {
                     reloading = true;
@@ -199,8 +201,8 @@ public class PlayerMovement : MonoBehaviour {
             {
                 GetComponent<GUImanager>().ChangeWeaponUI(1);
                 stickyTimer += Time.deltaTime;
-                laserTimer = 0.0f;
-                bombTimer = 0.0f;
+                //laserTimer = 0.0f;
+                //bombTimer = 0.0f;
                 if (stickiesLeft <= 0)
                 {
                     reloading = true;
@@ -214,8 +216,8 @@ public class PlayerMovement : MonoBehaviour {
             if (weapon == Weapon.LASER)
             {
                 GetComponent<GUImanager>().ChangeWeaponUI(2);
-                stickyTimer = 0.0f;
-                bombTimer = 0.0f;
+                //stickyTimer = 0.0f;
+                //bombTimer = 0.0f;
                 explosionCrosshair.SetActive(false);
                 LaserCrosshair.SetActive(true);
                 WeightCrosshair.SetActive(false);
@@ -396,18 +398,12 @@ public class PlayerMovement : MonoBehaviour {
                 weapon++;
                 //rotate clockwise
                 weaponTurner.transform.Rotate(0, 0, 120);
-
-                stickyTimer = stickyMinTime;
-                bombTimer = bombMinTime;
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 weapon--;
                 //rotate counter clockwise
                 weaponTurner.transform.Rotate(0, 0, -120);
-
-                stickyTimer = stickyMinTime;
-                bombTimer = bombMinTime;
             }
 
             if ((int)weapon == numberOfWeapons)
@@ -691,6 +687,8 @@ public class PlayerMovement : MonoBehaviour {
         laserForce = DV.WeaponRelated[5];
 
         stickyMinTime = DV.WeaponRelated[7];
+        bombTimer = bombMinTime;
+        stickyTimer = stickyMinTime;
     }
     void Start()
     {
@@ -796,6 +794,7 @@ public class PlayerMovement : MonoBehaviour {
             submergedTimer = 0;
 
             body.GetComponent<CapsuleCollider>().enabled = false;
+            Instantiate(playerDeathAudio, transform.position, Quaternion.identity);
         }
     }
 }
