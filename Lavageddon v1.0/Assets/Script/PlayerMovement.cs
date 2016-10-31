@@ -408,12 +408,14 @@ public class PlayerMovement : MonoBehaviour {
                 weapon++;
                 //rotate clockwise
                 weaponTurner.transform.Rotate(0, 0, 120);
+                Instantiate(itemSwitchAudio, transform.position, Quaternion.identity);
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 weapon--;
                 //rotate counter clockwise
                 weaponTurner.transform.Rotate(0, 0, -120);
+                Instantiate(itemSwitchAudio, transform.position, Quaternion.identity);
             }
 
             if ((int)weapon == numberOfWeapons)

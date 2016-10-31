@@ -73,6 +73,8 @@ public class managerscript : MonoBehaviour {
     public GameObject FloatBlockPlacementAudio;
     public GameObject ArmourBlockPlacementAudio;
 
+    public GameObject itemSwitchAudio;
+
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
 
@@ -303,12 +305,14 @@ public class managerscript : MonoBehaviour {
                 blockType++;
                 ResetBlock();
                 BlockTurner.transform.Rotate(0, 0, 120);
+                Instantiate(itemSwitchAudio, transform.position, Quaternion.identity);
             }
             if (Controller.prevState[player].Buttons.LeftShoulder == ButtonState.Released && Controller.state[player].Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 blockType--;
                 ResetBlock();
                 BlockTurner.transform.Rotate(0, 0, -120);
+                Instantiate(itemSwitchAudio, transform.position, Quaternion.identity);
             }
 
             if((int)blockType == numberOfBlockTypes)
