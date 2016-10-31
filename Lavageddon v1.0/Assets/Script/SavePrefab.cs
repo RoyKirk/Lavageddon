@@ -33,7 +33,25 @@ public class SavePrefab : MonoBehaviour
 
     //Vector3[] randRot = new Vector3[6];
     Vector3[] randRot = { new Vector3(0, 0, 0), new Vector3(90, 0, 0), new Vector3(-90, 0, 0), new Vector3(180, 0, 0), new Vector3(90, 0, 0), new Vector3(0, 0, 180) };
-                          
+                 
+    
+    void Awake()
+    {
+        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
+        
+        if (!File.Exists(path))
+        {
+            string createText = "";
+            
+
+            for (int i = 0; i < DefaultBoat0.Length; i++)
+            {
+                createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
+            }
+            Debug.Log(createText);
+            File.WriteAllText(path, createText);
+        }
+    }         
     // Use this for initialization
     void Start ()
     {
@@ -41,18 +59,20 @@ public class SavePrefab : MonoBehaviour
         spawnorigins[1] = new Vector3(-21.05f, 5.05f, 4.59f);
         spawnorigins[2] = new Vector3(2.02f, 5.05f, 25.78f);
         spawnorigins[3] = new Vector3(20.51f, 5.05f, 2.13f);
+        string createText = "";
 
-        
+
+        for (int i = 0; i < DefaultBoat0.Length; i++)
+        {
+            createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
+        }
+        Debug.Log(createText);
+        File.WriteAllText(path, createText);
+        ReadBoat(false);
 
         //do some research to get a better path location, preferably this games location
-        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
-        ReadBoat(false);
-        if(!File.Exists(path))
-        {
-            string createText = "";
-            File.WriteAllText(path, createText);
-        }
-	}
+
+    }
 	
     public void WriteBoat()
     {
@@ -93,7 +113,7 @@ public class SavePrefab : MonoBehaviour
         {
             for (int i = 0; i < DefaultBoat0.Length; i++)
             {
-                LoadedBoat.Insert(LoadedBoat.Length, DefaultBoat0[i] + Environment.NewLine);
+                LoadedBoat.Insert(LoadedBoat.Length, DefaultBoat0[i]);
             }
 
             File.WriteAllText(path, LoadedBoat);
