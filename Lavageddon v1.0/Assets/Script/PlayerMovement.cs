@@ -385,7 +385,10 @@ public class PlayerMovement : MonoBehaviour {
 
             if (Controller.state[player].Triggers.Right < 0.1)
             {
-                laserTimer -= Time.deltaTime * coolDownFactor;
+                if (!laserOverheated)
+                {
+                    laserTimer -= Time.deltaTime * coolDownFactor;
+                }
                 GamePad.SetVibration((PlayerIndex)player, 0, 0);
                 LineRenderer lineRenderer = GetComponent<LineRenderer>();
                 lineRenderer.enabled = false;
