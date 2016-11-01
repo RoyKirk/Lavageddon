@@ -293,15 +293,19 @@ public class ButtonManager : MonoBehaviour {
                     values.Increment(dropDown.value, selected - 1, -1);
                 }
 
-                if (DpadR > 0)
-                {
-                    values.Increment(dropDown.value, selected - 1, 1);
-                }
-                else if (DpadL < 0)
-                {
-                    values.Increment(dropDown.value, selected - 1, -1);
-                }
-                
+                //if (DpadR > 0)
+                //{
+                //    values.Increment(dropDown.value, selected - 1, 1);
+                //}
+
+                //if (DpadL < 0)
+                //{
+                //    values.Increment(dropDown.value, selected - 1, -1);
+                //}
+
+                values.Increment(dropDown.value, selected - 1, DpadR);
+                values.Increment(dropDown.value, selected - 1, DpadL);
+
             }
             
             

@@ -7,9 +7,13 @@ public class PlayerReady : MonoBehaviour {
     public ButtonManager BM;
     public int player = 0;
     public bool pressed = false;
+    public GameObject MenuHoverAudio;
+    public GameObject MenuPressAudio;
+    public GameObject MenuSelectAudio;
 
-	// Use this for initialization
-	void Start ()
+
+    // Use this for initialization
+    void Start ()
     {
         DPC = FindObjectOfType<DynamicPlayerCount>();
 	}
@@ -23,19 +27,21 @@ public class PlayerReady : MonoBehaviour {
              if (Controller.state[player].Buttons.Back == ButtonState.Released && pressed)
              {
                  pressed = false;
-             }
+            }
              if (Controller.prevState[player].Buttons.Back == ButtonState.Pressed && Controller.state[player].Buttons.Back == ButtonState.Pressed && DPC.ready[player] == false && !pressed)
              {
                  //Instantiate(players[i]);
                  DPC.ready[player] = true;
                  pressed = true;
-             }
+                Instantiate(MenuPressAudio, transform.position, Quaternion.identity);
+            }
              else if (Controller.prevState[player].Buttons.Back == ButtonState.Pressed && Controller.state[player].Buttons.Back == ButtonState.Pressed && DPC.ready[player] == true && !pressed)
              {
                  //Instantiate(players[i]);
                  DPC.ready[player] = false;
                  pressed = true;
-             }
+                Instantiate(MenuPressAudio, transform.position, Quaternion.identity);
+            }
 
 
             //navigating with thumbsticks
@@ -45,17 +51,21 @@ public class PlayerReady : MonoBehaviour {
             if(Controller.state[player].DPad.Up == ButtonState.Pressed && Controller.prevState[player].DPad.Up == ButtonState.Released)
             {
                 BM.selected--;
+                Instantiate(MenuHoverAudio, transform.position, Quaternion.identity);
             }
             else if (Controller.state[player].DPad.Down == ButtonState.Pressed && Controller.prevState[player].DPad.Down == ButtonState.Released)
             {
                 BM.selected++;
+                Instantiate(MenuHoverAudio, transform.position, Quaternion.identity);
             }
 
-            if (Controller.state[player].DPad.Right == ButtonState.Pressed)
+            if (Controller.state[player].DPad.Right == ButtonState.Pressed && Controller.prevState[player].DPad.Right == ButtonState.Released)
             {
                 BM.DpadR = 1;
+                Instantiate(MenuHoverAudio, transform.position, Quaternion.identity);
             }
-            else if (Controller.state[player].DPad.Right == ButtonState.Released)
+
+            if (Controller.state[player].DPad.Right == ButtonState.Released & Controller.prevState[player].DPad.Right == ButtonState.Pressed)
             {
                 BM.DpadR = 0;
             }
@@ -63,8 +73,10 @@ public class PlayerReady : MonoBehaviour {
             if (Controller.state[player].DPad.Left == ButtonState.Pressed && Controller.prevState[player].DPad.Left == ButtonState.Released)
             {
                 BM.DpadL = -1;
+                Instantiate(MenuHoverAudio, transform.position, Quaternion.identity);
             }
-            else if(Controller.state[player].DPad.Left == ButtonState.Released)
+
+            if (Controller.state[player].DPad.Left == ButtonState.Released & Controller.prevState[player].DPad.Right == ButtonState.Pressed)
             {
                 BM.DpadL = 0;
             }
@@ -93,6 +105,7 @@ public class PlayerReady : MonoBehaviour {
             if (Controller.state[player].Buttons.A == ButtonState.Pressed && Controller.prevState[player].Buttons.A == ButtonState.Released)
             {
                 BM.Apressed = true;
+                Instantiate(MenuSelectAudio, transform.position, Quaternion.identity);
             }
             else
             {
@@ -102,6 +115,7 @@ public class PlayerReady : MonoBehaviour {
             if (Controller.state[player].Buttons.B == ButtonState.Pressed && Controller.prevState[player].Buttons.B == ButtonState.Released)
             {
                 BM.Bpressed = true;
+                Instantiate(MenuPressAudio, transform.position, Quaternion.identity);
             }
             else
             {
