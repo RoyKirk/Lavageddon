@@ -18,6 +18,9 @@ public class SavePrefab : MonoBehaviour
     public GameObject blockFloat;
     public GameObject blockArmor;
     public GameObject blockSpawn;
+
+    public GameObject BoatExample;
+
     public struct blockinfo
     {
         public Vector3 trans;
@@ -37,36 +40,38 @@ public class SavePrefab : MonoBehaviour
     
     void Awake()
     {
-        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
-        
-        if (!File.Exists(path))
-        {
-            string createText = "";
-            
+         path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
 
-            for (int i = 0; i < DefaultBoat0.Length; i++)
-            {
-                createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
-            }
-            Debug.Log(createText);
-            File.WriteAllText(path, createText);
-        }
-    }         
-    // Use this for initialization
-    void Start ()
-    {
         spawnorigins[0] = new Vector3(2.02f, 5.05f, -24.24001f);
         spawnorigins[1] = new Vector3(-21.05f, 5.05f, 4.59f);
         spawnorigins[2] = new Vector3(2.02f, 5.05f, 25.78f);
         spawnorigins[3] = new Vector3(20.51f, 5.05f, 2.13f);
+
+        if (!File.Exists(path))
+         {
+            string createText = (spawnorigins[playernumber].x.ToString() + "<"+ spawnorigins[playernumber].y.ToString() + "<" + spawnorigins[playernumber].z.ToString() + "<S");
+            File.WriteAllText(path, createText);
+
+            AddtoList(spawnorigins[playernumber], 'S');
+
+            //delete the boat example after a time or certain events.
+            Instantiate(BoatExample, spawnorigins[playernumber], Quaternion.identity);
+            //instantiate boat example at ^ pos.
+             
+         }
+    }         
+    // Use this for initialization
+    void Start ()
+    {
+        
         string createText = "";
 
 
-        for (int i = 0; i < DefaultBoat0.Length; i++)
-        {
-            createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
-        }
-        Debug.Log(createText);
+        //for (int i = 0; i < DefaultBoat0.Length; i++)
+        //{
+        //    createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
+        //}
+        //Debug.Log(createText);
         File.WriteAllText(path, createText);
         ReadBoat(false);
 
@@ -86,24 +91,24 @@ public class SavePrefab : MonoBehaviour
         }
     }
 
-    string defaultBoat = "2.02<5.05<-20.20001< F" + Environment.NewLine + "2.02<5.05<-19.19001< F" + Environment.NewLine + "2.02<5.05<-18.18001< F" + Environment.NewLine + "2.02<5.05<-17.17001< F" + Environment.NewLine + "2.02<5.05<-16.16001< F" + Environment.NewLine + "3.03<5.05<-20.20001< F" + Environment.NewLine + "3.03<5.05<-19.19001< F" + Environment.NewLine + "4.04<5.05<-19.19001< F" + Environment.NewLine + "4.04<5.05<-18.18001< F" + Environment.NewLine + "4.04<5.05<-17.17001< F" + Environment.NewLine + "4.04<5.05<-16.16001< F" + Environment.NewLine + "3.03<5.05<-15.15001< F" + Environment.NewLine + "4.04<5.05<-20.20001< F" + Environment.NewLine + "4.04<5.05<-15.15001< F" + Environment.NewLine + "2.02<5.05<-15.15001< F" + Environment.NewLine + "5.05<5.05<-20.20001< F" + Environment.NewLine + "5.05<5.05<-17.17001< F" + Environment.NewLine + "5.05<5.05<-16.16001< F" + Environment.NewLine + "5.05<5.05<-19.19001< F" + Environment.NewLine + "5.05<5.05<-18.18001< F" + Environment.NewLine + "5.05<5.05<-15.15001< F" + Environment.NewLine + "1.01<5.05<-20.20001< F" + Environment.NewLine + "1.01<5.05<-19.19001< F" + Environment.NewLine + "1.01<5.05<-18.18001< F" + Environment.NewLine + "1.01<5.05<-17.17001< F" + Environment.NewLine + "1.01<5.05<-16.16001< F" + Environment.NewLine + "1.01<5.05<-15.15001< F" + Environment.NewLine + "6.06<5.05<-20.20001< F" + Environment.NewLine + "6.06<5.05<-19.19001< F" + Environment.NewLine + "6.06<5.05<-18.18001< F" + Environment.NewLine + "6.06<5.05<-17.17001< F" + Environment.NewLine + "6.06<5.05<-16.16001< F" + Environment.NewLine + "6.06<5.05<-15.15001< F" + Environment.NewLine + "0<5.05<-20.20001< F" + Environment.NewLine + "0<5.05<-19.19001< F" + Environment.NewLine + "0<5.05<-18.18001< F" + Environment.NewLine + "0<5.05<-17.17001< F" + Environment.NewLine + "0<5.05<-16.16001< F" + Environment.NewLine + "0<5.05<-15.15001< F" + Environment.NewLine + "0<5.05<-14.14001< F" + Environment.NewLine + "1.01<5.05<-14.14001< F" + Environment.NewLine + "2.02<5.05<-14.14001< F" + Environment.NewLine + "4.04<5.05<-14.14001< F" + Environment.NewLine + "5.05<5.05<-14.14001< F" + Environment.NewLine + "6.06<5.05<-14.14001< F" + Environment.NewLine + "3.03<5.05<-18.18001< F" + Environment.NewLine + "5.05<5.05<-13.13001< F" + Environment.NewLine + "4.04<5.05<-13.13001< F" + Environment.NewLine + "3.03<5.05<-14.14001< F" + Environment.NewLine + "3.03<5.05<-13.13001< F" + Environment.NewLine + "2.02<5.05<-13.13001< F" + Environment.NewLine + "1.01<5.05<-13.13001< F" + Environment.NewLine + "6.06<5.05<-13.13001< F" + Environment.NewLine + "0<5.05<-13.13001< F" + Environment.NewLine + "3.03<5.05<-12.12001< F" + Environment.NewLine + "1.01<5.05<-12.12001< F" + Environment.NewLine + "1.01<5.05<-11.11001< F" + Environment.NewLine + "3.03<5.05<-11.11001< F" + Environment.NewLine + "2.02<5.05<-11.11001< F" + Environment.NewLine + "4.04<5.05<-11.11001< F" + Environment.NewLine + "5.05<5.05<-12.12001< F" + Environment.NewLine + "5.05<5.05<-11.11001< F" + Environment.NewLine + "3.03<5.05<-16.16001< S";
-
-    string LoadedBoat = "";
-
-    string[] DefaultBoat0 = { "3.03<5.05<-24.24001< F" + Environment.NewLine, "4.04<5.05<-24.24001< F"+ Environment.NewLine,"6.06<5.05<-24.24001< F"+ Environment.NewLine,
-        "6.06<5.05<-23.23001< F" + Environment.NewLine,"6.06<5.05<-22.22001< F"+ Environment.NewLine,"6.06<5.05<-21.21001< F"+ Environment.NewLine, "6.06<5.05<-20.20001< F"+ Environment.NewLine,
-        "5.05<5.05<-23.23001< F" + Environment.NewLine,"5.05<5.05<-22.22001< F"+ Environment.NewLine, "5.05<5.05<-21.21001< F"+ Environment.NewLine, "5.05<5.05<-20.20001< F"+ Environment.NewLine,
-        "4.04<5.05<-23.23001< F" + Environment.NewLine,"4.04<5.05<-22.22001< F"+ Environment.NewLine, "4.04<5.05<-21.21001< F"+ Environment.NewLine,"4.04<5.05<-20.20001< F"+ Environment.NewLine,
-        "3.03<5.05<-23.23001< F" + Environment.NewLine,"3.03<5.05<-22.22001< F" + Environment.NewLine, "3.03<5.05<-21.21001< F"+ Environment.NewLine,"3.03<5.05<-20.20001< F"+ Environment.NewLine,
-        "2.02<5.05<-23.23001< F" + Environment.NewLine, "2.02<5.05<-22.22001< F"+ Environment.NewLine,"2.02<5.05<-21.21001< F"+ Environment.NewLine, "2.02<5.05<-20.20001< F"+ Environment.NewLine,
-        "5.05<6.06<-21.21001< F" + Environment.NewLine, "5.05<6.06<-23.23001< F"+ Environment.NewLine,
-        "5.05<6.06<-22.22001< F"+ Environment.NewLine, "4.04<6.06<-21.21001< S"+ Environment.NewLine,"2.02<5.05<-24.24001< A"+ Environment.NewLine,
-        "2.02<6.06<-24.24001< A"+ Environment.NewLine,"2.02<6.06<-23.23001< A"+ Environment.NewLine,"2.02<6.06<-22.22001< A"+ Environment.NewLine,"2.02<6.06<-21.21001< A"+ Environment.NewLine,
-        "2.02<6.06<-20.20001< A"+ Environment.NewLine,"3.03<6.06<-20.20001< A"+ Environment.NewLine,"4.04<6.06<-20.20001< A"+ Environment.NewLine,
-        "5.05<6.06<-20.20001< A"+ Environment.NewLine,"6.06<6.06<-20.20001< A"+ Environment.NewLine,"6.06<6.06<-21.21001< A"+ Environment.NewLine,"6.06<6.06<-22.22001< A"+ Environment.NewLine,
-        "6.06<6.06<-23.23001< A"+ Environment.NewLine,"6.06<6.06<-24.24001< A"+ Environment.NewLine,"5.05<6.06<-24.24001< A"+ Environment.NewLine,
-        "4.04<6.06<-24.24001< A"+ Environment.NewLine,"3.03<6.06<-24.24001< A"+ Environment.NewLine,"4.04<6.06<-22.22001< F"+ Environment.NewLine,"3.03<6.06<-22.22001< F"+ Environment.NewLine,
-        "3.03<6.06<-21.21001< F"+ Environment.NewLine,"4.04<6.06<-23.23001< F"+ Environment.NewLine,"3.03<6.06<-23.23001< F"+ Environment.NewLine };
+    //string defaultBoat = "2.02<5.05<-20.20001< F" + Environment.NewLine + "2.02<5.05<-19.19001< F" + Environment.NewLine + "2.02<5.05<-18.18001< F" + Environment.NewLine + "2.02<5.05<-17.17001< F" + Environment.NewLine + "2.02<5.05<-16.16001< F" + Environment.NewLine + "3.03<5.05<-20.20001< F" + Environment.NewLine + "3.03<5.05<-19.19001< F" + Environment.NewLine + "4.04<5.05<-19.19001< F" + Environment.NewLine + "4.04<5.05<-18.18001< F" + Environment.NewLine + "4.04<5.05<-17.17001< F" + Environment.NewLine + "4.04<5.05<-16.16001< F" + Environment.NewLine + "3.03<5.05<-15.15001< F" + Environment.NewLine + "4.04<5.05<-20.20001< F" + Environment.NewLine + "4.04<5.05<-15.15001< F" + Environment.NewLine + "2.02<5.05<-15.15001< F" + Environment.NewLine + "5.05<5.05<-20.20001< F" + Environment.NewLine + "5.05<5.05<-17.17001< F" + Environment.NewLine + "5.05<5.05<-16.16001< F" + Environment.NewLine + "5.05<5.05<-19.19001< F" + Environment.NewLine + "5.05<5.05<-18.18001< F" + Environment.NewLine + "5.05<5.05<-15.15001< F" + Environment.NewLine + "1.01<5.05<-20.20001< F" + Environment.NewLine + "1.01<5.05<-19.19001< F" + Environment.NewLine + "1.01<5.05<-18.18001< F" + Environment.NewLine + "1.01<5.05<-17.17001< F" + Environment.NewLine + "1.01<5.05<-16.16001< F" + Environment.NewLine + "1.01<5.05<-15.15001< F" + Environment.NewLine + "6.06<5.05<-20.20001< F" + Environment.NewLine + "6.06<5.05<-19.19001< F" + Environment.NewLine + "6.06<5.05<-18.18001< F" + Environment.NewLine + "6.06<5.05<-17.17001< F" + Environment.NewLine + "6.06<5.05<-16.16001< F" + Environment.NewLine + "6.06<5.05<-15.15001< F" + Environment.NewLine + "0<5.05<-20.20001< F" + Environment.NewLine + "0<5.05<-19.19001< F" + Environment.NewLine + "0<5.05<-18.18001< F" + Environment.NewLine + "0<5.05<-17.17001< F" + Environment.NewLine + "0<5.05<-16.16001< F" + Environment.NewLine + "0<5.05<-15.15001< F" + Environment.NewLine + "0<5.05<-14.14001< F" + Environment.NewLine + "1.01<5.05<-14.14001< F" + Environment.NewLine + "2.02<5.05<-14.14001< F" + Environment.NewLine + "4.04<5.05<-14.14001< F" + Environment.NewLine + "5.05<5.05<-14.14001< F" + Environment.NewLine + "6.06<5.05<-14.14001< F" + Environment.NewLine + "3.03<5.05<-18.18001< F" + Environment.NewLine + "5.05<5.05<-13.13001< F" + Environment.NewLine + "4.04<5.05<-13.13001< F" + Environment.NewLine + "3.03<5.05<-14.14001< F" + Environment.NewLine + "3.03<5.05<-13.13001< F" + Environment.NewLine + "2.02<5.05<-13.13001< F" + Environment.NewLine + "1.01<5.05<-13.13001< F" + Environment.NewLine + "6.06<5.05<-13.13001< F" + Environment.NewLine + "0<5.05<-13.13001< F" + Environment.NewLine + "3.03<5.05<-12.12001< F" + Environment.NewLine + "1.01<5.05<-12.12001< F" + Environment.NewLine + "1.01<5.05<-11.11001< F" + Environment.NewLine + "3.03<5.05<-11.11001< F" + Environment.NewLine + "2.02<5.05<-11.11001< F" + Environment.NewLine + "4.04<5.05<-11.11001< F" + Environment.NewLine + "5.05<5.05<-12.12001< F" + Environment.NewLine + "5.05<5.05<-11.11001< F" + Environment.NewLine + "3.03<5.05<-16.16001< S";
+    //
+    //string LoadedBoat = "";
+    //
+    //string[] DefaultBoat0 = { "3.03<5.05<-24.24001< F" + Environment.NewLine, "4.04<5.05<-24.24001< F"+ Environment.NewLine,"6.06<5.05<-24.24001< F"+ Environment.NewLine,
+    //    "6.06<5.05<-23.23001< F" + Environment.NewLine,"6.06<5.05<-22.22001< F"+ Environment.NewLine,"6.06<5.05<-21.21001< F"+ Environment.NewLine, "6.06<5.05<-20.20001< F"+ Environment.NewLine,
+    //    "5.05<5.05<-23.23001< F" + Environment.NewLine,"5.05<5.05<-22.22001< F"+ Environment.NewLine, "5.05<5.05<-21.21001< F"+ Environment.NewLine, "5.05<5.05<-20.20001< F"+ Environment.NewLine,
+    //    "4.04<5.05<-23.23001< F" + Environment.NewLine,"4.04<5.05<-22.22001< F"+ Environment.NewLine, "4.04<5.05<-21.21001< F"+ Environment.NewLine,"4.04<5.05<-20.20001< F"+ Environment.NewLine,
+    //    "3.03<5.05<-23.23001< F" + Environment.NewLine,"3.03<5.05<-22.22001< F" + Environment.NewLine, "3.03<5.05<-21.21001< F"+ Environment.NewLine,"3.03<5.05<-20.20001< F"+ Environment.NewLine,
+    //    "2.02<5.05<-23.23001< F" + Environment.NewLine, "2.02<5.05<-22.22001< F"+ Environment.NewLine,"2.02<5.05<-21.21001< F"+ Environment.NewLine, "2.02<5.05<-20.20001< F"+ Environment.NewLine,
+    //    "5.05<6.06<-21.21001< F" + Environment.NewLine, "5.05<6.06<-23.23001< F"+ Environment.NewLine,
+    //    "5.05<6.06<-22.22001< F"+ Environment.NewLine, "4.04<6.06<-21.21001< S"+ Environment.NewLine,"2.02<5.05<-24.24001< A"+ Environment.NewLine,
+    //    "2.02<6.06<-24.24001< A"+ Environment.NewLine,"2.02<6.06<-23.23001< A"+ Environment.NewLine,"2.02<6.06<-22.22001< A"+ Environment.NewLine,"2.02<6.06<-21.21001< A"+ Environment.NewLine,
+    //    "2.02<6.06<-20.20001< A"+ Environment.NewLine,"3.03<6.06<-20.20001< A"+ Environment.NewLine,"4.04<6.06<-20.20001< A"+ Environment.NewLine,
+    //    "5.05<6.06<-20.20001< A"+ Environment.NewLine,"6.06<6.06<-20.20001< A"+ Environment.NewLine,"6.06<6.06<-21.21001< A"+ Environment.NewLine,"6.06<6.06<-22.22001< A"+ Environment.NewLine,
+    //    "6.06<6.06<-23.23001< A"+ Environment.NewLine,"6.06<6.06<-24.24001< A"+ Environment.NewLine,"5.05<6.06<-24.24001< A"+ Environment.NewLine,
+    //    "4.04<6.06<-24.24001< A"+ Environment.NewLine,"3.03<6.06<-24.24001< A"+ Environment.NewLine,"4.04<6.06<-22.22001< F"+ Environment.NewLine,"3.03<6.06<-22.22001< F"+ Environment.NewLine,
+    //    "3.03<6.06<-21.21001< F"+ Environment.NewLine,"4.04<6.06<-23.23001< F"+ Environment.NewLine,"3.03<6.06<-23.23001< F"+ Environment.NewLine };
 
 
 
@@ -111,13 +116,13 @@ public class SavePrefab : MonoBehaviour
     {
         if(!File.Exists(path))
         {
-            for (int i = 0; i < DefaultBoat0.Length; i++)
-            {
-                LoadedBoat.Insert(LoadedBoat.Length, DefaultBoat0[i]);
-            }
-
-            File.WriteAllText(path, LoadedBoat);
-            //createStartBlock();
+            //for (int i = 0; i < DefaultBoat0.Length; i++)
+            //{
+            //    LoadedBoat.Insert(LoadedBoat.Length, DefaultBoat0[i]);
+            //}
+            string empty = "";
+            File.WriteAllText(path, empty);
+            createStartBlock();
             ReadBoat(true);
             //create default boat
         }
