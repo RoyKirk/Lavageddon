@@ -135,7 +135,7 @@ public class GUImanager : MonoBehaviour
             testBoat.text = "";
         }
 
-        if (spawnPosGood == false)
+        if (spawnPosGood == false && MS.spawnblock)
         {
             spawnblockWarning.text = "something is obstructing the spawn block!";
         }
