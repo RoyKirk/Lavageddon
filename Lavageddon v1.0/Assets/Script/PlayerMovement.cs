@@ -113,6 +113,11 @@ public class PlayerMovement : MonoBehaviour {
     public Slider laserOverheatSlider;
     public GameObject laserSlider;
 
+
+
+    bool jumped = false;
+    bool inAir = false;
+
     ////these are the weapon images
     //public GameObject explosion;
     //public GameObject Laser;
@@ -131,6 +136,10 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (alive)
         {
+
+
+
+
             if (Controller.prevState[player].Buttons.A == ButtonState.Released && Controller.state[player].Buttons.A == ButtonState.Pressed)
             {
 
@@ -145,6 +154,7 @@ public class PlayerMovement : MonoBehaviour {
                         bodyRB.AddForce(0, jumpForce, 0);
                         jumpParticle.GetComponent<ParticleSystem>().Play();
                         Instantiate(jumpSound, transform.position, Quaternion.identity);
+                        jumped = true;
                     }
                 }
                 //else if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(1, -1, 0), out hit, frictionCast))
@@ -180,6 +190,35 @@ public class PlayerMovement : MonoBehaviour {
                 //    }
                 //}
             }
+
+            if (jumped)
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
+                {
+                }
+                else
+                {
+                    inAir = true;
+                    jumped = false;
+                }
+            }
+            if (inAir)
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(body.transform.position + new Vector3(0, 1, 0), new Vector3(0, -1, 0), out hit, frictionCast))
+                {
+                    if (hit.collider.tag == "Block")
+                    {
+                        Debug.DrawLine(body.transform.position, hit.point);
+                        Instantiate(jumpLandingSound, transform.position, Quaternion.identity);
+                        inAir = false;
+                    }
+                }
+            }
+
 
             // CROSSHAIR NOTE use this to reference which weapon is being used and which cross hair should be active!
             if (weapon == Weapon.BOMB)
