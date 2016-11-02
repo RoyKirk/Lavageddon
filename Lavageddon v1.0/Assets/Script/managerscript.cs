@@ -27,6 +27,7 @@ public class managerscript : MonoBehaviour {
     public GameObject blockPlacePrefabFloat3X3X3InFront;
     public GameObject blockPlacePrefabArmour3X3X3InFront;
     public GameObject blockPlacePrefabSpawn;
+    public GameObject blockPlacePrefabSpawnInFront;
     public GameObject blockPrefabFloat;
     public GameObject blockPrefabArmour;
     public GameObject blockPrefabFloat3X3X3;
@@ -550,7 +551,7 @@ public class managerscript : MonoBehaviour {
         }
         if (blockType == BlockType.SPAWN)
         {
-            blockInFront = (GameObject)Instantiate(blockPlacePrefabSpawn, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
+            blockInFront = (GameObject)Instantiate(blockPlacePrefabSpawnInFront, transform.position + transform.forward.normalized * blockDistance, Quaternion.identity);
         }
         Destroy(block);
         startConstruction = true;
