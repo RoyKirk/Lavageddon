@@ -25,9 +25,13 @@ public class StickyWeightScript : MonoBehaviour {
     public int playerOwner;
 
     GameObject PLAYER;
+    public float deathTime = 20;
 
+    // Use this for initialization
     void Start()
     {
+        Destroy(this.gameObject, deathTime);
+
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         PLAYER = GameObject.Find("Player" + playerOwner + "(Clone)");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
