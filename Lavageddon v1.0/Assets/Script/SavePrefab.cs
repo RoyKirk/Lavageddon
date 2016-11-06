@@ -49,33 +49,48 @@ public class SavePrefab : MonoBehaviour
 
         if (!File.Exists(path))
          {
-            string createText = (spawnorigins[playernumber].x.ToString() + "<"+ spawnorigins[playernumber].y.ToString() + "<" + spawnorigins[playernumber].z.ToString() + "<S");
-            File.WriteAllText(path, createText);
-
-            AddtoList(spawnorigins[playernumber], 'S');
-
-            //delete the boat example after a time or certain events.
-            Instantiate(BoatExample, spawnorigins[playernumber], Quaternion.identity);
-            //instantiate boat example at ^ pos.
+            //string createText = (spawnorigins[playernumber].x.ToString() + "<"+ spawnorigins[playernumber].y.ToString() + "<" + spawnorigins[playernumber].z.ToString() + "<S");
+            //File.WriteAllText(path, createText);
+            //
+            //AddtoList(spawnorigins[playernumber], 'S');
+            //
+            ////delete the boat example after a time or certain events.
+            //Instantiate(BoatExample, spawnorigins[playernumber], Quaternion.identity);
+            ////instantiate boat example at ^ pos.
              
          }
     }         
     // Use this for initialization
     void Start ()
     {
-        
-        string createText = "";
-
-
-        //for (int i = 0; i < DefaultBoat0.Length; i++)
-        //{
-        //    createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
-        //}
-        //Debug.Log(createText);
-        File.WriteAllText(path, createText);
-        ReadBoat(false);
+        //
+        //string createText = "";
+        //
+        //
+        ////for (int i = 0; i < DefaultBoat0.Length; i++)
+        ////{
+        ////    createText.Insert(LoadedBoat.Length, DefaultBoat0[i]);
+        ////}
+        ////Debug.Log(createText);
+        //File.WriteAllText(path, createText);
+        //ReadBoat(false);
 
         //do some research to get a better path location, preferably this games location
+
+        spawnorigins[0] = new Vector3(2.02f, 5.05f, -24.24001f);
+        spawnorigins[1] = new Vector3(-21.05f, 5.05f, 4.59f);
+        spawnorigins[2] = new Vector3(2.02f, 5.05f, 25.78f);
+        spawnorigins[3] = new Vector3(20.51f, 5.05f, 2.13f);
+
+
+        //do some research to get a better path location, preferably this games location
+        path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Boat" + playernumber + ".txt";
+        ReadBoat(false);
+        if (!File.Exists(path))
+        {
+            string createText = "";
+            File.WriteAllText(path, createText);
+        }
 
     }
 	
@@ -120,11 +135,14 @@ public class SavePrefab : MonoBehaviour
             //{
             //    LoadedBoat.Insert(LoadedBoat.Length, DefaultBoat0[i]);
             //}
-            string empty = "";
-            File.WriteAllText(path, empty);
-            createStartBlock();
-            ReadBoat(true);
+            //string empty = "";
+            //File.WriteAllText(path, empty);
+            //createStartBlock();
+            //ReadBoat(true);
             //create default boat
+
+            File.WriteAllText(path, "");
+            createStartBlock();
         }
         string Flo = "F";
         string Arm = "A";
