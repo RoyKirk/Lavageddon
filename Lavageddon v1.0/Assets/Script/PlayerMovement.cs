@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool alive = true;
 
-    float lavaHeight = 1.5f;
+    public float lavaHeight = 1.5f;
 
     public float angularFriction = 0.8f;
 

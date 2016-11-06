@@ -15,6 +15,7 @@ public class ProjectileScript : MonoBehaviour
     GameObject PLAYER;
 
     public GameObject cannonHitSound;
+    public GameObject lavaImpact;
 
     // Use this for initialization
     void Start ()
@@ -33,7 +34,11 @@ public class ProjectileScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
+        if (transform.position.y < PLAYER.GetComponentInChildren<PlayerMovement>().lavaHeight)
+        {
+            Instantiate(lavaImpact, transform.position, lavaImpact.transform.rotation);
+        }
+        
         transform.forward = rb.velocity.normalized;
 	}
 
