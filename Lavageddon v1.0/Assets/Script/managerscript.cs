@@ -594,7 +594,7 @@ public class managerscript : MonoBehaviour {
             if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
             {
                 Instantiate(FloatBlockPlacementAudio,transform.position,Quaternion.identity);
-                BlockPlaceAndCost(blockPrefabFloat, FloatBlockCost);
+                BlockPlaceAndCost(blockPrefabFloat, 0);
                 //save.AddtoList(block.transform.position, true);//these true or false need to be in relation to float or armour
                 //numberOfBlocks += FloatBlockCost;
             }
@@ -604,7 +604,7 @@ public class managerscript : MonoBehaviour {
             if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
             {
                 Instantiate(ArmourBlockPlacementAudio, transform.position, Quaternion.identity);
-                BlockPlaceAndCost(blockPrefabArmour, ArmourBlockCost);
+                BlockPlaceAndCost(blockPrefabArmour, 1);
                 //save.AddtoList(block.transform.position, false);//these true or false need to be in relation to float or armour
                 //numberOfBlocks += ArmourBlockCost;
             }
@@ -638,7 +638,7 @@ public class managerscript : MonoBehaviour {
         //set up a bool that checks if they want to place a spawn block anyway, delete last spawn block and create a new one
         if(blockType == BlockType.SPAWN && spawnblock == false)
         {
-            BlockPlaceAndCost(blockPrefabSpawn, 0);
+            BlockPlaceAndCost(blockPrefabSpawn, 2);
             spawnPos = block.transform.position;
             //save.AddtoList(transform.position, 'S');
             spawnblock = true;
@@ -655,7 +655,7 @@ public class managerscript : MonoBehaviour {
                     Destroy(findSpawnBlock);
                 }
                 spawnPos = block.transform.position;
-                BlockPlaceAndCost(blockPrefabSpawn, 0);
+                BlockPlaceAndCost(blockPrefabSpawn, 2);
                 spawnblock = true;
             }
             testNewSpawnBlock = true;
@@ -688,21 +688,37 @@ public class managerscript : MonoBehaviour {
             blok = Instantiate(blockPrefab, block.transform.position, Quaternion.Euler(randRot[rand])) as GameObject;
             blok.GetComponent<BuildingBlock>().playerOwner = player;
         }
-        
+
+        switch (blockCost)
+        {
+            case 0:
+                save.AddtoList(blok.transform.position, 'F');
+                break;
+            case 1:
+                save.AddtoList(blok.transform.position, 'A');
+                break;
+            case 2:
+                blok.transform.rotation = Quaternion.identity;
+                save.AddtoList(blok.transform.position, 'S');
+                break;
+        }
+
+
         //Debug.Log(block.transform.position);
-        if (blockCost == FloatBlockCost)
-        {
-            save.AddtoList(blok.transform.position, 'F');
-        }
-        else if(blockCost == ArmourBlockCost)
-        {
-            save.AddtoList(blok.transform.position, 'A');
-        }
-        else
-        {
-            blok.transform.rotation = Quaternion.identity;
-            save.AddtoList(blok.transform.position, 'S');
-        }
+        //if (blockCost == FloatBlockCost)
+        //{
+        //    save.AddtoList(blok.transform.position, 'F');
+        //}
+        //else if(blockCost == ArmourBlockCost)
+        //{
+        //    Debug.Log("armor block placement");
+        //    save.AddtoList(blok.transform.position, 'A');
+        //}
+        //else
+        //{
+        //    blok.transform.rotation = Quaternion.identity;
+        //    save.AddtoList(blok.transform.position, 'S');
+        //}
         numberOfBlocks += blockCost;
         //anim.SetBool("GREEN", false);
     }
