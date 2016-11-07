@@ -14,8 +14,8 @@ public class managerscript : MonoBehaviour {
         SPAWN,
         FLOAT3X3X3,
         ARMOUR3X3X3,
-
     };
+
     int numberOfBlockTypes = 3;
     public bool blockdestroyed = false;
     public GameObject blockPlacePrefabFloat;
@@ -75,6 +75,14 @@ public class managerscript : MonoBehaviour {
     public GameObject ArmourBlockPlacementAudio;
 
     public GameObject itemSwitchAudio;
+
+    bool vibrate = false;
+
+    float vibrateTimer = 0.0f;
+    float vibrateTime = 0.2f;
+
+    float blockDelayTimer = 0.0f;
+    float blockDelayTime = 0.3f;
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
@@ -241,26 +249,50 @@ public class managerscript : MonoBehaviour {
             }
             //they have confirmed that they want to reset their boat.
             
-
             //timer so they have X seconds to press the reset button again before canceling
             
 
             if (Controller.prevState[player].Triggers.Right < 0.2 && Controller.state[player].Triggers.Right > 0.2 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
+                vibrate = true;
                 //numberOfBlocks += FloatBlockCost;
             }
 
             if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
             {
+                blockDelayTimer += Time.deltaTime;
                 blockTimer += Time.deltaTime;
 
-                if (blockTimer >= blockTime)
+                if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
                 {
                     PlaceBlock();
+                    vibrate = true;
                     blockTimer = 0;
                 }
             }
+            else
+            {
+                blockDelayTimer = 0.0f;
+            }
+
+            if(vibrate)
+            {
+                vibrateTimer += Time.deltaTime;
+                GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.3f);
+                if (vibrateTimer >= vibrateTime)
+                {
+                    GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.0f);
+                    vibrate = false;
+                    vibrateTimer = 0.0f;
+                }
+            }
+            else
+            {
+                vibrateTimer = 0.0f;
+                GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.0f);
+            }
+
 
             if (Controller.state[player].Triggers.Right < 0.2 && testNewSpawnBlock)
             {
@@ -284,14 +316,16 @@ public class managerscript : MonoBehaviour {
             if (Controller.prevState[player].Triggers.Left < 0.2 && Controller.state[player].Triggers.Left > 0.2)
             {
                 RemoveBlock();
+                vibrate = true;
             }
-            if (Controller.state[player].Triggers.Left > 0.9)
+            if (Controller.state[player].Triggers.Left > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)
             {
                 blockTimer += Time.deltaTime;
 
                 if (blockTimer >= blockTime)
                 {
                     RemoveBlock();
+                    vibrate = true;
                     blockTimer = 0;
                 }
             }
