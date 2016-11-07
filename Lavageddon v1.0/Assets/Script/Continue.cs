@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Continue : MonoBehaviour {
 
     public Button backbtn;
-    public Button continuebtn;
+    //public Button continuebtn;
     public Button resetbtn;
 
     public DynamicPlayerCount DPC;
@@ -35,13 +35,13 @@ public class Continue : MonoBehaviour {
             if (Controller.prevState[i].Buttons.Start == ButtonState.Released && Controller.state[i].Buttons.Start == ButtonState.Pressed)
             {
                 backbtn.gameObject.SetActive(!backbtn.gameObject.activeSelf);
-                continuebtn.gameObject.SetActive(!continuebtn.gameObject.activeSelf);
+                //continuebtn.gameObject.SetActive(!continuebtn.gameObject.activeSelf);
                 resetbtn.gameObject.SetActive(!resetbtn.gameObject.activeSelf);
             }
             if(Controller.prevState[i].Buttons.B == ButtonState.Released && Controller.state[i].Buttons.B == ButtonState.Pressed)
             {
                 backbtn.gameObject.SetActive(false);
-                continuebtn.gameObject.SetActive(false);
+                //continuebtn.gameObject.SetActive(false);
                 resetbtn.gameObject.SetActive(false);
             }
             
@@ -57,9 +57,9 @@ public class Continue : MonoBehaviour {
         }
         if(select < 0)
         {
-            select = 2;
+            select = 1;
         }
-        else if(select > 2)
+        else if(select > 1)
         {
             select = 0;
         }
@@ -68,10 +68,10 @@ public class Continue : MonoBehaviour {
             case 0:
                 backbtn.Select();
                 break;
+            //case 1:
+            //    continuebtn.Select();
+            //    break;
             case 1:
-                continuebtn.Select();
-                break;
-            case 2:
                 resetbtn.Select();
                 break;
         }
@@ -97,7 +97,7 @@ public class Continue : MonoBehaviour {
         MS.construction = true;
         gameover.enabled = false;
         backbtn.gameObject.SetActive(false);
-        continuebtn.gameObject.SetActive(false);
+        //continuebtn.gameObject.SetActive(false);
         resetbtn.gameObject.SetActive(false);
         
         
@@ -117,7 +117,7 @@ public class Continue : MonoBehaviour {
     public void Back()
     {
         backbtn.gameObject.SetActive(false);
-        continuebtn.gameObject.SetActive(false);
+        //continuebtn.gameObject.SetActive(false);
         resetbtn.gameObject.SetActive(false);
     }
 }

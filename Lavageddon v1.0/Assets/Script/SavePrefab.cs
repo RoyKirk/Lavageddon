@@ -49,16 +49,20 @@ public class SavePrefab : MonoBehaviour
 
         if (!File.Exists(path))
          {
+            string createText = "";
+            File.WriteAllText(path, createText);
             //string createText = (spawnorigins[playernumber].x.ToString() + "<"+ spawnorigins[playernumber].y.ToString() + "<" + spawnorigins[playernumber].z.ToString() + "<S");
             //File.WriteAllText(path, createText);
             //
-            //AddtoList(spawnorigins[playernumber], 'S');
+            createStartBlock();
+            AddtoList(spawnorigins[playernumber], 'S');
             //
             ////delete the boat example after a time or certain events.
-            //Instantiate(BoatExample, spawnorigins[playernumber], Quaternion.identity);
+            Instantiate(BoatExample, spawnorigins[playernumber], Quaternion.identity);
+            
             ////instantiate boat example at ^ pos.
-             
-         }
+
+        }
     }         
     // Use this for initialization
     void Start ()
