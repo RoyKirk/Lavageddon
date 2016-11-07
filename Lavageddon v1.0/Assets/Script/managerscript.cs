@@ -413,6 +413,7 @@ public class managerscript : MonoBehaviour {
         }
         else
         {
+            GamePad.SetVibration((PlayerIndex)player, 0.0f, 0.0f);
             Destroy(block);
             Destroy(blockInFront);
             startConstruction = true;
