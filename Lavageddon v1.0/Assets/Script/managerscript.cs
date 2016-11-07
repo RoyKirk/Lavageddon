@@ -82,7 +82,7 @@ public class managerscript : MonoBehaviour {
     float vibrateTime = 0.2f;
 
     float blockDelayTimer = 0.0f;
-    float blockDelayTime = 0.3f;
+    float blockDelayTime = 0.4f;
 
     //List<GameObject> boat = new List<GameObject>();
     // Use this for initialization
@@ -271,7 +271,7 @@ public class managerscript : MonoBehaviour {
                     blockTimer = 0;
                 }
             }
-            else
+            if (Controller.prevState[player].Triggers.Right > 0.9 && Controller.state[player].Triggers.Right < 0.9)
             {
                 blockDelayTimer = 0.0f;
             }
@@ -320,18 +320,22 @@ public class managerscript : MonoBehaviour {
             }
             if (Controller.state[player].Triggers.Left > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)
             {
+                blockDelayTimer += Time.deltaTime;
                 blockTimer += Time.deltaTime;
 
-                if (blockTimer >= blockTime)
+                if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
                 {
                     RemoveBlock();
                     vibrate = true;
                     blockTimer = 0;
                 }
             }
+
+
             if (Controller.prevState[player].Triggers.Left > 0.9 && Controller.state[player].Triggers.Left < 0.9)
             {
                 blockTimer = 0;
+                blockDelayTimer = 0.0f;
             }
 
 
