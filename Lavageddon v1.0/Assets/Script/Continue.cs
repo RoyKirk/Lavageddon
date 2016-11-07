@@ -14,7 +14,7 @@ public class Continue : MonoBehaviour {
     public GameObject[] players;
     public GameObject[] playerPrefabs;
     public ModeSwitch MS;
-    public Canvas gameover;
+    //public Canvas gameover;
     //GameObject[] BoatParents;
 
     public int select = 0;
@@ -95,7 +95,7 @@ public class Continue : MonoBehaviour {
         }
 
         MS.construction = true;
-        gameover.enabled = false;
+        //gameover.enabled = false;
         backbtn.gameObject.SetActive(false);
         //continuebtn.gameObject.SetActive(false);
         resetbtn.gameObject.SetActive(false);
