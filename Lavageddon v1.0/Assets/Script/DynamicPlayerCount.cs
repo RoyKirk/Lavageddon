@@ -17,7 +17,7 @@ public class DynamicPlayerCount : MonoBehaviour {
 
     //public GameObject[] BoatParents;
 
-    Canvas gameOver;
+    //Canvas gameOver;
     GameObject restart;
 
     bool newScene = true;
@@ -157,8 +157,8 @@ public class DynamicPlayerCount : MonoBehaviour {
                 ready[i] = false;
             }
             readyCount = 0;
-            gameOver = GameObject.Find("GameOver").GetComponent<Canvas>();
-            gameOver.enabled = false;
+            //gameOver = GameObject.Find("GameOver").GetComponent<Canvas>();
+            //gameOver.enabled = false;
             restart = GameObject.Find("Restart");
             restart.SetActive(false);
             newScene = false;
@@ -203,7 +203,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                 if (playersIn - playersDead <= 0)
                 {
                     playersDead = 0;
-                    gameOver.enabled = true;
+                    //gameOver.enabled = true;
                     //restart.SetActive(true);
                     allDead = true;
                     //GameObject restart = GameObject.Find("Restart").transform.parent.GetComponent<GameObject>();
@@ -215,7 +215,7 @@ public class DynamicPlayerCount : MonoBehaviour {
                 if (playersIn - playersDead <= 1)
                 {
                     playersDead = 0;
-                    gameOver.enabled = true;
+                    //gameOver.enabled = true;
                     //restart.SetActive(true);
                     allDead = true;
                     //GameObject restart = GameObject.Find("Restart").transform.parent.GetComponent<GameObject>();

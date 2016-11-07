@@ -118,6 +118,8 @@ public class PlayerMovement : MonoBehaviour {
     bool jumped = false;
     bool inAir = false;
 
+    public GameObject gameOver;
+
     ////these are the weapon images
     //public GameObject explosion;
     //public GameObject Laser;
@@ -740,6 +742,7 @@ public class PlayerMovement : MonoBehaviour {
         stickyMinTime = DV.WeaponRelated[7];
         bombTimer = bombMinTime;
         stickyTimer = stickyMinTime;
+        //gameOver.SetActive(false);
     }
     void Start()
     {
@@ -827,6 +830,7 @@ public class PlayerMovement : MonoBehaviour {
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
+            gameOver.SetActive(true);
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
