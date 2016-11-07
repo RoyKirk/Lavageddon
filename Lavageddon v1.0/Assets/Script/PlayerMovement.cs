@@ -493,6 +493,11 @@ public class PlayerMovement : MonoBehaviour {
         if (alive)
         {
 
+            if (GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount == 1)
+            {
+
+            }
+
             if (body.transform.position.y < lavaHeight)
             {
                 PlayerDead();
@@ -680,6 +685,8 @@ public class PlayerMovement : MonoBehaviour {
         }
 
 
+
+
         if (transform.position.y < lavaHeight)
         {
             redScreen.SetActive(true);
@@ -814,7 +821,7 @@ public class PlayerMovement : MonoBehaviour {
 
         bombsLeft = bombClipSize;
         stickiesLeft = stickyClipSize;
-
+        GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount += 1;
     }
 
 
@@ -830,6 +837,7 @@ public class PlayerMovement : MonoBehaviour {
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
+            GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount -= 1;
             gameOver.SetActive(true);
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
