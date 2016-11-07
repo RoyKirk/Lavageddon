@@ -4,6 +4,7 @@ using System.Collections;
 public class StickyWeightScript : MonoBehaviour {
 
     public GameObject weightGunHitSound;
+    public GameObject lavaHitSound;
     public GameObject lavaImpact;
     bool impacted = false;
     void OnTriggerEnter(Collider other)
@@ -29,6 +30,9 @@ public class StickyWeightScript : MonoBehaviour {
         if (transform.position.y < PLAYER.GetComponentInChildren<PlayerMovement>().lavaHeight && !impacted)
         {
             Instantiate(lavaImpact, transform.position, lavaImpact.transform.rotation);
+
+            Instantiate(lavaHitSound, transform.position, Quaternion.identity);
+            impacted = true;
         }
     }
 
