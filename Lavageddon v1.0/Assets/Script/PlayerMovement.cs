@@ -833,6 +833,13 @@ public class PlayerMovement : MonoBehaviour {
             gameOver.SetActive(true);
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
+
+            explosionCrosshair.SetActive(false);
+            LaserCrosshair.SetActive(false);
+            WeightCrosshair.SetActive(false);
+
+            weaponTurner.SetActive(false);
+
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
             Vector3 temp1 = transform.localPosition;
             Vector3 temp2 = GetComponent<PlayerMovement>().body.transform.localPosition;
