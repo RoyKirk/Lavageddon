@@ -255,7 +255,6 @@ public class managerscript : MonoBehaviour {
             if (Controller.prevState[player].Triggers.Right < 0.2 && Controller.state[player].Triggers.Right > 0.2 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
-                vibrate = true;
                 //numberOfBlocks += FloatBlockCost;
             }
 
@@ -267,7 +266,6 @@ public class managerscript : MonoBehaviour {
                 if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
                 {
                     PlaceBlock();
-                    vibrate = true;
                     blockTimer = 0;
                 }
             }
@@ -316,7 +314,6 @@ public class managerscript : MonoBehaviour {
             if (Controller.prevState[player].Triggers.Left < 0.2 && Controller.state[player].Triggers.Left > 0.2)
             {
                 RemoveBlock();
-                vibrate = true;
             }
             if (Controller.state[player].Triggers.Left > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)
             {
@@ -326,7 +323,6 @@ public class managerscript : MonoBehaviour {
                 if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
                 {
                     RemoveBlock();
-                    vibrate = true;
                     blockTimer = 0;
                 }
             }
@@ -632,6 +628,8 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + FloatBlockCost <= maxNumberOfBlocks)
             {
+
+                vibrate = true;
                 Instantiate(FloatBlockPlacementAudio,transform.position,Quaternion.identity);
                 BlockPlaceAndCost(blockPrefabFloat, 0, FloatBlockCost);
                 //save.AddtoList(block.transform.position, true);//these true or false need to be in relation to float or armour
@@ -642,6 +640,8 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + ArmourBlockCost <= maxNumberOfBlocks)
             {
+
+                vibrate = true;
                 Instantiate(ArmourBlockPlacementAudio, transform.position, Quaternion.identity);
                 BlockPlaceAndCost(blockPrefabArmour, 1, ArmourBlockCost);
                 //save.AddtoList(block.transform.position, false);//these true or false need to be in relation to float or armour
@@ -652,6 +652,8 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + FloatBlockCost * 27 <= maxNumberOfBlocks)
             {
+
+                vibrate = true;
                 GameObject blok = Instantiate(blockPrefabFloat3X3X3, block.transform.position, block.transform.rotation) as GameObject;
                 foreach (Transform child in blok.transform)
                 {
@@ -665,6 +667,8 @@ public class managerscript : MonoBehaviour {
         {
             if (numberOfBlocks + ArmourBlockCost * 27 <= maxNumberOfBlocks)
             {
+
+                vibrate = true;
                 GameObject blok = Instantiate(blockPrefabArmour3X3X3, block.transform.position, block.transform.rotation) as GameObject;
                 foreach (Transform child in blok.transform)
                 {
@@ -677,6 +681,8 @@ public class managerscript : MonoBehaviour {
         //set up a bool that checks if they want to place a spawn block anyway, delete last spawn block and create a new one
         if(blockType == BlockType.SPAWN && spawnblock == false)
         {
+
+            vibrate = true;
             BlockPlaceAndCost(blockPrefabSpawn, 2, 0);
             spawnPos = block.transform.position;
             //save.AddtoList(transform.position, 'S');
@@ -695,6 +701,8 @@ public class managerscript : MonoBehaviour {
                 }
                 spawnPos = block.transform.position;
                 BlockPlaceAndCost(blockPrefabSpawn, 2, 0);
+
+                vibrate = true;
                 spawnblock = true;
             }
             testNewSpawnBlock = true;
@@ -793,7 +801,7 @@ public class managerscript : MonoBehaviour {
 
     void RemoveBlock()
     {
-        anim.SetTrigger("red");
+        
         RaycastHit shot;
         if (Physics.Raycast(transform.position, transform.forward, out shot))
         {
@@ -802,6 +810,8 @@ public class managerscript : MonoBehaviour {
             {
                 if (!shot.collider.GetComponent<BlockDamage>().keystone && shot.collider.GetComponent<BuildingBlock>().playerOwner == player)
                 {
+                    anim.SetTrigger("red");
+                    vibrate = true;
                     shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
                     save.RemovefromList(shot.collider.transform.position);
                     numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;

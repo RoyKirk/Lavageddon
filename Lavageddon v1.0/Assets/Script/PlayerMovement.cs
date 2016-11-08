@@ -119,6 +119,7 @@ public class PlayerMovement : MonoBehaviour {
     bool inAir = false;
 
     public GameObject gameOver;
+    public GameObject winScreen;
 
     ////these are the weapon images
     //public GameObject explosion;
@@ -493,6 +494,11 @@ public class PlayerMovement : MonoBehaviour {
         if (alive)
         {
 
+            if (GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount == 1)
+            {
+                winScreen.SetActive(true);
+            }
+
             if (body.transform.position.y < lavaHeight)
             {
                 PlayerDead();
@@ -680,6 +686,8 @@ public class PlayerMovement : MonoBehaviour {
         }
 
 
+
+
         if (transform.position.y < lavaHeight)
         {
             redScreen.SetActive(true);
@@ -814,7 +822,7 @@ public class PlayerMovement : MonoBehaviour {
 
         bombsLeft = bombClipSize;
         stickiesLeft = stickyClipSize;
-
+        GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount += 1;
     }
 
 
@@ -830,7 +838,11 @@ public class PlayerMovement : MonoBehaviour {
         submergedTimer += Time.deltaTime;
         if (submergedTimer >= submergedMinTime)
         {
-            gameOver.SetActive(true);
+            GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount -= 1;
+            if (!winScreen.activeSelf)
+            {
+                gameOver.SetActive(true);
+            }
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
 
