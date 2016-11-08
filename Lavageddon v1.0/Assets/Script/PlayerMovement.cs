@@ -119,6 +119,7 @@ public class PlayerMovement : MonoBehaviour {
     bool inAir = false;
 
     public GameObject gameOver;
+    public GameObject winScreen;
 
     ////these are the weapon images
     //public GameObject explosion;
@@ -495,7 +496,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if (GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount == 1)
             {
-
+                winScreen.SetActive(true);
             }
 
             if (body.transform.position.y < lavaHeight)
@@ -838,7 +839,10 @@ public class PlayerMovement : MonoBehaviour {
         if (submergedTimer >= submergedMinTime)
         {
             GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount -= 1;
-            gameOver.SetActive(true);
+            if (!winScreen.activeSelf)
+            {
+                gameOver.SetActive(true);
+            }
             GamePad.SetVibration((PlayerIndex)player, 0f, 0f);
             alive = false;
             GameObject.Find("PlayerManager").GetComponent<DynamicPlayerCount>().playerDeath();
