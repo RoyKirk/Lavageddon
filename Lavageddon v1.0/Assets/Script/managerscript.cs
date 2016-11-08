@@ -693,7 +693,7 @@ public class managerscript : MonoBehaviour {
             //they are trying to place another spawn block
             if (confirm)
             {
-                findSpawnBlock = GameObject.Find("BlockSpawn(Clone)");
+                findSpawnBlock = GameObject.Find("BlockSpawn " + player +"(Clone)");
                 if (findSpawnBlock.GetComponent<BuildingBlock>().playerOwner == player)
                 {
                     save.RemovefromList(findSpawnBlock.transform.position);

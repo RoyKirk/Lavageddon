@@ -750,6 +750,7 @@ public class PlayerMovement : MonoBehaviour {
         stickyMinTime = DV.WeaponRelated[7];
         bombTimer = bombMinTime;
         stickyTimer = stickyMinTime;
+        GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount += 1;
         //gameOver.SetActive(false);
     }
     void Start()
@@ -781,15 +782,15 @@ public class PlayerMovement : MonoBehaviour {
             bodyRB.isKinematic = false;
         }
 
-        LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-        lineRenderer.SetColors(c1, c2);
-        lineRenderer.SetWidth(0.3F, 0.3F);
-        lineRenderer.SetVertexCount(lengthOfLineRenderer);
-        lineRenderer.enabled = false;
+        //LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+        //lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        //lineRenderer.SetColors(c1, c2);
+        //lineRenderer.SetWidth(0.3F, 0.3F);
+        //lineRenderer.SetVertexCount(lengthOfLineRenderer);
+        //lineRenderer.enabled = false;
         alive = true;
 
-                //setting the menu variables to the player variables
+        //setting the menu variables to the player variables
         playerManager = GameObject.FindGameObjectWithTag("Manager");
         DynamicVariables DV = playerManager.GetComponent<DynamicVariables>();
         Rigidbody rb = body.transform.parent.GetComponent<Rigidbody>();
@@ -800,7 +801,7 @@ public class PlayerMovement : MonoBehaviour {
         sensitivityY = DV.PlayerRelated[2];
         rb.mass = DV.PlayerRelated[3];
         submergedMinTime = DV.PlayerRelated[4];
-        if(DV.PlayerRelated[5] == 1)
+        if (DV.PlayerRelated[5] == 1)
         {
             submergeAccumulate = true;
         }
@@ -822,7 +823,6 @@ public class PlayerMovement : MonoBehaviour {
 
         bombsLeft = bombClipSize;
         stickiesLeft = stickyClipSize;
-        GameObject.Find("PlayerCount").GetComponent<PlayerCount>().playerCount += 1;
     }
 
 
