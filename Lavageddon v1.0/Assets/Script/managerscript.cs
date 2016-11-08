@@ -252,17 +252,17 @@ public class managerscript : MonoBehaviour {
             //timer so they have X seconds to press the reset button again before canceling
             
 
-            if (Controller.prevState[player].Triggers.Right < 0.2 && Controller.state[player].Triggers.Right > 0.2 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.prevState[player].Triggers.Right < 0.2 && Controller.state[player].Triggers.Right > 0.2 && Controller.state[player].Triggers.Right < 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
             {
                 PlaceBlock();
                 //numberOfBlocks += FloatBlockCost;
             }
 
-            if (Controller.state[player].Triggers.Right > 0.9 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
+            if (Controller.state[player].Triggers.Right > 0.8 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
             {
                 blockDelayTimer += Time.deltaTime;
                 blockTimer += Time.deltaTime;
-
+            
                 if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
                 {
                     PlaceBlock();
@@ -769,28 +769,6 @@ public class managerscript : MonoBehaviour {
         numberOfBlocks += blockcost;
         //anim.SetBool("GREEN", false);
     }
-
-    //void BlockPlaceAndCost3X3(GameObject blockPrefab, int blockCost)
-    //{
-    //    if (numberOfBlocks + blockCost * 27 <= maxNumberOfBlocks)
-    //    {
-    //        GameObject blok = Instantiate(blockPrefab, block.transform.position, block.transform.rotation) as GameObject;
-    //        foreach (Transform child in blok.transform)
-    //        {
-    //            child.GetComponent<BuildingBlock>().playerOwner = player;
-    //            if(blockCost == ArmourBlockCost)
-    //            {
-    //                save.AddtoList(child.transform.position, false);
-    //            }
-    //            else
-    //            {
-    //                save.AddtoList(child.transform.position, true);
-    //            }
-    //            
-    //            numberOfBlocks += blockCost;
-    //        }
-    //    }
-    //}
 
     public void LoadBoatPlacement(int blockID, Vector3 pos)
     {
