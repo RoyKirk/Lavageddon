@@ -782,12 +782,12 @@ public class PlayerMovement : MonoBehaviour {
             bodyRB.isKinematic = false;
         }
 
-        //LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-        //lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-        //lineRenderer.SetColors(c1, c2);
-        //lineRenderer.SetWidth(0.3F, 0.3F);
-        //lineRenderer.SetVertexCount(lengthOfLineRenderer);
-        //lineRenderer.enabled = false;
+        LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.SetColors(c1, c2);
+        lineRenderer.SetWidth(0.3F, 0.3F);
+        lineRenderer.SetVertexCount(lengthOfLineRenderer);
+        lineRenderer.enabled = false;
         alive = true;
 
         //setting the menu variables to the player variables

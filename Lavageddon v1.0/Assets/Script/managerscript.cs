@@ -815,7 +815,7 @@ public class managerscript : MonoBehaviour {
                     shot.collider.GetComponent<BlockDamage>().Damage(shot.collider.GetComponent<BlockDamage>().HitPoints);
                     save.RemovefromList(shot.collider.transform.position);
                     numberOfBlocks -= shot.collider.GetComponent<BlockDamage>().cost;
-                    if(shot.collider.name == "BlockSpawn(Clone)")
+                    if(shot.collider.name == "BlockSpawn " + player + "(Clone)")
                     {
                         spawnblock = false;
                     }
