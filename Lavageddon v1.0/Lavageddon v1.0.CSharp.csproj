@@ -116,6 +116,7 @@
     <Compile Include="Assets\Script\VolumeBuildUpScript.cs" />
     <Compile Include="Assets\Script\WhirlpoolCurrent.cs" />
     <Compile Include="Assets\Script\WhirlpoolOffest.cs" />
+    <Compile Include="Assets\Script\autoDelete.cs" />
     <Compile Include="Assets\Script\managerscript.cs" />
     <Compile Include="Assets\Script\spawnblockRaycast.cs" />
     <Compile Include="Assets\Script\startButton.cs" />
