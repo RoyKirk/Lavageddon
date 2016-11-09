@@ -388,7 +388,7 @@ public class PlayerMovement : MonoBehaviour {
                             //Vector3 pos = transform.position + transform.forward.normalized * i;
                             //Vector3 pos = (transform.position - transform.up.normalized * (lengthOfLineRenderer - i + 1) / 20) + (transform.forward.normalized * i + transform.up.normalized / (lengthOfLineRenderer - i + 1) / 20);
                             //lineRenderer.SetPosition(i, pos);
-                            Vector3 pos = (body.transform.position + new Vector3(0, 1, 0)) + i*((shot.point - body.transform.position)/lengthOfLineRenderer);
+                            Vector3 pos = (body.transform.position + new Vector3(0, 2, 0)) + i*((shot.point - body.transform.position - new Vector3(0, 2, 0)) /lengthOfLineRenderer);
                             lineRenderer.SetPosition(i, pos);
                             i++;
                         }
