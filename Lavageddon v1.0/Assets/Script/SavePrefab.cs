@@ -54,6 +54,7 @@ public class SavePrefab : MonoBehaviour
             //string createText = (spawnorigins[playernumber].x.ToString() + "<"+ spawnorigins[playernumber].y.ToString() + "<" + spawnorigins[playernumber].z.ToString() + "<S");
             //File.WriteAllText(path, createText);
             //
+            //Debug.Log("it should happen");
             createStartBlock();
             AddtoList(spawnorigins[playernumber], 'S');
             //
@@ -242,9 +243,14 @@ public class SavePrefab : MonoBehaviour
 
     public void createStartBlock()
     {
+        spawnorigins[0] = new Vector3(2.02f, 5.05f, -24.24001f);
+        spawnorigins[1] = new Vector3(-21.05f, 5.05f, 4.59f);
+        spawnorigins[2] = new Vector3(2.02f, 5.05f, 25.78f);
+        spawnorigins[3] = new Vector3(20.51f, 5.05f, 2.13f);
         DeleteAll();
         if(Boat.Count == 0)
         {
+            //Debug.Log(spawnorigins[playernumber]);
             GameObject block = (GameObject)Instantiate(blockSpawn, spawnorigins[playernumber], Quaternion.identity);
             block.GetComponent<BuildingBlock>().playerOwner = playernumber;
             AddtoList(spawnorigins[playernumber], 'S');
