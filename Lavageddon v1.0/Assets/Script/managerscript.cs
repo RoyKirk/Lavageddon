@@ -263,13 +263,20 @@ public class managerscript : MonoBehaviour {
 
             if (Controller.state[player].Triggers.Right > 0.8 && block && block.GetComponent<PlacementBlockScript>().placeable)// && numberOfBlocks < maxNumberOfBlocks)
             {
-                blockDelayTimer += Time.deltaTime;
-                blockTimer += Time.deltaTime;
-            
-                if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
+                if (blockType == BlockType.SPAWN)
                 {
                     PlaceBlock();
-                    blockTimer = 0;
+                }
+                else
+                {
+                    blockDelayTimer += Time.deltaTime;
+                    blockTimer += Time.deltaTime;
+
+                    if (blockTimer >= blockTime && blockDelayTimer >= blockDelayTime)
+                    {
+                        PlaceBlock();
+                        blockTimer = 0;
+                    }
                 }
             }
             if (Controller.prevState[player].Triggers.Right > 0.9 && Controller.state[player].Triggers.Right < 0.9)
@@ -709,6 +716,7 @@ public class managerscript : MonoBehaviour {
 
                 vibrate = true;
                 spawnblock = true;
+                confirm = false;
             }
             testNewSpawnBlock = true;
 

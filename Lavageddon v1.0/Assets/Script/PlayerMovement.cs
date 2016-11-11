@@ -865,8 +865,8 @@ public class PlayerMovement : MonoBehaviour {
             transform.localPosition = temp1;
             GetComponent<PlayerMovement>().body.transform.localPosition = temp2;
             //body.transform.position = new Vector3(0f, 15f, -29f);
-            MeshRenderer[] meshes = body.GetComponentsInChildren<MeshRenderer>();
-            foreach(MeshRenderer mesh in meshes)
+            SkinnedMeshRenderer[] meshes = body.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach(SkinnedMeshRenderer mesh in meshes)
             {
                 mesh.enabled = false;
             }
