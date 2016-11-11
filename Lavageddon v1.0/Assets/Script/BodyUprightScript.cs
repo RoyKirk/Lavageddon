@@ -12,6 +12,7 @@ public class BodyUprightScript : MonoBehaviour {
     CameraMovement cameraScript;
     PlayerMovement playerScript;
 
+    public Animator playerAnim;
 
     public int player = 0;
 
@@ -37,6 +38,8 @@ public class BodyUprightScript : MonoBehaviour {
         //transform.position += Controller.state[player].ThumbSticks.Left.Y * new Vector3(transform.forward.normalized.x + transform.up.normalized.x, 0, transform.forward.normalized.z + transform.up.normalized.z) * movementSpeed * Time.deltaTime;
         transform.parent.transform.position += Controller.state[player].ThumbSticks.Left.Y * transform.forward * movementSpeed * Time.deltaTime;
         transform.parent.transform.position += Controller.state[player].ThumbSticks.Left.X * transform.right.normalized * movementSpeed * Time.deltaTime;
+        playerAnim.SetFloat("move", Controller.state[player].ThumbSticks.Left.Y);
+        playerAnim.SetFloat("side", Controller.state[player].ThumbSticks.Left.X);
 
         if (cameraScript.enabled || !playerScript.alive)
         {

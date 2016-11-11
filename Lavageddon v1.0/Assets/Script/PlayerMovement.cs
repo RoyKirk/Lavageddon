@@ -121,6 +121,8 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject gameOver;
     public GameObject winScreen;
 
+    public Animator playerAnim;
+
     ////these are the weapon images
     //public GameObject explosion;
     //public GameObject Laser;
@@ -153,6 +155,8 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     if (hit.collider.tag == "Block")
                     {
+                        //jumping
+                        playerAnim.SetTrigger("Jump");
                         Debug.DrawLine(body.transform.position, hit.point);
                         bodyRB.AddForce(0, jumpForce, 0);
                         jumpParticle.GetComponent<ParticleSystem>().Play();
@@ -215,6 +219,8 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     if (hit.collider.tag == "Block")
                     {
+                        //landed
+                        playerAnim.SetTrigger("Land");
                         Debug.DrawLine(body.transform.position, hit.point);
                         Instantiate(jumpLandingSound, transform.position, Quaternion.identity);
                         inAir = false;

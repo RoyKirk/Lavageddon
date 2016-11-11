@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: a276b7f1755d12b40b57654ff31f3652
+timeCreated: 1478754127
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Base_JNT
+    100002: Blade_JNT
+    100004: Exahsr_C2_JNT
+    100006: Exahst_A1_JNT
+    100008: Exahst_A2_JNT
+    100010: Exahst_B1_JNT
+    100012: Exahst_B2_JNT
+    100014: Exahst_C1_JNT
+    100016: Head_JNT
+    100018: ikHandle1
+    100020: ikHandle2
+    100022: ikHandle3
+    100024: ikHandle4
+    100026: ikHandle5
+    100028: ikHandle6
+    100030: L_Ankle_JNT
+    100032: L_Elbow_JNT
+    100034: L_Heel_JNT
+    100036: L_Hip_JNT
+    100038: L_Hip_Main_JNT
+    100040: L_Knee_JNT
+    100042: L_Knee_Main_JNT
+    100044: L_Shoulder_JNT
+    100046: L_Toe_JNT
+    100048: L_Wrist_JNT
+    100050: Pelvis_JNT
+    100052: R_Ankle_JNT
+    100054: R_Elbow_JNT
+    100056: R_Heel_JNT
+    100058: R_Hip_JNT
+    100060: R_Hip_Main_JNT
+    100062: R_Knee_JNT
+    100064: R_Knee_Main_JNT
+    100066: R_Shoulder_JNT
+    100068: R_Toe_JNT
+    100070: R_Wrist_JNT
+    100072: RFL_L_Ankle_JNT1
+    100074: RFL_L_Heel_JNT
+    100076: RFL_L_Toe_JNT
+    100078: RFL_R_Ankle_JNT
+    100080: RFL_R_Heel_JNT
+    100082: RFL_R_Toe_JNT
+    100084: //RootNode
+    100086: Spine_1_JNT
+    100088: Spine_2_JNT
+    100090: Spine_3_JNT
+    400000: Base_JNT
+    400002: Blade_JNT
+    400004: Exahsr_C2_JNT
+    400006: Exahst_A1_JNT
+    400008: Exahst_A2_JNT
+    400010: Exahst_B1_JNT
+    400012: Exahst_B2_JNT
+    400014: Exahst_C1_JNT
+    400016: Head_JNT
+    400018: ikHandle1
+    400020: ikHandle2
+    400022: ikHandle3
+    400024: ikHandle4
+    400026: ikHandle5
+    400028: ikHandle6
+    400030: L_Ankle_JNT
+    400032: L_Elbow_JNT
+    400034: L_Heel_JNT
+    400036: L_Hip_JNT
+    400038: L_Hip_Main_JNT
+    400040: L_Knee_JNT
+    400042: L_Knee_Main_JNT
+    400044: L_Shoulder_JNT
+    400046: L_Toe_JNT
+    400048: L_Wrist_JNT
+    400050: Pelvis_JNT
+    400052: R_Ankle_JNT
+    400054: R_Elbow_JNT
+    400056: R_Heel_JNT
+    400058: R_Hip_JNT
+    400060: R_Hip_Main_JNT
+    400062: R_Knee_JNT
+    400064: R_Knee_Main_JNT
+    400066: R_Shoulder_JNT
+    400068: R_Toe_JNT
+    400070: R_Wrist_JNT
+    400072: RFL_L_Ankle_JNT1
+    400074: RFL_L_Heel_JNT
+    400076: RFL_L_Toe_JNT
+    400078: RFL_R_Ankle_JNT
+    400080: RFL_R_Heel_JNT
+    400082: RFL_R_Toe_JNT
+    400084: //RootNode
+    400086: Spine_1_JNT
+    400088: Spine_2_JNT
+    400090: Spine_3_JNT
+    7400000: land
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

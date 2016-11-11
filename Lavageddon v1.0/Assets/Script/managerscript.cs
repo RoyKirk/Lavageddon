@@ -96,6 +96,9 @@ public class managerscript : MonoBehaviour {
     const float newSpawnCounterMax = 1;
     float newSpawnCounter;
 
+    public GameObject HeadModel;
+    public GameObject BodyModel;
+
     void Awake()
     {
         playerManager = GameObject.FindGameObjectWithTag("Manager");
@@ -456,6 +459,8 @@ public class managerscript : MonoBehaviour {
         }
         else
         {
+            HeadModel.SetActive(false);
+            BodyModel.SetActive(true);
             numberText.text = "";
         }
 
