@@ -123,6 +123,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public Animator playerAnim;
 
+    public GameObject laserBar;
+
     ////these are the weapon images
     //public GameObject explosion;
     //public GameObject Laser;
@@ -855,6 +857,7 @@ public class PlayerMovement : MonoBehaviour {
             explosionCrosshair.SetActive(false);
             LaserCrosshair.SetActive(false);
             WeightCrosshair.SetActive(false);
+            laserBar.SetActive(false);
 
             weaponTurner.SetActive(false);
 
